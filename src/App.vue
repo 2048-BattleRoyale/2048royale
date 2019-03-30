@@ -1,29 +1,50 @@
 <template>
   <div id="app">
-    <h1>This is a more senseful text.</h1>
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <link href="https://fonts.googleapis.com/css?family=Germania+One" rel="stylesheet">
+
+    <span class="title-span">
+      <img class="title-logo" alt="2048 Royale Logo" src="./assets/logo.svg">
+      <h1 class="title-text">2048 Battle Royale</h1>
+    </span>
+    <Board/>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from "./components/HelloWorld.vue";
+import Board from "./components/Board.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    HelloWorld
+    HelloWorld,
+    Board
   }
-}
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+
+  padding-top: 40px;
+  padding-bottom: 10%;
+}
+
+.title-text,
+.title-logo {
+  display: inline-block;
+  vertical-align: baseline;
+}
+.title-logo {
+  margin-right: 10px;
+}
+.title-span .title-text {
+  font-family: "Germania One", Helvetica, Arial, sans-serif;
+  font-size: 96px;
 }
 </style>
