@@ -15,30 +15,24 @@ var canvas;
 var subdivision;
 var ctx;
 var colors = {
-  "2": "F2F5C9",
-  "4": "3097A4",
-  "8": "3281A1",
-  "16": "2D80B7",
-  "32": "30CDAC",
-  "64": "F2F5C9",
-  "128": "3097A4",
-  "256": "3281A1",
-  "512": "2D3BB7",
-  "1024": "30CDAC",
-  "2048": "F2F5C9",
-  "4096": "3097A4",
-  "8192": "3281A1",
-  "16384": "642DB7"
+  "2": "ffcdd2",
+  "4": "f48fb1",
+  "8": "ba68c8",
+  "16": "7e57c2",
+  "32": "3f51b5",
+  "64": "1e88e5",
+  "128": "0288d1",
+  "256": "00838f",
+  "512": "004d40",
+  "1024": "b9f6ca",
+  "2048": "b2ff59",
+  "4096": "c6ff00",
+  "8192": "ffd600",
+  "16384": "212121"
 };
 var grid = [];
-
-//Push random multiples of 2
-for (var i = 1; i <= 16 * 16 + 1; i += 1) {
-  //grid.push({owner:"0",number:(2**(Math.floor(Math.random()*12)))})
-  var random = Math.floor(Math.random() * 12);
-  var multtwo = 2 ** random;
-  grid.push(multtwo);
-}
+var gameid;
+var token;
 
 //Return the appropriate image for drawing
 function roundRect(x, y, width, height, radius, fill, stroke) {
@@ -165,30 +159,30 @@ function drawGrid() {
 }
 
 function drawText(number, x, y) {
-  // console.log(number.toString().length);
+  //  console.log(number.toString().length);
   if (number.toString().length == 1) {
-    ctx.font = " 27px arial ";
+    ctx.font = " 2.3vw arial ";
     var c = ctx.fillStyle;
     ctx.fillStyle = "black";
-    ctx.fillText(number, x - subdivision * 0.1, y + 2);
+    ctx.fillText(number, x - subdivision * 0.15, y + 7);
     ctx.fillStyle = c;
   }
   if (number.toString().length == 2) {
-    ctx.font = " 26px arial ";
+    ctx.font = " 1.8vw arial ";
     var c = ctx.fillStyle;
     ctx.fillStyle = "black";
-    ctx.fillText(number, x - subdivision * 0.2, y + 2);
+    ctx.fillText(number, x - subdivision * 0.35, y + 4);
     ctx.fillStyle = c;
   }
   if (number.toString().length == 3) {
-    ctx.font = " 25px arial";
+    ctx.font = " 1.25vw arial";
     var c = ctx.fillStyle;
     ctx.fillStyle = "black";
-    ctx.fillText(number, x - subdivision * 0.3, y + subdivision * 0.05);
+    ctx.fillText(number, x - subdivision * 0.34, y + subdivision * 0.05);
     ctx.fillStyle = c;
   }
   if (number.toString().length == 4) {
-    ctx.font = " 23px arial";
+    ctx.font = " 1vw arial";
     var c = ctx.fillStyle;
     ctx.fillStyle = "black";
     ctx.fillText(number, x - subdivision * 0.4, y + 2);
@@ -198,6 +192,20 @@ function drawText(number, x, y) {
 
 //Draw the entire grid
 function reDraw() {
+  $.ajax({
+    url: "http://spazzlo.com:8080/board",
+    data: { token: token, gameid: gameid },
+    dataType: "json",
+    method: "GET"
+  }).done(boarddata => {
+    console.log(boarddata);
+    for (var i = 0; i < 16; i++) {
+      for (var o = 0; o < 16; o++) {
+        grid[i * 16 + o] = boarddata["board"][i][o]["value"];
+      }
+    }
+  });
+
   drawGrid();
   var localx = 0;
   var localy = 0;
@@ -209,13 +217,15 @@ function reDraw() {
       hexval = "0";
     }
     drawImage(localx, localy, hexval);
-    drawText(grid[localx+16*localy],subdivision*localx+13,subdivision*localy+20); //Sparkling lime is sparkling lie
+    drawText(
+      grid[localx + 16 * localy],
+      subdivision * localx + 13,
+      subdivision * localy + 20
+    ); //Sparkling lime is sparkling lie
     localx += 1;
     if (localx % 2 == 0) {
       offset += 1;
     }
-    //		drawImage(0,0,2);
-    //		drawImage(2,2,16);
     if (i % 16 == 0 && i != 0) {
       localy += 1;
       localx = 0;
@@ -224,50 +234,43 @@ function reDraw() {
   }
 }
 
-// Only draw stuff once the window is loaded and initialized
-window.addEventListener("load", function(event) {
-  canvas = document.getElementById("game-board");
-  canvas.width = window.innerWidth * 0.5;
-  canvas.height = window.innerWidth * 0.5;
+$.ajax({
+  url: "http://spazzlo.com:8080/games",
+  data: {},
+  dataType: "json",
+  method: "GET"
+}).done(gamelist => {
+  console.log(gamelist["games"][0][0]);
+  gameid = gamelist["games"][0][0];
+  // Log into game
+  $.ajax({
+    url: "http://spazzlo.com:8080/join",
+    data: { gameid: gamelist["games"][0][0] },
+    dataType: "json",
+    method: "GET"
+  }).done(tkn => {
+    console.log(tkn);
+    token = tkn["token"];
 
-  subdivision = canvas.width / 16;
-  ctx = canvas.getContext("2d");
-  reDraw();
-
-  window.onload = window.onresize = function() {
-    canvas.width = window.innerWidth * 0.8;
-    canvas.height = window.innerWidth * 0.8;
+    canvas = document.getElementById("game-board");
+    canvas.width = window.innerWidth * 0.5;
+    canvas.height = window.innerWidth * 0.5;
     subdivision = canvas.width / 16;
+    ctx = canvas.getContext("2d");
     reDraw();
-  };
+
+    window.onload = window.onresize = function() {
+      canvas.width = window.innerWidth * 0.8;
+      canvas.height = window.innerWidth * 0.8;
+      subdivision = canvas.width / 16;
+      reDraw();
+    };
+  });
+
+  // Only draw stuff once the window is loaded and initialized
 
   // Log in
   // Get games list
-  // $.ajax({
-  //     url: "http://spazzlo.com:8080/games",
-  //     data: {},
-  //     dataType: "json",
-  //     method: "GET"
-  // }).done((gamelist) => {
-  //     console.log(gamelist["games"][0][0])
-  //     // Log into game
-  //     $.ajax({
-  //         url: "http://spazzlo.com:8080/join",
-  //         data: {gameid: gamelist["games"][0][0]},
-  //         dataType: "json",
-  //         method: "GET"
-  //     }).done((token) => {
-  //         console.log(token)
-  //         $.ajax({
-  //           url: "http://spazzlo.com:8080/games",
-  //           data: {},
-  //           dataType: "json",
-  //           method: "GET"
-  //         }).done((data) => {
-  //             console.log(data)
-  //         })
-  //     })
-  // })
 });
 
 // Respond to move commands
@@ -275,15 +278,51 @@ document.addEventListener("keydown", function(event) {
   if (event.keyCode == 39) {
     console.log("Right");
     event.preventDefault();
+    $.ajax({
+      url: "http://spazzlo.com:8080/makemove",
+      data: { token: token, gameid: gameid, direction: 1 },
+      dataType: "json",
+      method: "GET"
+    }).done(data => {
+      console.log(data);
+    });
+    reDraw();
   } else if (event.keyCode == 37) {
     console.log("Left");
     event.preventDefault();
+    $.ajax({
+      url: "http://spazzlo.com:8080/makemove",
+      data: { token: token, gameid: gameid, direction: 3 },
+      dataType: "json",
+      method: "GET"
+    }).done(data => {
+      console.log(data);
+    });
+    reDraw();
   } else if (event.keyCode == 38) {
     console.log("Up");
     event.preventDefault();
+    $.ajax({
+      url: "http://spazzlo.com:8080/makemove",
+      data: { token: token, gameid: gameid, direction: 0 },
+      dataType: "json",
+      method: "GET"
+    }).done(data => {
+      console.log(data);
+    });
+    reDraw();
   } else if (event.keyCode == 40) {
     console.log("Down");
     event.preventDefault();
+    $.ajax({
+      url: "http://spazzlo.com:8080/makemove",
+      data: { token: token, gameid: gameid, direction: 2 },
+      dataType: "json",
+      method: "GET"
+    }).done(data => {
+      console.log(data);
+    });
+    reDraw();
   }
 });
 </script>
