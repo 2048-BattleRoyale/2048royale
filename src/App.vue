@@ -43,6 +43,10 @@ export default {
 .title-logo {
   margin-right: 10px;
 }
+.title-text {
+  margin-top: 0px;
+  margin-bottom: 30px;
+}
 .title-span .title-text {
   font-family: "Germania One", Helvetica, Arial, sans-serif;
   font-size: 96px;
