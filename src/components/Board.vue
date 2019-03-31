@@ -10,11 +10,13 @@ export default {
   props: {}
 };
 
+// Global variables
 var serverURL = "http://spazzlo.com:8080";
 var canvas;
 var subdivision;
 var ctx;
 var colors = {
+  // TODO: Import this from JSON file
   "2": "ffcdd2",
   "4": "f48fb1",
   "8": "ba68c8",
@@ -34,7 +36,7 @@ var grid = [];
 var gameid;
 var token;
 
-//Return the appropriate image for drawing
+// Draw a rectangle with rounded corners
 function roundRect(x, y, width, height, radius, fill, stroke) {
   //still need to implement text, because I suck.
   if (typeof stroke == "undefined") {
@@ -75,11 +77,11 @@ function roundRect(x, y, width, height, radius, fill, stroke) {
   }
 }
 
-function drawImage(x, y, hex) {
-  ctx.fillStyle = hex;
-  if (hex == "0") {
-    ctx.fillStyle = "#ffffff00";
-  }
+// Draw a block at the given coordintes
+function drawBlock(x, y, hex) {
+  if (hex == "0") ctx.fillStyle = "#ffffff00";
+  else ctx.fillStyle = hex;
+
   roundRect(
     subdivision * x,
     subdivision * y,
@@ -91,13 +93,14 @@ function drawImage(x, y, hex) {
   );
 }
 
-//Remove all of the heck in the canvas
+// Remove all of the heck in the canvas
 function clearCanvas() {
   const context = canvas.getContext("2d");
   context.clearRect(0, 0, canvas.width, canvas.height);
   drawGrid();
 }
 
+// Match a 2**x value to a hex color
 function hexJson(number1) {
   var rando = "0";
   if (number1 != "0") {
@@ -111,6 +114,7 @@ function hexJson(number1) {
   return colors[rando];
 }
 
+// Draw the gridlines and background canvas
 function drawGrid() {
   ctx.strokeStyle = "#9c9c9c";
 
@@ -158,40 +162,31 @@ function drawGrid() {
   }
 }
 
+// Write in the numbers
 function drawText(number, x, y) {
-  //  console.log(number.toString().length);
+  var c = ctx.fillStyle;
+  ctx.fillStyle = "black";
+
   if (number.toString().length == 1) {
     ctx.font = " 2.3vw arial ";
-    var c = ctx.fillStyle;
-    ctx.fillStyle = "black";
     ctx.fillText(number, x - subdivision * 0.15, y + 7);
-    ctx.fillStyle = c;
-  }
-  if (number.toString().length == 2) {
+  } else if (number.toString().length == 2) {
     ctx.font = " 1.8vw arial ";
-    var c = ctx.fillStyle;
-    ctx.fillStyle = "black";
     ctx.fillText(number, x - subdivision * 0.35, y + 4);
-    ctx.fillStyle = c;
-  }
-  if (number.toString().length == 3) {
+  } else if (number.toString().length == 3) {
     ctx.font = " 1.25vw arial";
-    var c = ctx.fillStyle;
-    ctx.fillStyle = "black";
     ctx.fillText(number, x - subdivision * 0.34, y + subdivision * 0.05);
-    ctx.fillStyle = c;
-  }
-  if (number.toString().length == 4) {
+  } else if (number.toString().length == 4) {
     ctx.font = " 1vw arial";
-    var c = ctx.fillStyle;
-    ctx.fillStyle = "black";
     ctx.fillText(number, x - subdivision * 0.4, y + 2);
-    ctx.fillStyle = c;
   }
+
+  ctx.fillStyle = c;
 }
 
-//Draw the entire grid
+// Draw the entire grid
 function reDraw() {
+  // Reset grid[] object with updated values from server
   $.ajax({
     url: "http://spazzlo.com:8080/board",
     data: { token: token, gameid: gameid },
@@ -206,26 +201,24 @@ function reDraw() {
     }
   });
 
+  // Draw the grid, then draw in the blocks
   drawGrid();
   var localx = 0;
   var localy = 0;
   var offset = -1;
   for (var i = 0; i <= 16 * 16; i++) {
-    // console.log(hexJson(grid[localx + 16 * localy]));
     var hexval = "#" + hexJson(grid[localx + 16 * localy]);
-    if (grid[localx + 16 * localy] == 0) {
-      hexval = "0";
-    }
-    drawImage(localx, localy, hexval);
+    if (grid[localx + 16 * localy] == 0) hexval = "0";
+
+    drawBlock(localx, localy, hexval);
     drawText(
       grid[localx + 16 * localy],
       subdivision * localx + 13,
       subdivision * localy + 20
     ); //Sparkling lime is sparkling lie
     localx += 1;
-    if (localx % 2 == 0) {
-      offset += 1;
-    }
+
+    if (localx % 2 == 0) offset += 1;
     if (i % 16 == 0 && i != 0) {
       localy += 1;
       localx = 0;
@@ -234,14 +227,19 @@ function reDraw() {
   }
 }
 
+// Log in
+// Get games list
 $.ajax({
   url: "http://spazzlo.com:8080/games",
   data: {},
   dataType: "json",
   method: "GET"
 }).done(gamelist => {
+  // Choose a game to log into and store the game id
+  // TODO: select a game with < 4 players
   console.log(gamelist["games"][0][0]);
   gameid = gamelist["games"][0][0];
+
   // Log into game
   $.ajax({
     url: "http://spazzlo.com:8080/join",
@@ -249,33 +247,29 @@ $.ajax({
     dataType: "json",
     method: "GET"
   }).done(tkn => {
+    // Store the session token
     console.log(tkn);
     token = tkn["token"];
 
-    canvas = document.getElementById("game-board");
-    canvas.width = window.innerWidth * 0.5;
-    canvas.height = window.innerWidth * 0.5;
-    subdivision = canvas.width / 16;
-    ctx = canvas.getContext("2d");
-    reDraw();
-
+    // Only draw stuff once the window is loaded and initialized
     window.onload = window.onresize = function() {
-      canvas.width = window.innerWidth * 0.8;
-      canvas.height = window.innerWidth * 0.8;
+      // Init global variables
+      canvas = document.getElementById("game-board");
+      canvas.width = window.innerWidth * 0.5;
+      canvas.height = window.innerWidth * 0.5;
+      ctx = canvas.getContext("2d");
       subdivision = canvas.width / 16;
+
       reDraw();
     };
   });
-
-  // Only draw stuff once the window is loaded and initialized
-
-  // Log in
-  // Get games list
 });
 
 // Respond to move commands
+// TODO: Debug this
 document.addEventListener("keydown", function(event) {
   if (event.keyCode == 39) {
+    // Right
     console.log("Right");
     event.preventDefault();
     $.ajax({
@@ -288,6 +282,7 @@ document.addEventListener("keydown", function(event) {
     });
     reDraw();
   } else if (event.keyCode == 37) {
+    // Left
     console.log("Left");
     event.preventDefault();
     $.ajax({
@@ -300,6 +295,7 @@ document.addEventListener("keydown", function(event) {
     });
     reDraw();
   } else if (event.keyCode == 38) {
+    // Up
     console.log("Up");
     event.preventDefault();
     $.ajax({
@@ -312,6 +308,7 @@ document.addEventListener("keydown", function(event) {
     });
     reDraw();
   } else if (event.keyCode == 40) {
+    // Down
     console.log("Down");
     event.preventDefault();
     $.ajax({

@@ -11,13 +11,11 @@
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
 import Board from "./components/Board.vue";
 
 export default {
   name: "app",
   components: {
-    HelloWorld,
     Board
   }
 };
@@ -32,7 +30,7 @@ export default {
   color: #2c3e50;
 
   padding-top: 40px;
-  padding-bottom: 10%;
+  padding-bottom: 50px;
 }
 
 .title-text,
