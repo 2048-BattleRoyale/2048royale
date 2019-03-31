@@ -45,7 +45,7 @@ export default {
 }
 .title-text {
   margin-top: 0px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 }
 .title-span .title-text {
   font-family: "Germania One", Helvetica, Arial, sans-serif;
