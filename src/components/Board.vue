@@ -15,23 +15,24 @@ var serverURL = "http://spazzlo.com:8080";
 var canvas;
 var subdivision;
 var ctx;
-var colors = {
-  // TODO: Import this from JSON file
-  "2": "ffcdd2",
-  "4": "f48fb1",
-  "8": "ba68c8",
-  "16": "7e57c2",
-  "32": "3f51b5",
-  "64": "1e88e5",
-  "128": "0288d1",
-  "256": "00838f",
-  "512": "004d40",
-  "1024": "b9f6ca",
-  "2048": "b2ff59",
-  "4096": "c6ff00",
-  "8192": "ffd600",
-  "16384": "212121"
-};
+var colors = require("./../assets/blockColors.json");
+// var colors = {
+//   // TODO: Import this from JSON file
+//   "2": "ffcdd2",
+//   "4": "f48fb1",
+//   "8": "ba68c8",
+//   "16": "7e57c2",
+//   "32": "3f51b5",
+//   "64": "1e88e5",
+//   "128": "0288d1",
+//   "256": "00838f",
+//   "512": "004d40",
+//   "1024": "b9f6ca",
+//   "2048": "b2ff59",
+//   "4096": "c6ff00",
+//   "8192": "ffd600",
+//   "16384": "212121"
+// };
 var grid = [];
 var gameid;
 var token;
