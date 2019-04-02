@@ -164,25 +164,36 @@ function drawGrid() {
 }
 
 // Write in the numbers
-function drawText(number, x, y) {
-  var c = ctx.fillStyle;
-  ctx.fillStyle = "black";
-
-  if (number.toString().length == 1) {
-    ctx.font = " 2.3vw arial ";
-    ctx.fillText(number, x - subdivision * 0.15, y + 7);
-  } else if (number.toString().length == 2) {
-    ctx.font = " 1.8vw arial ";
-    ctx.fillText(number, x - subdivision * 0.35, y + 4);
-  } else if (number.toString().length == 3) {
-    ctx.font = " 1.25vw arial";
-    ctx.fillText(number, x - subdivision * 0.34, y + subdivision * 0.05);
-  } else if (number.toString().length == 4) {
-    ctx.font = " 1vw arial";
-    ctx.fillText(number, x - subdivision * 0.4, y + 2);
+function drawText(number,x,y) {
+  console.log(number.toString().length);
+  if (number.toString().length == 1){
+    ctx.font = 'bold '+subdivision*.45+ 'px'+ ' sans-serif';
+    var c=ctx.fillStyle;
+    ctx.fillStyle="black"
+      ctx.fillText(number, x-(subdivision*.05), y+subdivision*.05);
+      ctx.fillStyle=c;
   }
-
-  ctx.fillStyle = c;
+  if (number.toString().length == 2){
+    ctx.font = ' bold '+subdivision*.45+ 'px'+ ' sans-serif';
+    var c=ctx.fillStyle;
+    ctx.fillStyle="black"
+      ctx.fillText(number, x-(subdivision*.17), y+subdivision*.039);
+      ctx.fillStyle=c;
+  }
+  if (number.toString().length == 3){
+    ctx.font = ' bold '+subdivision*.45+ 'px'+ ' sans-serif';
+    var c=ctx.fillStyle;
+    ctx.fillStyle="black"
+      ctx.fillText(number, x-(subdivision*.29), y+(subdivision*.025));
+      ctx.fillStyle=c;
+  }
+  if (number.toString().length == 4){
+    ctx.font = ' bold '+subdivision*.4+ 'px'+ ' sans-serif';
+    var c=ctx.fillStyle;
+    ctx.fillStyle="black"
+      ctx.fillText(number, x-(subdivision*.38), y+(subdivision*.025));
+      ctx.fillStyle=c;
+  }
 }
 
 // Draw the entire grid
