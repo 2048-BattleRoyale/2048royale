@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <link href="https://fonts.googleapis.com/css?family=Germania+One" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css?family=Lato:700" rel="stylesheet">
     <span class="title-span">
       <img class="title-logo" alt="2048 Royale Logo" src="./assets/logo.svg">
       <h1 class="title-text">2048 Battle Royale</h1>
@@ -23,7 +23,7 @@ export default {
 
 <style>
 #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  font-family: sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -39,7 +39,7 @@ export default {
   vertical-align: baseline;
 }
 .title-logo {
-  margin-right: 10px;
+  margin-right: -150px;
 }
 .title-text {
   margin-top: 0px;
@@ -47,6 +47,6 @@ export default {
 }
 .title-span .title-text {
   font-family: "Germania One", Helvetica, Arial, sans-serif;
-  font-size: 96px;
+  font-size: 46px;
 }
 </style>

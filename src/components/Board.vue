@@ -83,15 +83,7 @@ function drawBlock(x, y, hex) {
   if (hex == "0") ctx.fillStyle = "#ffffff00";
   else ctx.fillStyle = hex;
 
-  roundRect(
-    subdivision * x,
-    subdivision * y,
-    subdivision,
-    subdivision,
-    10,
-    "#fff",
-    "1px"
-  );
+roundRect(subdivision*x,subdivision*y,subdivision,subdivision,6,"#fff","1px") //change to accomodate different grid images
 }
 
 // Remove all of the heck in the canvas
@@ -150,7 +142,7 @@ function drawGrid() {
 
   // Draw subdivision lines
   if (canvas.getContext) {
-    ctx.lineWidth = 2;
+    ctx.lineWidth = 3;
     for (var i = subdivision; i < subdivision * 16; i += subdivision) {
       // Horiontal lines
       ctx.moveTo(0, i);
@@ -170,28 +162,28 @@ function drawText(number,x,y) {
     ctx.font = 'bold '+subdivision*.45+ 'px'+ ' sans-serif';
     var c=ctx.fillStyle;
     ctx.fillStyle="black"
-      ctx.fillText(number, x-(subdivision*.05), y+subdivision*.05);
+      ctx.fillText(number, x+(subdivision*.36), y+(subdivision*.65));
       ctx.fillStyle=c;
   }
   if (number.toString().length == 2){
     ctx.font = ' bold '+subdivision*.45+ 'px'+ ' sans-serif';
     var c=ctx.fillStyle;
     ctx.fillStyle="black"
-      ctx.fillText(number, x-(subdivision*.17), y+subdivision*.039);
+      ctx.fillText(number, x+(subdivision*.25), y+(subdivision*.65));
       ctx.fillStyle=c;
   }
   if (number.toString().length == 3){
     ctx.font = ' bold '+subdivision*.45+ 'px'+ ' sans-serif';
     var c=ctx.fillStyle;
     ctx.fillStyle="black"
-      ctx.fillText(number, x-(subdivision*.29), y+(subdivision*.025));
+      ctx.fillText(number, x+(subdivision*.135), y+(subdivision*.65));
       ctx.fillStyle=c;
   }
   if (number.toString().length == 4){
     ctx.font = ' bold '+subdivision*.4+ 'px'+ ' sans-serif';
     var c=ctx.fillStyle;
     ctx.fillStyle="black"
-      ctx.fillText(number, x-(subdivision*.38), y+(subdivision*.025));
+      ctx.fillText(number, x+(subdivision*.05), y+(subdivision*.65));
       ctx.fillStyle=c;
   }
 }
@@ -212,7 +204,12 @@ function reDraw() {
       }
     }
   });
-
+for (var i =1; i<=(16*16+1);i+=1) {
+  //grid.push({owner:"0",number:(2**(Math.floor(Math.random()*12)))})
+  var random=Math.floor(Math.random()*12);
+  var multtwo=2**(random+1);
+  grid.push(multtwo); //purely for theme testing, if I replace this with nulls, it creates a nice empty grid
+}
   // Draw the grid, then draw in the blocks
   drawGrid();
   var localx = 0;
@@ -223,11 +220,7 @@ function reDraw() {
     if (grid[localx + 16 * localy] == 0) hexval = "0";
 
     drawBlock(localx, localy, hexval);
-    drawText(
-      grid[localx + 16 * localy],
-      subdivision * localx + 13,
-      subdivision * localy + 20
-    ); //Sparkling lime is sparkling lie
+    drawText(grid[localx+16*localy],subdivision*localx,subdivision*localy); //Sparkling lime is sparkling lie
     localx += 1;
 
     if (localx % 2 == 0) offset += 1;
@@ -238,7 +231,7 @@ function reDraw() {
     }
   }
 }
-
+/*
 // Log in
 // Get games list
 $.ajax({
@@ -262,7 +255,7 @@ $.ajax({
     // Store the session token
     console.log(tkn);
     token = tkn["token"];
-
+*/
     // Only draw stuff once the window is loaded and initialized
     window.onload = window.onresize = function() {
       // Init global variables
@@ -274,8 +267,8 @@ $.ajax({
 
       reDraw();
     };
-  });
-});
+ // });
+//});
 
 // Respond to move commands
 // TODO: Debug this
