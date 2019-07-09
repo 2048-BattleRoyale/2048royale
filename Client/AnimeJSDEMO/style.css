@@ -1,0 +1,17 @@
+#boxes{
+  width:80%;
+  margin:auto;
+  text-align: center;
+}
+
+
+.box{
+  
+  position: relative;
+  width:100px;
+  height: 100px;
+  margin:4px;
+  display:inline-block;
+  background-color: dimgray
+}
+
