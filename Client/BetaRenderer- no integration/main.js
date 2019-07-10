@@ -21,14 +21,14 @@ for (index = 1; index < 14; index++) {
 var  grid= document.getElementById('tiles');
 var userToken = "PLACEHOLDER";
 var score = 0;
+var totalB=0;
 var animationDuration=500;
 var lastStrokeTime;
 var packetSent = false;
 var playerAlive = true;
 var currentArray=[];
 var modernArray=[];
-var currentTiles=[];
-var board = {"Food":"Great","Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"box1":{"enabled":true,"tileNum":2,"tileID":0,"owner":1,"justMerged":false},"box2":{"enabled":true,"tileNum":4,"tileID":18,"owner":2,"justMerged":false},"box3":{"enabled":true,"tileNum":4,"tileID":96,"owner":1,"justMerged":false},"box4":{"enabled":true,"tileNum":4,"tileID":37,"owner":1,"justMerged":true}}};
+var board = {"Food":"Great","Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":1,"owner":1,"justMerged":false},"2":{"enabled":true,"tileNum":4,"tileID":18,"owner":2,"justMerged":false},"3":{"enabled":true,"tileNum":4,"tileID":96,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":4,"tileID":37,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":193,"owner":1,"justMerged":false}}};
 //Test/Example board used for testing out a real board object.
 //console.log(board.Players[1].Score);
 //Color Profiles
@@ -49,20 +49,16 @@ var theme1={ //This is a blue and pink theme. More will be added in the future, 
   "16384":"FF47BD"
   }
 
-
-
-
-
-
-
 //Tile class is the object that's stored in each array.
-console.log(board.Boxes["box3"].tileID);
+//console.log(board.Boxes["3"].tileID);
 class Tile {
-  constructor(id,x,y,value) {
+  constructor(id,x,y,value,owner,enabled) {
     this.x=x;
     this.y=y;
     this.value=value;
     this.id=id;
+    this.owner=owner;
+    this.enabled=enabled;
   }
 
   deleteSelf() {
@@ -72,37 +68,37 @@ class Tile {
 }
 
 // Generate a test array for number manipulation
-
+/*
 var extrarows=0;
 for (let i=1;i<15;i++) {
   for (let j=0;j<14;j++) {
-    currentArray.push(new Tile(14*(i-1)+j+extrarows,j,i,Math.pow(2,1+(Math.floor(Math.random() * 9)))));
+    currentArray.push(new Tile(14*(i-1)+j+extrarows,j,i,Math.pow(2,1+(Math.floor(Math.random() * 12)))));
   }
   extrarows+=1;
 }
+*/
 console.log(currentArray)
-console.log(currentArray[1]); //Check to make sure IDs are still logical
+//console.log(currentArray[1]); //Check to make sure IDs are still logical
 //Primary Functions
 function removeTile(removeid) {
 
 }
-function g2(x) {
-  if (x>2) {
-    return 1;
-  }
-  else {
-    return 0;
-  }
-}
-function newTile(Tile) {
+
+
+function newTile(Box) {
+  console.log(Box);
+  var box=new Tile(totalB+1,Box.tileID%14-1,Math.floor(Box.tileID/14+1),Box.tileNum,Box.owner,Box.enabled);
+  totalB+=1;
+  currentArray.push(box);  
     var tile_div=document.createElement('div');
     tile_div.className='tile';
-    tile_div.id='tile'+(Tile.id).toString();
+    tile_div.id='tile'+(box.id).toString();
     grid.appendChild(tile_div);
    // document.getElementById('tile'+(Tile.id).toString()).style.transform="translate(1vmin,0vmin)" //Static transform to accomodate for the earlier margin one
-    document.getElementById('tile'+(Tile.id).toString()).style.transform="translate("+(2.859+5.75*(Tile.x))+"vmin,"+((Tile.y-1)*5.75+1.859)+"vmin)" //Original position transform
-    document.getElementById('tile'+(Tile.id).toString()).style.backgroundColor='#'+getColor(Tile.value);
+    document.getElementById('tile'+(box.id).toString()).style.transform="translate("+(2.859+5.75*(box.x))+"vmin,"+((box.y-1)*5.75+1.859)+"vmin)" //Original position transform
+    document.getElementById('tile'+(box.id).toString()).style.backgroundColor='#'+getColor(box.value);
     
+
   }
 
 function getColor(values) {
@@ -116,8 +112,11 @@ function moveSingular() {
 function drawAtCoords(X,Y,Value) {
 
 }
-function firstDraw() {
-
+function firstDraw(Board) {
+      for (let i=1; i<(Object.keys(Board.Boxes).length+1);i++) {
+     //console.log(Board.Boxes[i.toString()]);
+      newTile(Board.Boxes[i.toString()]);
+    }
 }
 function deleteTile() {
 
@@ -148,9 +147,7 @@ function drawMovement() {
     }
   }
 }
-for (i=0;i<(14*14);i++) {
-  newTile(currentArray[i]);
-}
+
 
 //Listeners
 document.addEventListener('keydown', function(event){
@@ -184,7 +181,7 @@ while (false) {
   break;
 }
 
-
+firstDraw(board);
 
 
 
