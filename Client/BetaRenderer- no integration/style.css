@@ -6,9 +6,9 @@
 #grid{
 
   position: absolute;
-  border-radius: 3%;
+  border-radius: 2%;
   background-color: rgba(255, 255, 255, 0);
-  border: 1vmin solid black;
+  border: .5vmin solid black;
   width:80vmin;
   height:80vmin;
   z-index: 1;
@@ -18,7 +18,7 @@
   width:.25vmin;
   height: 80vmin;
   background-color: grey;
-  margin-left: -1vmin;
+  margin-left: -.8vmin;
   z-index: 2;
 }
 .hline {
@@ -27,7 +27,7 @@
   width:80vmin;
   height: .25vmin;
   background-color: grey;
-  margin-top: -1vmin;
+  margin-top: -.8vmin;
   z-index: 3;
 }
 .box{

@@ -6,7 +6,7 @@ for (index = 1; index < 14; index++) {
   vertical_line.className='vline';
   vertical_line.id="vline"+index.toString();
   gridContainer.appendChild(vertical_line);  
-  document.getElementById("vline"+index.toString()).style.transform = "translate("+( 5.78571428571*index).toString()+"vmin,"+(0).toString()+"vmin)";
+  document.getElementById("vline"+index.toString()).style.transform = "translate("+( 5.8*index).toString()+"vmin,"+(0).toString()+"vmin)";
 }
 
 
@@ -15,7 +15,7 @@ for (index = 1; index < 14; index++) {
   horizontal_line.className='hline';
   horizontal_line.id="hline"+index.toString();
   gridContainer.appendChild(horizontal_line);  
-  document.getElementById("hline"+index.toString()).style.transform = "translate("+(0).toString()+"vmin,"+(5.78571428571*index).toString()+"vmin)";
+  document.getElementById("hline"+index.toString()).style.transform = "translate("+(0).toString()+"vmin,"+(5.8*index).toString()+"vmin)";
 }
   /*
 anime({
