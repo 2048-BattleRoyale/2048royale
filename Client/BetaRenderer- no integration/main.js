@@ -28,8 +28,33 @@ var playerAlive = true;
 var currentArray=[];
 var modernArray=[];
 var currentTiles=[];
-
 var board = {"Food":"Great","Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"box1":{"enabled":true,"tileNum":2,"tileID":0,"owner":1,"justMerged":false},"box2":{"enabled":true,"tileNum":4,"tileID":18,"owner":2,"justMerged":false},"box3":{"enabled":true,"tileNum":4,"tileID":96,"owner":1,"justMerged":false},"box4":{"enabled":true,"tileNum":4,"tileID":37,"owner":1,"justMerged":true}}};
+//Test/Example board used for testing out a real board object.
+//console.log(board.Players[1].Score);
+//Color Profiles
+var theme1={ //This is a blue and pink theme. More will be added in the future, selected with html buttons
+  "2":"A8DEF5",
+  "4":"AFDBF3",
+  "8":"B7D8F2",
+  "16":"BFD5F1",
+  "32":"C7D2EF",
+  "64":"CFCFEE",
+  "128":"D6CCED",
+  "256":"DEC9EC",
+  "512":"E6C6EA",
+  "1024":"EEC3E9",
+  "2048":"F6C0E8",
+  "4096":"FEBEE7",
+  "8192":"FF8AD5",
+  "16384":"FF47BD"
+  }
+
+
+
+
+
+
+
 //Tile class is the object that's stored in each array.
 console.log(board.Boxes["box3"].tileID);
 class Tile {
@@ -51,7 +76,7 @@ class Tile {
 var extrarows=0;
 for (let i=1;i<15;i++) {
   for (let j=0;j<14;j++) {
-    currentArray.push(new Tile(14*(i-1)+j+extrarows,j,i,Math.pow(2,1+(Math.floor(Math.random() * 3)))));
+    currentArray.push(new Tile(14*(i-1)+j+extrarows,j,i,Math.pow(2,1+(Math.floor(Math.random() * 9)))));
   }
   extrarows+=1;
 }
@@ -76,12 +101,15 @@ function newTile(Tile) {
     grid.appendChild(tile_div);
    // document.getElementById('tile'+(Tile.id).toString()).style.transform="translate(1vmin,0vmin)" //Static transform to accomodate for the earlier margin one
     document.getElementById('tile'+(Tile.id).toString()).style.transform="translate("+(2.859+5.75*(Tile.x))+"vmin,"+((Tile.y-1)*5.75+1.859)+"vmin)" //Original position transform
-    document.getElementById('tile'+(Tile.id).toString()).style.transform.backgroudColor=getColor(Tile.Value);
+    document.getElementById('tile'+(Tile.id).toString()).style.backgroundColor='#'+getColor(Tile.value);
     
   }
-function getColor(value) {
 
+function getColor(values) {
+  return theme1[values];
+  // Future code here will allow for switchable themes that are admittedly quite snazzy
 }
+
 function moveSingular() {
 
 }

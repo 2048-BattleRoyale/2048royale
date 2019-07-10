@@ -31,7 +31,7 @@
   z-index: 1;
 }
 .tile{
-  border-radius: 1vmin;
+  border-radius: 1.25vmin;
   position: absolute;
   width:5.5vmin;
   height: 5.5vmin;
