@@ -48,6 +48,13 @@ function initBoard(boxes, nextTileId) {
       boxes[(r * 6 + 2) + y][(c * 6 + 2) + x].tileNum = 2;
       boxes[(r * 6 + 2) + y][(c * 6 + 2) + x].tileId = nextTileId;
       nextTileId++;
+
+      // Obliterate this section
+      boxes[(r * 6 + 1) + y][(c * 6 + 2) + x].tileNum = 2;
+      boxes[(r * 6 + 1) + y][(c * 6 + 2) + x].tileId = nextTileId;
+      boxes[(r * 6 + 1) + y][(c * 6 + 2) + x].owner = 1;
+      nextTileId++;
+
       if (r == 0 && c == 0) boxes[(r * 6 + 2) + y][(c * 6 + 2) + x].owner = 1;
       else if (r == 0 && c == 1) boxes[(r * 6 + 2) + y][(c * 6 + 2) + x].owner = 2;
       else if (r == 1 && c == 0) boxes[(r * 6 + 2) + y][(c * 6 + 2) + x].owner = 3;
@@ -56,6 +63,7 @@ function initBoard(boxes, nextTileId) {
   }
 }
 
+// DEPRECIATED: Log the enabled/disabled state of each box. Superceded by logTileNul
 function logEnabled(boxes) {
   console.log();
   console.log("Boxes (enabled)");
@@ -72,6 +80,7 @@ function logEnabled(boxes) {
   }
 }
 
+// Log the tile numbers and enabled/disabled state of each box
 function logTileNum(boxes) {
   console.log();
   console.log("Tiles (number)");
@@ -87,11 +96,14 @@ function logTileNum(boxes) {
   }
 }
 
+// Enable a new box on the board
 function enableBox(boxes, x, y) {
   boxes[x][y].enabled = true;
 }
 
-function handleBoardMove(board, nextTileId, direction, player) {
+// Handle the tile moving process
+// TODO(Neil): Make a list of all of the moves made
+function handleTileMove(board, direction, player) {
   if (direction === "up") {
     // For all boxes except for the top row...
     for (var r = 1; r < 14; r++) {
@@ -163,6 +175,24 @@ function handleBoardMove(board, nextTileId, direction, player) {
         }
       }
     }
+
+  } else console.log("ERROR: (handleBoardMoveDirection) direction isn't up/down/left/right");
+}
+
+// Handle all aspects of a board move
+// TODO(Neil): Make a list of all of the moves and mergers
+function handleBoardMove(board, nextTileId, direction, player) {
+  if (direction === "up") {
+    handleTileMove(board, direction, player);
+
+  } else if (direction === "down") {
+    handleTileMove(board, direction, player);
+
+  } else if (direction === "left") {
+    handleTileMove(board, direction, player);
+
+  } else if (direction === "right") {
+    handleTileMove(board, direction, player);
 
   } else console.log("ERROR: (handleBoardMoveDirection) direction isn't up/down/left/right");
 }
