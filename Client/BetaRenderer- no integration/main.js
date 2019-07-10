@@ -28,6 +28,7 @@ var packetSent = false;
 var playerAlive = true;
 var currentArray=[];
 var modernArray=[];
+var players={};
 var board = {"Food":"Great","Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":1,"owner":1,"justMerged":false},"2":{"enabled":true,"tileNum":4,"tileID":18,"owner":2,"justMerged":false},"3":{"enabled":true,"tileNum":4,"tileID":96,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":4,"tileID":37,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":193,"owner":1,"justMerged":false}}};
 //Test/Example board used for testing out a real board object.
 //console.log(board.Players[1].Score);
@@ -92,6 +93,7 @@ function newTile(Box) {
   currentArray.push(box);  
     var tile_div=document.createElement('div');
     tile_div.className='tile';
+    
     tile_div.id='tile'+(box.id).toString();
     grid.appendChild(tile_div);
    // document.getElementById('tile'+(Tile.id).toString()).style.transform="translate(1vmin,0vmin)" //Static transform to accomodate for the earlier margin one
@@ -106,21 +108,22 @@ function getColor(values) {
   // Future code here will allow for switchable themes that are admittedly quite snazzy
 }
 
-function moveSingular() {
+function moveTile() {
 
-}
-function drawAtCoords(X,Y,Value) {
-
-}
-function firstDraw(Board) {
-      for (let i=1; i<(Object.keys(Board.Boxes).length+1);i++) {
-     //console.log(Board.Boxes[i.toString()]);
-      newTile(Board.Boxes[i.toString()]);
-    }
 }
 function deleteTile() {
 
 }
+function firstDraw(Board) { //When the board is first recieved, call this function on it.
+      for (let i=1; i<(Object.keys(Board.Boxes).length+1);i++) {
+     //console.log(Board.Boxes[i.toString()]);
+      newTile(Board.Boxes[i.toString()]);
+    }
+    players=Board.Players;
+    console.log("Setup Complete. Now Waiting.");
+
+}
+
 function drawMovement() {
   //Handle the corners, and make them fancy
   for(i=0;i<currentArray.length;i++) {
@@ -187,13 +190,13 @@ firstDraw(board);
 
 
  /* Uncomment for shenanigans
- 
+ */
 anime({
-  targets: 'div.grid',
+  targets: '#tile3',
   translateY: [
-    { value: 200, duration: 500 },
-    { value: 0, duration: 500 },
-    { value: 200, duration: 500 },
+    { value: 200, duration: 2000 },
+    { value: 0, duration: 2000 },
+    { value: 200, duration: 2000 },
   ],
   rotate:{
     value: '.75turn',
@@ -202,14 +205,13 @@ anime({
   backgroundColor:[{
       value:'#2b01ff',
       easing: 'spring',
-      duration:500
+      duration:1500
     },
   {
-    value:'#9b00ff', duration:500
+    value:'#9b00ff', duration:1500
   }],
   delay:500,
   loop:true,
   direction:'alternate'
   
 });
-*/
