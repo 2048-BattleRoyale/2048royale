@@ -1,20 +1,23 @@
 gridContainer=document.getElementById('grid');
 gridContainer.style.transform="translate(1vmin,0vmin)"
+
 for (index = 1; index < 14; index++) {
   var vertical_line = document.createElement('div');
   vertical_line.className='vline';
   vertical_line.id="vline"+index.toString();
   gridContainer.appendChild(vertical_line);  
-  document.getElementById("vline"+index.toString()).style.transform = "translate("+( 5.78571428571*index).toString()+"vmin,"+(-80*(index-1)).toString()+"vmin)";
+  document.getElementById("vline"+index.toString()).style.transform = "translate("+( 5.78571428571*index).toString()+"vmin,"+(0).toString()+"vmin)";
 }
-for (index = 1; index < 0; index++) {
+
+
+for (index = 1; index < 14; index++) {
   var horizontal_line = document.createElement('div');
   horizontal_line.className='hline';
   horizontal_line.id="hline"+index.toString();
   gridContainer.appendChild(horizontal_line);  
-  document.getElementById("hline"+index.toString()).style.transform = "translate("+"0vmin,"+( 5.71428571429*index-1047).toString()+"vmin)";
+  document.getElementById("hline"+index.toString()).style.transform = "translate("+(0).toString()+"vmin,"+(5.78571428571*index).toString()+"vmin)";
 }
-/*
+  /*
 anime({
   targets: 'div.box',
   translateY: [

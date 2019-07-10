@@ -4,23 +4,31 @@
   text-align: center;
 }
 #grid{
-  width:80%;
+
+  position: absolute;
   border-radius: 3%;
   background-color: rgba(255, 255, 255, 0);
   border: 1vmin solid black;
   width:80vmin;
   height:80vmin;
+  z-index: 1;
 }
 .vline {
-  width:1vmin;
+  position: absolute;
+  width:.25vmin;
   height: 80vmin;
-  background-color: black;
+  background-color: grey;
   margin-left: -1vmin;
+  z-index: 2;
 }
 .hline {
+  
+  position: absolute;
   width:80vmin;
-  height: 1vmin;
-  background-color: black;
+  height: .25vmin;
+  background-color: grey;
+  margin-top: -1vmin;
+  z-index: 3;
 }
 .box{
   
