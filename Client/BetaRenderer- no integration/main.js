@@ -1,4 +1,4 @@
-gridContainer=document.getElementById('grid');
+var gridContainer=document.getElementById('grid');
 gridContainer.style.transform="translate(1vmin,0vmin)"
 //Draw those snazzy vertical lines
 for (index = 1; index < 14; index++) {
@@ -17,7 +17,7 @@ for (index = 1; index < 14; index++) {
   document.getElementById("hline"+index.toString()).style.transform = "translate("+(0).toString()+"vmin,"+(5.8*index).toString()+"vmin)";
 }
 //Variable&Class Declarations
-
+var  grid= document.getElementById('tiles');
 var userToken = "PLACEHOLDER";
 var score = 0;
 var animationDuration=500;
@@ -44,20 +44,35 @@ class Tile {
 }
 // Generate a test array for number manipulation
 
-for (let i=0;i<14;i++) {
+var extrarows=0;
+for (let i=1;i<15;i++) {
   for (let j=0;j<14;j++) {
-    currentArray.push(new Tile(14*i+j,j,i,Math.pow(2,1+(Math.floor(Math.random() * 3)))));
+    currentArray.push(new Tile(14*(i-1)+j+extrarows,j,i,Math.pow(2,1+(Math.floor(Math.random() * 3)))));
   }
+  extrarows+=1;
 }
-
-console.log(currentArray[16]); //Check to make sure IDs are still logical
+console.log(currentArray)
+console.log(currentArray[1]); //Check to make sure IDs are still logical
 //Primary Functions
 function removeTile(removeid) {
 
 }
-function newTile(newX, newY,value) {
-
-} 
+function g2(x) {
+  if (x>2) {
+    return 1;
+  }
+  else {
+    return 0;
+  }
+}
+function newTile(Tile) {
+    var tile_div=document.createElement('div');
+    tile_div.className='tile';
+    tile_div.id='tile'+(Tile.id).toString();
+    grid.appendChild(tile_div);
+   // document.getElementById('tile'+(Tile.id).toString()).style.transform="translate(1vmin,0vmin)" //Static transform to accomodate for the earlier margin one
+    document.getElementById('tile'+(Tile.id).toString()).style.transform="translate("+(2.65+5.78571428571*(Tile.x))+"vmin,"+((Tile.y-1)*5.78571428571+1.7)+"vmin)" //Original position transform
+}
 function moveSingular() {
 
 }
@@ -71,8 +86,35 @@ function deleteTile() {
 
 }
 function drawMovement() {
+  //Handle the corners, and make them fancy
+  for(i=0;i<currentArray.length;i++) {
+    if(currentArray[i].x ==  0 && currentArray.y == 0) {
+      document.getElementById('tile'+(currentArray[i].id).toString()).style.borderTopLeftRadius ='2vmin'; 
 
+    }
+    if(currentArray[i].x ==  14 && currentArray.y == 0) {
+      document.getElementById('tile'+(currentArray[i].id).toString()).style.borderTopRightRadius ='2vmin'; 
+    }
+    if(currentArray[i].x ==  0 && currentArray.y == 14) {
+      document.getElementById('tile'+(currentArray[i].id).toString()).style.borderBottomLeftRadius ='2vmin'; 
+
+    }
+    if(currentArray[i].x ==  14 && currentArray.y == 14) {
+      document.getElementById('tile'+(currentArray[i].id).toString()).style.borderBottomRightRadius ='2vmin'; 
+    }
+    if (((currentArray[i].x ==  14 && currentArray.y == 14) == false) && ((currentArray[i].x ==  0 && currentArray.y == 14) == false) && ((currentArray[i].x ==  14 && currentArray.y == 0) == false) && ((currentArray[i].x ==  0 && currentArray.y == 0)==false)) {
+      document.getElementById('tile'+(currentArray[i].id).toString()).style.borderBottomRightRadius ='1vmin'; 
+      document.getElementById('tile'+(currentArray[i].id).toString()).style.borderBottomLeftRadius ='1vmin'; 
+      document.getElementById('tile'+(currentArray[i].id).toString()).style.borderTopRightRadius ='1vmin'; 
+      document.getElementById('tile'+(currentArray[i].id).toString()).style.borderTopLeftRadius ='1vmin'; 
+
+    }
+  }
 }
+for (i=0;i<(14*14);i++) {
+  newTile(currentArray[i]);
+}
+drawMovement();
 //Listeners
 document.addEventListener('keydown', function(event){
   //alert(event.keyCode); (Uncomment this line if you need to add future keyswitch codes)
@@ -111,6 +153,7 @@ while (false) {
 
 
  /* Uncomment for shenanigans
+ 
 anime({
   targets: 'div.grid',
   translateY: [

@@ -1,19 +1,19 @@
-#boxes{
+#tiles{
   
 }
 #grid{
 
   position: absolute;
-  border-radius: 2%;
+  border-radius: 2vmin;
   background-color: rgba(255, 255, 255, 0);
-  border: .5vmin solid black;
+  border: 2vmin solid black;
   width:80vmin;
   height:80vmin;
   z-index: 1;
 }
 .vline {
   position: absolute;
-  width:.25vmin;
+  width:.5vmin;
   height: 80vmin;
   background-color: grey;
   margin-left: -.8vmin;
@@ -23,18 +23,21 @@
   
   position: absolute;
   width:80vmin;
-  height: .25vmin;
+  height: .5vmin;
   background-color: grey;
   margin-top: -.8vmin;
   z-index: 3;
 }
-.box{
-  
-  position: relative;
-  width:100px;
-  height: 100px;
-  margin:4px;
-  display:inline-block;
-  background-color: dimgray
+.tile{
+  border-radius:1vmin;
+  border-top-left-radius: 1vmin; 
+  border-top-right-radius: 1vmin;
+  border-bottom-left-radius: 1vmin;
+  border-bottom-right-radius: 1vmin;
+  position: absolute;
+  width:5.45vmin;
+  height: 5.45vmin;
+  background-color: green;
+  z-index: 0;
 }
 
