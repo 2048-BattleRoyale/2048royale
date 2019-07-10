@@ -1,43 +1,41 @@
 #tiles{
   
 }
+
 #grid{
 
   position: absolute;
   border-radius: 2vmin;
-  background-color: rgba(255, 255, 255, 0);
+  background-color: rgba(0, 0, 0, 0);
   border: 2vmin solid black;
   width:80vmin;
   height:80vmin;
-  z-index: 1;
+  z-index: 48988;
 }
 .vline {
   position: absolute;
   width:.5vmin;
   height: 80vmin;
-  background-color: grey;
-  margin-left: -.8vmin;
-  z-index: 2;
+  background-color: rgb(128, 128, 128);
+  margin-left: -.5vmin;
+  z-index: 1;
 }
 .hline {
   
   position: absolute;
   width:80vmin;
   height: .5vmin;
-  background-color: grey;
-  margin-top: -.8vmin;
-  z-index: 3;
+  background-color: rgb(128, 128, 128);
+  margin-top: -.456vmin;
+  margin-bottom: .5vmin;
+  z-index: 1;
 }
 .tile{
-  border-radius:1vmin;
-  border-top-left-radius: 1vmin; 
-  border-top-right-radius: 1vmin;
-  border-bottom-left-radius: 1vmin;
-  border-bottom-right-radius: 1vmin;
+  border-radius: 1vmin;
   position: absolute;
-  width:5.45vmin;
-  height: 5.45vmin;
-  background-color: green;
-  z-index: 0;
+  width:5.5vmin;
+  height: 5.5vmin;
+  background-color: darkolivegreen;
+  z-index: 5;
 }
-
+  

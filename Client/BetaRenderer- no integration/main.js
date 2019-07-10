@@ -1,12 +1,13 @@
 var gridContainer=document.getElementById('grid');
-gridContainer.style.transform="translate(1vmin,0vmin)"
+gridContainer.style.transform="translate(1vmin,0vmin)";
+//document.getElementById('background').style.transform="translate(1vmin,0vmin)"
 //Draw those snazzy vertical lines
 for (index = 1; index < 14; index++) {
   var vertical_line = document.createElement('div');
   vertical_line.className='vline';
   vertical_line.id="vline"+index.toString();
   gridContainer.appendChild(vertical_line);  
-  document.getElementById("vline"+index.toString()).style.transform = "translate("+( 5.8*index).toString()+"vmin,"+(0).toString()+"vmin)";
+  document.getElementById("vline"+index.toString()).style.transform = "translate("+( 5.75*index).toString()+"vmin,"+(0).toString()+"vmin)";
 }
 //Draw some snazzier horizontal lines
 for (index = 1; index < 14; index++) {
@@ -14,7 +15,7 @@ for (index = 1; index < 14; index++) {
   horizontal_line.className='hline';
   horizontal_line.id="hline"+index.toString();
   gridContainer.appendChild(horizontal_line);  
-  document.getElementById("hline"+index.toString()).style.transform = "translate("+(0).toString()+"vmin,"+(5.8*index).toString()+"vmin)";
+  document.getElementById("hline"+index.toString()).style.transform = "translate("+(0).toString()+"vmin,"+(5.75*index).toString()+"vmin)";
 }
 //Variable&Class Declarations
 var  grid= document.getElementById('tiles');
@@ -28,7 +29,9 @@ var currentArray=[];
 var modernArray=[];
 var currentTiles=[];
 
+var board = {"Food":"Great","Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"box1":{"enabled":true,"tileNum":2,"tileID":0,"owner":1,"justMerged":false},"box2":{"enabled":true,"tileNum":4,"tileID":18,"owner":2,"justMerged":false},"box3":{"enabled":true,"tileNum":4,"tileID":96,"owner":1,"justMerged":false},"box4":{"enabled":true,"tileNum":4,"tileID":37,"owner":1,"justMerged":true}}};
 //Tile class is the object that's stored in each array.
+console.log(board.Boxes["box3"].tileID);
 class Tile {
   constructor(id,x,y,value) {
     this.x=x;
@@ -42,6 +45,7 @@ class Tile {
   }
 
 }
+
 // Generate a test array for number manipulation
 
 var extrarows=0;
@@ -71,7 +75,12 @@ function newTile(Tile) {
     tile_div.id='tile'+(Tile.id).toString();
     grid.appendChild(tile_div);
    // document.getElementById('tile'+(Tile.id).toString()).style.transform="translate(1vmin,0vmin)" //Static transform to accomodate for the earlier margin one
-    document.getElementById('tile'+(Tile.id).toString()).style.transform="translate("+(2.65+5.78571428571*(Tile.x))+"vmin,"+((Tile.y-1)*5.78571428571+1.65)+"vmin)" //Original position transform
+    document.getElementById('tile'+(Tile.id).toString()).style.transform="translate("+(2.859+5.75*(Tile.x))+"vmin,"+((Tile.y-1)*5.75+1.859)+"vmin)" //Original position transform
+    document.getElementById('tile'+(Tile.id).toString()).style.transform.backgroudColor=getColor(Tile.Value);
+    
+  }
+function getColor(value) {
+
 }
 function moveSingular() {
 
@@ -114,7 +123,7 @@ function drawMovement() {
 for (i=0;i<(14*14);i++) {
   newTile(currentArray[i]);
 }
-drawMovement();
+
 //Listeners
 document.addEventListener('keydown', function(event){
   //alert(event.keyCode); (Uncomment this line if you need to add future keyswitch codes)
