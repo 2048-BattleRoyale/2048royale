@@ -1,5 +1,5 @@
 
-
+/*
 anime({
   targets: 'div.box',
   translateY: [
@@ -23,3 +23,4 @@ anime({
   drection:'alternate'
   
 });
+*/
