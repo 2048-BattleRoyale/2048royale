@@ -71,7 +71,7 @@ function newTile(Tile) {
     tile_div.id='tile'+(Tile.id).toString();
     grid.appendChild(tile_div);
    // document.getElementById('tile'+(Tile.id).toString()).style.transform="translate(1vmin,0vmin)" //Static transform to accomodate for the earlier margin one
-    document.getElementById('tile'+(Tile.id).toString()).style.transform="translate("+(2.65+5.78571428571*(Tile.x))+"vmin,"+((Tile.y-1)*5.78571428571+1.7)+"vmin)" //Original position transform
+    document.getElementById('tile'+(Tile.id).toString()).style.transform="translate("+(2.65+5.78571428571*(Tile.x))+"vmin,"+((Tile.y-1)*5.78571428571+1.65)+"vmin)" //Original position transform
 }
 function moveSingular() {
 
