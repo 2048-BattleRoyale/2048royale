@@ -5,13 +5,23 @@
 }
 #grid{
   width:80%;
-  border-radius: 6%;
-  background-color: white;
+  border-radius: 3%;
+  background-color: rgba(255, 255, 255, 0);
   border: 1vmin solid black;
   width:80vmin;
   height:80vmin;
 }
-
+.vline {
+  width:1vmin;
+  height: 80vmin;
+  background-color: black;
+  margin-left: -1vmin;
+}
+.hline {
+  width:80vmin;
+  height: 1vmin;
+  background-color: black;
+}
 .box{
   
   position: relative;
