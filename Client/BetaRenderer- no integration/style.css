@@ -4,8 +4,11 @@ font-family: ClearSans-Bold;
 src: url('ClearSans-Bold.ttf'),
 url('ClearSans-Bold.eot');
 }
-
-#grid{
+.gridlines{
+  position: absolute;
+  z-index: 12;
+}
+.grid{
 
   position: absolute;
   border-radius: 2vmin;
@@ -13,7 +16,7 @@ url('ClearSans-Bold.eot');
   border: 2vmin solid black;
   width:80vmin;
   height:80vmin;
-  z-index: 48988;
+  z-index: 13;
 }
 .vline {
   position: absolute;
@@ -21,17 +24,17 @@ url('ClearSans-Bold.eot');
   height: 80vmin;
   background-color: rgb(128, 128, 128);
   margin-left: -.5vmin;
-  z-index: 1;
+  z-index: 0;
 }
 .hline {
   
   position: absolute;
   width:80vmin;
-  height: .5vmin;
+  height:.5vmin;
   background-color: rgb(128, 128, 128);
-  margin-top: -.456vmin;
+  margin-top: -.5vmin;
   margin-bottom: .5vmin;
-  z-index: 1;
+  z-index: 0;
 }
 #tiles {
 }
@@ -45,6 +48,6 @@ url('ClearSans-Bold.eot');
   width:5.5vmin;
   height: 5.5vmin;
   background-color: darkolivegreen;
-  z-index: 5;
+  z-index: -3;
 }
   

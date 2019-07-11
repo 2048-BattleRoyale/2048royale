@@ -1,5 +1,5 @@
-var gridContainer=document.getElementById('grid');
-gridContainer.style.transform="translate(1vmin,0vmin)";
+var gridContainer=document.getElementById('gridlines');
+gridContainer.style.transform="translate(0vmin,0vmin)";
 //document.getElementById('background').style.transform="translate(1vmin,0vmin)"
 //Draw those snazzy vertical lines
 for (index = 1; index < 14; index++) {
@@ -29,7 +29,7 @@ var playerAlive = true;
 var currentArray=[];
 var modernArray=[];
 var players={};
-var board = {"Food":"Great","Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":1,"owner":1,"justMerged":false},"2":{"enabled":true,"tileNum":512,"tileID":18,"owner":2,"justMerged":false},"3":{"enabled":true,"tileNum":4096,"tileID":96,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileID":37,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":193,"owner":1,"justMerged":false}}};
+var board = {"Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":1,"owner":1,"justMerged":false},"2":{"enabled":true,"tileNum":512,"tileID":18,"owner":2,"justMerged":false},"3":{"enabled":true,"tileNum":4096,"tileID":96,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileID":37,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":193,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileID":87,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileID":196,"owner":1,"justMerged":false}}};
 //Test/Example board used for testing out a real board object.
 //console.log(board.Players[1].Score);
 //Color Profiles
@@ -85,17 +85,29 @@ function removeTile(removeid) {
 
 }
 
-function calcX(tileID) {
+function calcX(tileID) { //Used to parse the modulo values given in the Tile creation of newTile
   if(tileID==1) {
     return 1;
+  }
+  if(tileID==0){
+    return 14;
   }
   else {
     return tileID;
   }
 }
+function calcY(tileID) {
+  if(tileID/14==14) {
+    return 14;
+  }
+  else {
+    return Math.floor(tileID/14+1);
+  }
+}
+
 function newTile(Box) {
   console.log(Box);
-  var box=new Tile(totalB+1,calcX(Box.tileID%14),Math.floor(Box.tileID/14+1),Box.tileNum,Box.owner,Box.enabled);
+  var box=new Tile(totalB+1,calcX(Box.tileID%14),calcY(Box.tileID),Box.tileNum,Box.owner,Box.enabled);
   totalB+=1;
   currentArray.push(box);  
     var tile_div=document.createElement('div');
@@ -104,7 +116,7 @@ function newTile(Box) {
     tile_div.id='tile'+(box.id).toString();
     grid.appendChild(tile_div);
    // document.getElementById('tile'+(Tile.id).toString()).style.transform="translate(1vmin,0vmin)" //Static transform to accomodate for the earlier margin one
-    document.getElementById('tile'+(box.id).toString()).style.transform="translate("+(2.859+5.75*(box.x-1))+"vmin,"+((box.y-1)*5.75+1.859)+"vmin)" //Original position transform
+    document.getElementById('tile'+(box.id).toString()).style.transform="translate("+(+5.735*(box.x-1))+"vmin,"+((box.y-1)*5.735)+"vmin)" //Original position transform
     document.getElementById('tile'+(box.id).toString()).style.backgroundColor='#'+getColor(box.value);
     switch(Box.tileNum) {
       case(2):
@@ -229,7 +241,7 @@ firstDraw(board);
 
  /* Uncomment for shenanigans
  */
-for (i=0;i<5;i++) {
+for (i=1;i<5;i++) {
 anime({
   targets: '#tile4',
   translateX:(5.75*i).toString()+'vmin',
