@@ -85,10 +85,17 @@ function removeTile(removeid) {
 
 }
 
-
+function calcX(tileID) {
+  if(tileID==1) {
+    return 1;
+  }
+  else {
+    return tileID;
+  }
+}
 function newTile(Box) {
   console.log(Box);
-  var box=new Tile(totalB+1,Box.tileID%14-1,Math.floor(Box.tileID/14+1),Box.tileNum,Box.owner,Box.enabled);
+  var box=new Tile(totalB+1,calcX(Box.tileID%14),Math.floor(Box.tileID/14+1),Box.tileNum,Box.owner,Box.enabled);
   totalB+=1;
   currentArray.push(box);  
     var tile_div=document.createElement('div');
@@ -97,7 +104,7 @@ function newTile(Box) {
     tile_div.id='tile'+(box.id).toString();
     grid.appendChild(tile_div);
    // document.getElementById('tile'+(Tile.id).toString()).style.transform="translate(1vmin,0vmin)" //Static transform to accomodate for the earlier margin one
-    document.getElementById('tile'+(box.id).toString()).style.transform="translate("+(2.859+5.75*(box.x))+"vmin,"+((box.y-1)*5.75+1.859)+"vmin)" //Original position transform
+    document.getElementById('tile'+(box.id).toString()).style.transform="translate("+(2.859+5.75*(box.x-1))+"vmin,"+((box.y-1)*5.75+1.859)+"vmin)" //Original position transform
     document.getElementById('tile'+(box.id).toString()).style.backgroundColor='#'+getColor(box.value);
     switch(Box.tileNum) {
       case(2):
