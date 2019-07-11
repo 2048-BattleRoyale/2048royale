@@ -1,5 +1,8 @@
-#tiles{
-  
+@font-face
+{
+font-family: ClearSans-Bold;
+src: url('ClearSans-Bold.ttf'),
+url('ClearSans-Bold.eot');
 }
 
 #grid{
@@ -30,9 +33,15 @@
   margin-bottom: .5vmin;
   z-index: 1;
 }
+#tiles {
+}
 .tile{
   border-radius: 1.25vmin;
   position: absolute;
+  text-align: center;
+  line-height: 5vmin;
+  font-size:5vmin;
+  font-family: ClearSans-Bold, sans-serif;
   width:5.5vmin;
   height: 5.5vmin;
   background-color: darkolivegreen;

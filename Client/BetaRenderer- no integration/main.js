@@ -29,7 +29,7 @@ var playerAlive = true;
 var currentArray=[];
 var modernArray=[];
 var players={};
-var board = {"Food":"Great","Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":1,"owner":1,"justMerged":false},"2":{"enabled":true,"tileNum":4,"tileID":18,"owner":2,"justMerged":false},"3":{"enabled":true,"tileNum":4,"tileID":96,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":4,"tileID":37,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":193,"owner":1,"justMerged":false}}};
+var board = {"Food":"Great","Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":1,"owner":1,"justMerged":false},"2":{"enabled":true,"tileNum":512,"tileID":18,"owner":2,"justMerged":false},"3":{"enabled":true,"tileNum":4096,"tileID":96,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileID":37,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":193,"owner":1,"justMerged":false}}};
 //Test/Example board used for testing out a real board object.
 //console.log(board.Players[1].Score);
 //Color Profiles
@@ -93,12 +93,43 @@ function newTile(Box) {
   currentArray.push(box);  
     var tile_div=document.createElement('div');
     tile_div.className='tile';
-    
+    tile_div.innerHTML=(box.value).toString()+'\n';
     tile_div.id='tile'+(box.id).toString();
     grid.appendChild(tile_div);
    // document.getElementById('tile'+(Tile.id).toString()).style.transform="translate(1vmin,0vmin)" //Static transform to accomodate for the earlier margin one
     document.getElementById('tile'+(box.id).toString()).style.transform="translate("+(2.859+5.75*(box.x))+"vmin,"+((box.y-1)*5.75+1.859)+"vmin)" //Original position transform
     document.getElementById('tile'+(box.id).toString()).style.backgroundColor='#'+getColor(box.value);
+    switch(Box.tileNum) {
+      case(2):
+      case(4):
+      case(8):
+          document.getElementById('tile'+(box.id).toString()).style.fontSize='2vmin'; //5 max
+          document.getElementById('tile'+(box.id).toString()).style.lineHeight='5vmin';
+          break;
+      case(16):
+      case(32):
+      case(64):
+        document.getElementById('tile'+(box.id).toString()).style.fontSize='2vmin'; //4.6 Max
+        document.getElementById('tile'+(box.id).toString()).style.lineHeight='5vmin';
+        break;
+      case(128):
+      case(256):
+      case(512):
+        document.getElementById('tile'+(box.id).toString()).style.fontSize='2vmin'; // 2.8 max
+        document.getElementById('tile'+(box.id).toString()).style.lineHeight='5vmin';
+        break;  
+      case(1024):
+      case(2048):
+      case(4096):
+      case(8192):
+         document.getElementById('tile'+(box.id).toString()).style.fontSize='2vmin'; // 2 max
+         document.getElementById('tile'+(box.id).toString()).style.lineHeight='5vmin';
+         break;    
+     case(16384):
+          document.getElementById('tile'+(box.id).toString()).style.fontSize='2vmin'; //1.5 optimal
+          document.getElementById('tile'+(box.id).toString()).style.lineHeight='5vmin';
+          break;
+    }
     
 
   }
@@ -191,27 +222,11 @@ firstDraw(board);
 
  /* Uncomment for shenanigans
  */
+for (i=0;i<5;i++) {
 anime({
-  targets: '#tile3',
-  translateY: [
-    { value: 200, duration: 2000 },
-    { value: 0, duration: 2000 },
-    { value: 200, duration: 2000 },
-  ],
-  rotate:{
-    value: '.75turn',
-    easing: 'easeInOutSine'
-  },
-  backgroundColor:[{
-      value:'#2b01ff',
-      easing: 'spring',
-      duration:1500
-    },
-  {
-    value:'#9b00ff', duration:1500
-  }],
-  delay:500,
-  loop:true,
-  direction:'alternate'
-  
+  targets: '#tile4',
+  translateX:(5.75*i).toString()+'vmin',
+  backgroundColor: '#f8210',
+  easing: 'easeInOutQuad'
 });
+}
