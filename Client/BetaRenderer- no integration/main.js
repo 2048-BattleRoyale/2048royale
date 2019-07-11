@@ -126,7 +126,7 @@ function newTile(Box) {
          document.getElementById('tile'+(box.id).toString()).style.lineHeight='5vmin';
          break;    
      case(16384):
-          document.getElementById('tile'+(box.id).toString()).style.fontSize='2vmin'; //1.5 optimal
+          document.getElementById('tile'+(box.id).toString()).style.fontSize='1.7vmin'; //1.5 optimal
           document.getElementById('tile'+(box.id).toString()).style.lineHeight='5vmin';
           break;
     }
@@ -226,7 +226,15 @@ for (i=0;i<5;i++) {
 anime({
   targets: '#tile4',
   translateX:(5.75*i).toString()+'vmin',
-  backgroundColor: '#f8210',
+  backgroundColor: [{
+    value:'#FEBEE7',
+    duration:500,
+  },
+  {
+    value:'#f8210',
+    duration:500,
+  },
+],
   easing: 'easeInOutQuad'
 });
 }
