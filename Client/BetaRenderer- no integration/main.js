@@ -110,7 +110,7 @@ function calcX(tileID) { //Used to parse the modulo values given in the Tile cre
     return tileID;
   }
 }
-function calcY(tileID) {
+function calcY(tileID) { //See above... but for Y
   if(tileID%14==0) {
     return tileID/14;
   }
@@ -118,7 +118,6 @@ function calcY(tileID) {
     return Math.floor(tileID/14+1);
   }
 }
-
 function newTile(Box) {
   console.log(Box);
   var box=new Tile(totalB+1,calcX(Box.tileID%14),calcY(Box.tileID),Box.tileNum,Box.owner,Box.enabled);
@@ -172,7 +171,7 @@ function getColor(values) {
   return theme1[values];
   // Future code here will allow for switchable themes that are admittedly quite snazzy
 }
-function findposbyID(ID) {
+function findposbyID(ID) { //Give this function an ID from a current Tile and it'll tell you its position in the array
   for (i=0;i<currentArray.length;i++) {
       if (currentArray[i].id == ID) {
         return i;
@@ -215,8 +214,30 @@ console.log(Tile.y)
     //document.getElementById('tile'+(Tile.id).toString()).innerHTML=(FutureTile.value).toString()+'\n'; This is a blanket update, the progress updater above will do a better job 99% of the time, but uncomment this if a corner-case arises
     currentArray[findposbyID(Tile)]=FutureTile;
   }
-function deleteTile() {
-
+function deleteTile(Tile) { //Play delete animation then kick that sorry thing off of the array.
+  anime({
+    targets: '#'+'tile'+(Tile.id).toString(),
+    scale:[{
+      value:0,
+      duration:750,
+    },
+  ],
+  rotation:[{
+    value:'1turn',
+    duration:750,
+  },
+],
+    backgroundColor: [{
+      value:['#'+getColor(Tile.value), '#FFFFFF'],
+      duration:750,
+    },
+  ],
+  
+    easing: 'linear',
+    
+  
+  })
+  currentArray.splice(findposbyID(Tile.id),1);
 }
 function sleep(milliseconds) {
   var start = new Date().getTime();
@@ -298,5 +319,7 @@ while (false) {
 
 firstDraw(board);
 
-moveTile(currentArray[1],currentArray[2])
-
+moveTile(currentArray[1],new Tile(12,4,currentArray[1].y,16,1,true))
+deleteTile(currentArray[3])
+console.log(findposbyID(currentArray[3].id))
+//(id,x,y,value,owner,enabled) Referece to Tile class for testing out the animation function
