@@ -16,8 +16,9 @@ url('ClearSans-Bold.eot');
   border: 2vmin solid black;
   width:80vmin;
   height:80vmin;
-  z-index: 13;
+  z-index: 1555;
 }
+
 .vline {
   position: absolute;
   width:.5vmin;
@@ -37,6 +38,7 @@ url('ClearSans-Bold.eot');
   z-index: 0;
 }
 #tiles {
+  z-index: -3;
 }
 .tile{
   border-radius: 1.25vmin;

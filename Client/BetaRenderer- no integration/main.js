@@ -29,7 +29,7 @@ var playerAlive = true;
 var currentArray=[];
 var modernArray=[];
 var players={};
-var board = {"Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":1,"owner":1,"justMerged":false},"2":{"enabled":true,"tileNum":512,"tileID":18,"owner":2,"justMerged":false},"3":{"enabled":true,"tileNum":4096,"tileID":96,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileID":37,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":193,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileID":87,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileID":196,"owner":1,"justMerged":false}}};
+var board = {"Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":1,"owner":1,"justMerged":false},"2":{"enabled":true,"tileNum":512,"tileID":85,"owner":2,"justMerged":false},"3":{"enabled":true,"tileNum":4096,"tileID":96,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileID":37,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":193,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileID":112,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileID":196,"owner":1,"justMerged":false}}};
 //Test/Example board used for testing out a real board object.
 //console.log(board.Players[1].Score);
 //Color Profiles
@@ -84,6 +84,20 @@ console.log(currentArray)
 function removeTile(removeid) {
 
 }
+function findCurrentAnim(id,xory) { // Useful in the console to find X or Y
+  var transforms=document.getElementById('tile'+id.toString()).style.transform;
+  transformY=((transforms.split('translateY'))[1].slice(1,(transforms.split('translateY'))[1].length-5));
+  transformX=((transforms.split('translateY'))[1].split('translateX'))[0].slice(1,(transforms.split('translateY'))[1].split('translateX')[0].length-5);
+  if (xory='X') {
+    return transformX;
+  }
+  if (xory='Y') {
+    return transformY;
+  }
+  else {
+    console.log("Fatal error on line 87.")
+  }
+}
 
 function calcX(tileID) { //Used to parse the modulo values given in the Tile creation of newTile
   if(tileID==1) {
@@ -97,8 +111,8 @@ function calcX(tileID) { //Used to parse the modulo values given in the Tile cre
   }
 }
 function calcY(tileID) {
-  if(tileID/14==14) {
-    return 14;
+  if(tileID%14==0) {
+    return tileID/14;
   }
   else {
     return Math.floor(tileID/14+1);
@@ -118,6 +132,7 @@ function newTile(Box) {
    // document.getElementById('tile'+(Tile.id).toString()).style.transform="translate(1vmin,0vmin)" //Static transform to accomodate for the earlier margin one
     document.getElementById('tile'+(box.id).toString()).style.transform="translate("+(+5.735*(box.x-1))+"vmin,"+((box.y-1)*5.735)+"vmin)" //Original position transform
     document.getElementById('tile'+(box.id).toString()).style.backgroundColor='#'+getColor(box.value);
+    document.getElementById('tile'+(box.id).toString()).style.transform=document.getElementById('tile'+(box.id).toString()).style.transform+" translateX(0vmin)"+" translateY(0vmin)"; //Original position transform
     switch(Box.tileNum) {
       case(2):
       case(4):
@@ -157,12 +172,59 @@ function getColor(values) {
   return theme1[values];
   // Future code here will allow for switchable themes that are admittedly quite snazzy
 }
-
-function moveTile() {
-
+function findposbyID(ID) {
+  for (i=0;i<currentArray.length;i++) {
+      if (currentArray[i].id == ID) {
+        return i;
+        break;
+      }
+  }
 }
+function moveTile(Tile,FutureTile) { //TIle is the tile as it sits NOW, FutureTile is where you want it to move.
+
+console.log(Tile.y)
+  var progress=0;
+    anime({
+      targets: '#'+'tile'+(Tile.id).toString(),
+      translateY:{
+        
+        value:['0vmin',((FutureTile.y-Tile.y)*5.735).toString()+'vmin'],
+        //value:[5.735*0,5.735*-13],
+        duration:750,
+    },
+      translateX:{
+        value:['0vmin',((FutureTile.x-Tile.x)*5.735).toString()+'vmin'],        //value:[5.735*0,5.735*-13],
+        duration:750,
+      },
+  
+      backgroundColor: [{
+        value:['#'+getColor(Tile.value),'#'+getColor(FutureTile.value)],
+      }
+    ],
+    
+      easing: 'easeInOutQuad',
+      update: function() {
+        progress+=1
+        if (progress>40) {
+        document.getElementById('tile'+(Tile.id).toString()).innerHTML=(FutureTile.value).toString()+'\n';
+        }
+      }
+    
+    
+    })
+    //document.getElementById('tile'+(Tile.id).toString()).innerHTML=(FutureTile.value).toString()+'\n'; This is a blanket update, the progress updater above will do a better job 99% of the time, but uncomment this if a corner-case arises
+    currentArray[findposbyID(Tile)]=FutureTile;
+  }
 function deleteTile() {
 
+}
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
 }
 function firstDraw(Board) { //When the board is first recieved, call this function on it.
       for (let i=1; i<(Object.keys(Board.Boxes).length+1);i++) {
@@ -236,24 +298,5 @@ while (false) {
 
 firstDraw(board);
 
+moveTile(currentArray[1],currentArray[2])
 
-
-
- /* Uncomment for shenanigans
- */
-for (i=1;i<5;i++) {
-anime({
-  targets: '#tile4',
-  translateX:(5.75*i).toString()+'vmin',
-  backgroundColor: [{
-    value:'#FEBEE7',
-    duration:500,
-  },
-  {
-    value:'#f8210',
-    duration:500,
-  },
-],
-  easing: 'easeInOutQuad'
-});
-}
