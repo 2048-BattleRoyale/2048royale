@@ -4,6 +4,35 @@ class Board {
       []
     ];
     this.nextTileId = 1;
+    this.playersInGame = [];
+  }
+
+  addPlayer(sessionID, connection, name) {
+    if (this.isFull()) return;
+
+    this.playersInGame.push({
+      sID: sessionID,
+      connection: connection,
+      name: name,
+      score: 0
+    });
+  }
+
+  isFull() {
+    if (this.playersInGame.length >= 4) return true;
+    else return false;
+  }
+
+  getPlayers() {
+    return this.playersInGame;
+  }
+
+  getAsJSON() {
+    var playersList = [];
+    for(var i = 0; i < this.playersInGame.length; i++)
+      playersList.push({name: this.playersInGame[i].name, score: this.playersInGame[i].score});
+
+    return {players: playersList, boxes: this.boxes};
   }
 
   // Initialize a new boxes. Fill it with nulled elements and set up the initial boxes state.
