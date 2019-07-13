@@ -29,7 +29,10 @@ var playerAlive = true;
 var currentArray=[];
 var modernArray=[];
 var players={};
+var eventuallyRemove=[];
 var board = {"Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":1,"owner":1,"justMerged":false},"2":{"enabled":true,"tileNum":512,"tileID":85,"owner":2,"justMerged":false},"3":{"enabled":true,"tileNum":4096,"tileID":96,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileID":37,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":193,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileID":112,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileID":196,"owner":1,"justMerged":false}}};
+var boardTest = {"Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":2,"owner":1,"justMerged":false},"2":{"enabled":true,"tileNum":512,"tileID":62,"owner":2,"justMerged":false},"3":{"enabled":true,"tileNum":4096,"tileID":122,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileID":21,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":12,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileID":98,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileID":34,"owner":1,"justMerged":false}}};
+
 //Test/Example board used for testing out a real board object.
 //console.log(board.Players[1].Score);
 //Color Profiles
@@ -80,10 +83,8 @@ for (let i=1;i<15;i++) {
 */
 console.log(currentArray)
 //console.log(currentArray[1]); //Check to make sure IDs are still logical
-//Primary Functions
-function removeTile(removeid) {
 
-}
+//Practical side-functions
 function findCurrentAnim(id,xory) { // Useful in the console to find X or Y
   var transforms=document.getElementById('tile'+id.toString()).style.transform;
   transformY=((transforms.split('translateY'))[1].slice(1,(transforms.split('translateY'))[1].length-5));
@@ -118,6 +119,35 @@ function calcY(tileID) { //See above... but for Y
     return Math.floor(tileID/14+1);
   }
 }
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
+function findposbyID(ID) { //Give this function an ID from a current Tile and it'll tell you its position in the array
+  for (i=0;i<currentArray.length;i++) {
+      if (currentArray[i].id == ID) {
+        return i;
+        break;
+      }
+  }
+}
+function getColor(values) {
+  return theme1[values];
+  // Future code here will allow for switchable themes that are admittedly quite snazzy
+}
+function divCleaner() { //Cleanup divs and make everything align
+  for (i=0;i<eventuallyRemove.length;i++) {
+  document.getElementById("tile"+eventuallyRemove[i]).remove();
+  console.log("Removed tile"+eventuallyRemove[i]);
+}
+eventuallyRemove=[];
+}
+//Primary Functions
+
 function newTile(Box) {
   console.log(Box);
   var box=new Tile(totalB+1,calcX(Box.tileID%14),calcY(Box.tileID),Box.tileNum,Box.owner,Box.enabled);
@@ -166,19 +196,16 @@ function newTile(Box) {
     
 
   }
-
-function getColor(values) {
-  return theme1[values];
-  // Future code here will allow for switchable themes that are admittedly quite snazzy
-}
-function findposbyID(ID) { //Give this function an ID from a current Tile and it'll tell you its position in the array
-  for (i=0;i<currentArray.length;i++) {
-      if (currentArray[i].id == ID) {
-        return i;
-        break;
-      }
+function idInCurrentArray(id) {
+  for (let i=0;i<currentArray.length;i++) {
+    if (currentArray[i].id==parseInt(id,10)) {
+      return [true,i];
+      break;
+    }
   }
+  return false;
 }
+
 function moveTile(Tile,FutureTile) { //TIle is the tile as it sits NOW, FutureTile is where you want it to move.
 
 console.log(Tile.y)
@@ -237,15 +264,8 @@ function deleteTile(Tile) { //Play delete animation then kick that sorry thing o
     
   
   })
-  currentArray.splice(findposbyID(Tile.id),1);
-}
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
+  currentArray.splice(findposbyID(Tile.id),1);//Remove that filthy, filthy div from existence as we know it.
+  eventuallyRemove.push((Tile.id).toString());
 }
 function firstDraw(Board) { //When the board is first recieved, call this function on it.
       for (let i=1; i<(Object.keys(Board.Boxes).length+1);i++) {
@@ -257,8 +277,16 @@ function firstDraw(Board) { //When the board is first recieved, call this functi
 
 }
 
-function drawMovement() {
+function drawMovement(newBoard) {
+  for (let i=0; i<=(Object.keys(newBoard.Boxes).length);i++) {
+    if (idInCurrentArray(Object.keys(newBoard.Boxes)[i])[0]) {
+      let Box=newBoard.Boxes[i+1];
+      console.log(Box);
+      moveTile(currentArray[parseInt(idInCurrentArray(Object.keys(newBoard.Boxes)[i])[1],10)],new Tile(Object.keys(newBoard.Boxes)[i],calcX(Box.tileID%14),calcY(Box.tileID),Box.tileNum,Box.owner,Box.enabled));
+    }
+   }
   //Handle the corners, and make them fancy
+  /*
   for(i=0;i<currentArray.length;i++) {
     if(currentArray[i].x ==  0 && currentArray.y == 0) {
       document.getElementById('tile'+(currentArray[i].id).toString()).style.borderTopLeftRadius ='2vmin'; 
@@ -282,6 +310,7 @@ function drawMovement() {
 
     }
   }
+  */ //The corners were too fancy for the modern era... give it time.
 }
 
 
@@ -318,8 +347,8 @@ while (false) {
 }
 
 firstDraw(board);
-
-moveTile(currentArray[1],new Tile(12,4,currentArray[1].y,16,1,true))
-deleteTile(currentArray[3])
+drawMovement(boardTest);
+//moveTile(currentArray[1],new Tile(12,4,currentArray[1].y,16,1,true))
+//deleteTile(currentArray[3])
 console.log(findposbyID(currentArray[3].id))
 //(id,x,y,value,owner,enabled) Referece to Tile class for testing out the animation function
