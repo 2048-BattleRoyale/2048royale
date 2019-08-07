@@ -31,7 +31,7 @@ var modernArray=[];
 var players={};
 var eventuallyRemove=[];
 var board = {"Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":1,"owner":1,"justMerged":false},"2":{"enabled":true,"tileNum":512,"tileID":85,"owner":2,"justMerged":false},"3":{"enabled":true,"tileNum":4096,"tileID":96,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileID":37,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":193,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileID":112,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileID":196,"owner":1,"justMerged":false}}};
-var boardTest = {"Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":2,"owner":1,"justMerged":false},"2":{"enabled":true,"tileNum":512,"tileID":62,"owner":2,"justMerged":false},"3":{"enabled":true,"tileNum":4096,"tileID":122,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileID":21,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":12,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileID":98,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileID":34,"owner":1,"justMerged":false}}};
+var boardTest = {"Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":2,"owner":1,"justMerged":false},"3":{"enabled":true,"tileNum":4096,"tileID":122,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileID":21,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":12,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileID":98,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileID":34,"owner":1,"justMerged":false},"8":{"enabled":true,"tileNum":4096,"tileID":88,"owner":1,"justMerged":false}}};
 
 //Test/Example board used for testing out a real board object.
 //console.log(board.Players[1].Score);
@@ -207,7 +207,6 @@ function idInCurrentArray(id) {
 }
 
 function moveTile(Tile,FutureTile) { //TIle is the tile as it sits NOW, FutureTile is where you want it to move.
-
 console.log(Tile.y)
   var progress=0;
     anime({
@@ -278,6 +277,72 @@ function firstDraw(Board) { //When the board is first recieved, call this functi
 }
 
 function drawMovement(newBoard) {
+/*
+To-Do: 
+Integrate Additions of tiles and deletions of tiles into the drawMovement function
+
+
+*/
+  //Find Key Differences
+newArrayKeys=(Object.keys(newBoard.Boxes));
+newArrayKeys=newArrayKeys.map(function (x) { 
+  return parseInt(x, 10); 
+});
+console.log(newArrayKeys)
+currentArrayKeys=[];
+for (i=0;i<currentArray.length;i++) {
+  currentArrayKeys.push(currentArray[i].id);
+}
+//First, you find if there are any elements newArrayKeys has that the current one doesn't (additions)
+additions=[]
+for(i=0;i<newArrayKeys.length;i++) {
+  found=false;
+  for(j=0;j<currentArrayKeys.length;j++) {
+    if (newArrayKeys[i]==currentArrayKeys[j]) {
+      found=true;
+    }
+  }
+  
+  if (!found) {
+    additions.push(newArrayKeys[i]);
+  }
+}
+console.log(additions);
+//Then, you check to see if there are any elements (by id) that the old array has and new doesn't  (deletions)
+deletions=[]
+for(i=0;i<currentArrayKeys.length;i++) {
+  found=false;
+  for(j=0;j<newArrayKeys.length;j++) {
+    if (currentArrayKeys[i]==newArrayKeys[j]) {
+      found=true;
+    }
+  }
+  
+  if (!found) {
+    deletions.push(currentArrayKeys[i]);
+  }
+}
+console.log(deletions);
+//Remove these from the lists; they'll be parsed seperately
+
+
+/* Ignore for now
+for(i=0;i<((newArrayKeys.length <= currentArrayKeys.length) ? currentArrayKeys : newArrayKeys);i++) {
+  curUse=((newArrayKeys.length <= currentArrayKeys.length) ? currentArrayKeys : newArrayKeys);
+  invUse=((newArrayKeys.length >= currentArrayKeys.length) ? currentArrayKeys : newArrayKeys);
+  hasFound=false;
+  for(j=0;j<((newArrayKeys.length >= currentArrayKeys.length) ? currentArrayKeys : newArrayKeys);j++) {
+    if (curUse[i]==invUse[j]) {
+      hasFound=true;
+      console.log("Hasfound"+curUse[i]);
+    }
+  }
+  if (!hasFound) {
+    overlap.push(curUse[i])
+  }
+}
+*/
+/*
   for (let i=0; i<=(Object.keys(newBoard.Boxes).length);i++) {
     if (idInCurrentArray(Object.keys(newBoard.Boxes)[i])[0]) {
       let Box=newBoard.Boxes[i+1];
@@ -285,6 +350,9 @@ function drawMovement(newBoard) {
       moveTile(currentArray[parseInt(idInCurrentArray(Object.keys(newBoard.Boxes)[i])[1],10)],new Tile(Object.keys(newBoard.Boxes)[i],calcX(Box.tileID%14),calcY(Box.tileID),Box.tileNum,Box.owner,Box.enabled));
     }
    }
+*/
+
+
   //Handle the corners, and make them fancy
   /*
   for(i=0;i<currentArray.length;i++) {
@@ -338,7 +406,7 @@ document.addEventListener('keydown', function(event){
   }
 } );
 
-
+//window.onload();
 
 
 //Main Loop
@@ -348,6 +416,7 @@ while (false) {
 
 firstDraw(board);
 drawMovement(boardTest);
+//deleteTile(currentArray[3]);
 //moveTile(currentArray[1],new Tile(12,4,currentArray[1].y,16,1,true))
 //deleteTile(currentArray[3])
 console.log(findposbyID(currentArray[3].id))
