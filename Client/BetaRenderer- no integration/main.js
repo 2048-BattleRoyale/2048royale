@@ -300,12 +300,8 @@ function firstDraw(Board) { //When the board is first recieved, call this functi
 }
 
 function drawMovement(newBoard) {
-/*
-To-Do: 
-Integrate Additions of tiles and deletions of tiles into the drawMovement function
 
-
-*/
+board=newBoard;
   //Find Key Differences
 newArrayKeys=(Object.keys(newBoard.Boxes));
 newArrayKeys=newArrayKeys.map(function (x) { 
@@ -318,6 +314,7 @@ for (i=0;i<currentArray.length;i++) {
 }
 //First, you find if there are any elements newArrayKeys has that the current one doesn't (additions)
 additions=[]
+additions2=[];
 for(i=0;i<newArrayKeys.length;i++) {
   found=false;
   for(j=0;j<currentArrayKeys.length;j++) {
@@ -328,6 +325,7 @@ for(i=0;i<newArrayKeys.length;i++) {
   
   if (!found) {
     additions.push(newArrayKeys[i]);
+    additions2.push(newArrayKeys[i]);
   }
 }
 console.log(additions);
@@ -352,23 +350,35 @@ do{
 deleteTile(currentArray[idInCurrentArray(deletions[0])[1]]);
 deletions.shift();
 }while(deletions.length>0); 
+do{
+  newTile(newBoard.Boxes[additions[0]]);
+  delete newBoard.Boxes[additions[0]];
+  additions.shift();
+  }while(additions.length>0); 
+console.log(newBoard);
+
+//Move Everything Else
+ketamine=Object.keys(newBoard.Boxes);
+var i=0;
+  for (i in ketamine) {
+    if (true /*idInCurrentArray(ketamine)[0]*/) {
+      console.log("RECIEVED"+i)
+      Box=newBoard.Boxes[ketamine[i]];
+      console.log(Box);
+      moveTile(currentArray[idInCurrentArray(ketamine[i])[1]],new Tile(ketamine[i],calcX(Box.tileID%14),calcY(Box.tileID),Box.tileNum,Box.owner,Box.enabled));
+    }
+   }
+
 //Parse Additions
 //drawMovement(boardTest);
+
+/*
 do{
   newTile(newBoard.Boxes[additions[0]]);
   additions.shift();
   }while(additions.length>0); 
-
-/*
-  for (let i=0; i<=(Object.keys(newBoard.Boxes).length);i++) {
-    if (idInCurrentArray(Object.keys(newBoard.Boxes)[i])[0]) {
-      let Box=newBoard.Boxes[i+1];
-      console.log(Box);
-      moveTile(currentArray[parseInt(idInCurrentArray(Object.keys(newBoard.Boxes)[i])[1],10)],new Tile(Object.keys(newBoard.Boxes)[i],calcX(Box.tileID%14),calcY(Box.tileID),Box.tileNum,Box.owner,Box.enabled));
-    }
-   }
-*/
-
+*/ ///May need this later uwu
+  console.log(newBoard);
 
   //Handle the corners, and make them fancy
   /*
