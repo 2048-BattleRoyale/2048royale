@@ -30,6 +30,7 @@ var currentArray=[];
 var modernArray=[];
 var players={};
 var eventuallyRemove=[];
+var socket = new WebSocket('ws://echo.websocket.org');
 var board = {"Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":1,"owner":1,"justMerged":false},"2":{"enabled":true,"tileNum":512,"tileID":85,"owner":2,"justMerged":false},"3":{"enabled":true,"tileNum":4096,"tileID":96,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileID":37,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":193,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileID":112,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileID":196,"owner":1,"justMerged":false}}};
 var boardTest = {"Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":2,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileID":21,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":12,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileID":98,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileID":34,"owner":1,"justMerged":false},"8":{"enabled":true,"tileNum":4096,"tileID":88,"owner":1,"justMerged":false},"9":{"enabled":true,"tileNum":2,"tileID":127,"owner":1,"justMerged":false}}};
 
@@ -63,10 +64,6 @@ class Tile {
     this.id=id;
     this.owner=owner;
     this.enabled=enabled;
-  }
-
-  deleteSelf() {
-    alert("I need a frickin' array before I can delete tiles.");
   }
 
 }
@@ -378,8 +375,6 @@ do{
   additions.shift();
   }while(additions.length>0); 
 */ ///May need this later uwu
-  console.log(newBoard);
-
   //Handle the corners, and make them fancy
   /*
   for(i=0;i<currentArray.length;i++) {
@@ -416,23 +411,86 @@ document.addEventListener('keydown', function(event){
     case 87:
     case 38:
       alert("Up! To be replaced by sockets when ready.");
+      socket.send({
+        "msgType": "playerMove",
+        "direction": "up"
+      })
       break;
     case 39:
     case 68:
         alert("Right! To be replaced by sockets when ready.");
+        socket.send({
+          "msgType": "playerMove",
+          "direction": "right"
+        })
         break;
     case 40:
     case 83:
         alert("Down! To be replaced by sockets when ready.");
+        socket.send({
+          "msgType": "playerMove",
+          "direction": "down"
+        })
         break;
     case 37:
     case 65:
         alert("Left! To be replaced by sockets when ready.");
+        socket.send({
+          "msgType": "playerMove",
+          "direction": "left"
+        })
         break;
 
   }
 } );
+window.onload = function () {
 
+  // Create a new WebSocket.
+   var socket = new WebSocket('ws://echo.websocket.org');
+  //var socket = new WebSocket('ws://localhost:5500'); 
+
+
+  // Handle any errors that occur.
+  socket.onerror = function (error) {
+    console.log('WebSocket Error: ' + error);
+  };
+
+
+  // Show a connected message when the WebSocket is opened.
+  socket.onopen = function (event) {
+    console.log("Socket is connected.");
+  };
+
+
+  // Handle messages sent by the server.
+  socket.onmessage = function (event) {
+    switch(event.data[messageType]) {
+      case 'boardUpdate':
+        testBoard=event.data['board'];
+        drawMovement(event.data['board'])
+    }
+  };
+
+
+  // Show a disconnected message when the WebSocket is closed.
+  socket.onclose = function (event) {
+    console.log("Socket is disconnected");
+  };
+
+
+  
+
+
+ //Send a signup request as soon as the socket is connected
+ /*
+ socket.send({
+  "msgType": "signup",
+  "sessionID": "1" //Change with time
+})
+*/
+
+
+};
 //window.onload();
 
 
