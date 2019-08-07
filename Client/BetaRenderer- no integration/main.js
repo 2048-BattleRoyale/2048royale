@@ -31,7 +31,7 @@ var modernArray=[];
 var players={};
 var eventuallyRemove=[];
 var board = {"Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":1,"owner":1,"justMerged":false},"2":{"enabled":true,"tileNum":512,"tileID":85,"owner":2,"justMerged":false},"3":{"enabled":true,"tileNum":4096,"tileID":96,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileID":37,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":193,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileID":112,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileID":196,"owner":1,"justMerged":false}}};
-var boardTest = {"Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":2,"owner":1,"justMerged":false},"3":{"enabled":true,"tileNum":4096,"tileID":122,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileID":21,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":12,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileID":98,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileID":34,"owner":1,"justMerged":false},"8":{"enabled":true,"tileNum":4096,"tileID":88,"owner":1,"justMerged":false}}};
+var boardTest = {"Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":2,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileID":21,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":12,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileID":98,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileID":34,"owner":1,"justMerged":false},"8":{"enabled":true,"tileNum":4096,"tileID":88,"owner":1,"justMerged":false}}};
 
 //Test/Example board used for testing out a real board object.
 //console.log(board.Players[1].Score);
@@ -324,24 +324,13 @@ for(i=0;i<currentArrayKeys.length;i++) {
 }
 console.log(deletions);
 //Remove these from the lists; they'll be parsed seperately
+//Parse Additions and Deletions
+do{
+deleteTile(currentArray[idInCurrentArray(deletions[0])[1]]);
+deletions.shift();
+}while(deletions.length>0); 
+console.log(deletions)
 
-
-/* Ignore for now
-for(i=0;i<((newArrayKeys.length <= currentArrayKeys.length) ? currentArrayKeys : newArrayKeys);i++) {
-  curUse=((newArrayKeys.length <= currentArrayKeys.length) ? currentArrayKeys : newArrayKeys);
-  invUse=((newArrayKeys.length >= currentArrayKeys.length) ? currentArrayKeys : newArrayKeys);
-  hasFound=false;
-  for(j=0;j<((newArrayKeys.length >= currentArrayKeys.length) ? currentArrayKeys : newArrayKeys);j++) {
-    if (curUse[i]==invUse[j]) {
-      hasFound=true;
-      console.log("Hasfound"+curUse[i]);
-    }
-  }
-  if (!hasFound) {
-    overlap.push(curUse[i])
-  }
-}
-*/
 /*
   for (let i=0; i<=(Object.keys(newBoard.Boxes).length);i++) {
     if (idInCurrentArray(Object.keys(newBoard.Boxes)[i])[0]) {
