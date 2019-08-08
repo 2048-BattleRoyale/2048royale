@@ -9,6 +9,8 @@
   <link href="css/mdb.min.css" rel="stylesheet">
   <!-- Your custom styles (optional) -->
   <link href="css/style.css" rel="stylesheet">
+  <link  href="dark-mode.css">
+
   <title>2048 Local Client</title>
 </head>
 <body>
@@ -31,7 +33,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent" style="font-size:4vmin">
               <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                  <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                  <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="#">Login</a>
@@ -41,9 +43,12 @@
                     Settings
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Board Colors</a>
+                    <a class="dropdown-item" href="themes.html">Board Colors</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Light Mode/Dark Mode</a>
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="darkSwitch" />
+                        <label class="custom-control-label" for="darkSwitch">Light Mode(beta)</label>
+                      </div>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Account Settings</a>
                   </div>
@@ -104,12 +109,11 @@
     </div>
 
   </footer>
-  <!-- Footer -->
+ <!-- Footer -->
 
-  <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
-  <script src="js/main.js"></script>
     <!-- JQuery -->
     <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <!-- Bootstrap tooltips -->
     <script type="text/javascript" src="js/popper.min.js"></script>
     <!-- Bootstrap core JavaScript -->
@@ -117,5 +121,13 @@
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="js/mdb.min.js"></script>
 
+    <script src="js/dark-mode-switch.min.js"></script>
+   <!---- <script src="js/jscolor.js"></script>-->
+    <script src="js/cookietable.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
+    <script src="js/main.js"></script>
+
+  
+</body>
 </body>
     </html>

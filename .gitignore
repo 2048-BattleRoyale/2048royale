@@ -140,3 +140,8 @@ Client/css/mdb.lite.min.css
 Client/css/mdb.min.css
 Client/css/modules/animations-extended.css
 Client/css/modules/animations-extended.min.css
+Client/jscolor-example.html
+Client/js/jscolor.js
+Client/js/dark-mode-switch.min.js
+Client/js/dark-mode-switch.js
+Client/css/dark-mode.css
