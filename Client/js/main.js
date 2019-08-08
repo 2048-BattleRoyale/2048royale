@@ -35,9 +35,8 @@ var board = {"Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score"
 var boardTest = {"Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":2,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileID":21,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":12,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileID":98,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileID":34,"owner":1,"justMerged":false},"8":{"enabled":true,"tileNum":4096,"tileID":88,"owner":1,"justMerged":false},"9":{"enabled":true,"tileNum":2,"tileID":127,"owner":1,"justMerged":false},"10":{"enabled":true,"tileNum":16,"tileID":63,"owner":1,"justMerged":false}}};
 
 //Test/Example board used for testing out a real board object.
-//console.log(board.Players[1].Score);
-//Color Profiles
-var theme1={ //This is a blue and pink theme. More will be added in the future, selected with html buttons
+//Color Profiles Stored Dynamically Online- this is the default
+var theme1={ //This is a blue and pink theme. 
   "2":"A8DEF5",
   "4":"AFDBF3",
   "8":"B7D8F2",
@@ -68,16 +67,7 @@ class Tile {
 
 }
 
-// Generate a test array for number manipulation
-/*
-var extrarows=0;
-for (let i=1;i<15;i++) {
-  for (let j=0;j<14;j++) {
-    currentArray.push(new Tile(14*(i-1)+j+extrarows,j,i,Math.pow(2,1+(Math.floor(Math.random() * 12)))));
-  }
-  extrarows+=1;
-}
-*/
+
 console.log(currentArray)
 //console.log(currentArray[1]); //Check to make sure IDs are still logical
 
@@ -354,7 +344,7 @@ do{
   }while(additions.length>0); 
 console.log(newBoard);
 
-//Move Everything Else
+
 ketamine=Object.keys(newBoard.Boxes);
 var i=0;
   for (i in ketamine) {
@@ -366,41 +356,7 @@ var i=0;
     }
    }
 
-//Parse Additions
-//drawMovement(boardTest);
 
-/*
-do{
-  newTile(newBoard.Boxes[additions[0]]);
-  additions.shift();
-  }while(additions.length>0); 
-*/ ///May need this later uwu
-  //Handle the corners, and make them fancy
-  /*
-  for(i=0;i<currentArray.length;i++) {
-    if(currentArray[i].x ==  0 && currentArray.y == 0) {
-      document.getElementById('tile'+(currentArray[i].id).toString()).style.borderTopLeftRadius ='2vmin'; 
-
-    }
-    if(currentArray[i].x ==  14 && currentArray.y == 0) {
-      document.getElementById('tile'+(currentArray[i].id).toString()).style.borderTopRightRadius ='2vmin'; 
-    }
-    if(currentArray[i].x ==  0 && currentArray.y == 14) {
-      document.getElementById('tile'+(currentArray[i].id).toString()).style.borderBottomLeftRadius ='2vmin'; 
-
-    }
-    if(currentArray[i].x ==  14 && currentArray.y == 14) {
-      document.getElementById('tile'+(currentArray[i].id).toString()).style.borderBottomRightRadius ='2vmin'; 
-    }
-    if (((currentArray[i].x ==  14 && currentArray.y == 14) == false) && ((currentArray[i].x ==  0 && currentArray.y == 14) == false) && ((currentArray[i].x ==  14 && currentArray.y == 0) == false) && ((currentArray[i].x ==  0 && currentArray.y == 0)==false)) {
-      document.getElementById('tile'+(currentArray[i].id).toString()).style.borderBottomRightRadius ='1vmin'; 
-      document.getElementById('tile'+(currentArray[i].id).toString()).style.borderBottomLeftRadius ='1vmin'; 
-      document.getElementById('tile'+(currentArray[i].id).toString()).style.borderTopRightRadius ='1vmin'; 
-      document.getElementById('tile'+(currentArray[i].id).toString()).style.borderTopLeftRadius ='1vmin'; 
-
-    }
-  }
-  */ //The corners were too fancy for the modern era... give it time.
 }
 
 
@@ -489,12 +445,6 @@ if (document.cookie.indexOf('colorTheme')==-1) {
 
 
  //Send a signup request as soon as the socket is connected
- /*
- socket.send({
-  "msgType": "signup",
-  "sessionID": "1" //Change with time
-})
-*/
 
 
 };
@@ -507,10 +457,5 @@ while (false) {
 
 
 firstDraw(board);
-//sleep(1000);
-//drawMovement(boardTest);
-//deleteTile(currentArray[3]);
-//moveTile(currentArray[1],new Tile(12,4,currentArray[1].y,16,1,true))
-//deleteTile(currentArray[3])
+
 console.log(findposbyID(currentArray[3].id))
-//(id,x,y,value,owner,enabled) Referece to Tile class for testing out the animation function
