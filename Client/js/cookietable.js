@@ -26,3 +26,7 @@ $('.exportJSON').on('click', function(event) {
   $.cookie("colorTheme", JSON.stringify(testTheme));
 
 });
+$('#title').on('click', function(event) {
+  window.location.href = "index.html";
+  console.log('he')
+});
