@@ -3,6 +3,7 @@ const url = require('url');
 const WebSocket = require('ws');
 const Board = require("./board.js");
 
+const debugMsgs = true;
 const httpPort = 7000;
 const wsPort = 8000;
 console.log("CONFIG: http on port:\t" + httpPort);
@@ -10,6 +11,14 @@ console.log("CONFIG: ws on port:\t" + wsPort);
 
 // {Board, Board, Board, ...}
 var boardsList = [];
+
+function logMsg(critical, msg) {
+  if (critical) {
+    console.log("CRITICAL ERR: " + msg);
+  } else if (debugMsgs) {
+    console.log(msg);
+  }
+}
 
 // Creates a random string of characters length characters long.
 function makeSessionID(length) {
@@ -35,10 +44,8 @@ function sendBoardUpdate(board) {
 
 // Handles an incoming WebSockets message.
 function handleWsMessage(ws, msg) {
-  // console.log('received: %s', msg);
-  ws.send(msg);
+  // ws.send(msg);
   var parsedMsg = JSON.parse(msg);
-  console.log(parsedMsg);
 
   switch (parsedMsg.msgType) {
     case "signup":
@@ -58,12 +65,13 @@ function handleWsMessage(ws, msg) {
       boardsList[freeBoard].addPlayer(parsedMsg.sessionID, ws, parsedMsg.name);
       // If this made the board full, then start the game.
       if (boardsList[freeBoard].isFull()) {
+        // Initialize the board, so that it has boxes.
+        boardsList[freeBoard].initBoard();
+
         // Tell all of the players that the game is starting and send the first board object.
         var playersList = boardsList[freeBoard].getPlayers();
-        console.log("Players list:")
-        console.log(playersList)
         for (var i = 0; i < playersList.length; i++) {
-          console.log("Sending game stating message to board: " + freeBoard + ", player: " + i)
+          logMsg(false, "Sending game stating message to board: " + freeBoard + ", player: " + i)
           playersList[i].connection.send(JSON.stringify({
             msgType: "gameStarting"
           }));
@@ -74,7 +82,7 @@ function handleWsMessage(ws, msg) {
         }
       } else {
         // Otherwise, just send a waiting message.
-        console.log("Nope, just sending waiting message.")
+        logMsg(false, "Nope, just sending waiting message.")
         ws.send(JSON.stringify({
           msgType: "waitingForPlayers"
         }));
@@ -143,13 +151,10 @@ http.createServer(function (request, response) {
     // 'Content-type': 'text/plain'
     'Content-type': 'text/html'
   });
-  // response.write('Hello Node JS Server Response');
-  // response.end();
 
   pathName = url.parse(request.url).pathname;
   query = url.parse(request.url).query;
-  console.log('pathName: ' + pathName);
-  console.log('query: ' + query);
+  logMsg(false, "HTTP Query: {pathName: " + pathName + ", query: " + query + "}");
 
   // Send the client a unique session id.
   var sessionID = "";
@@ -176,6 +181,7 @@ const wsserver = new WebSocket.Server({
 });
 wsserver.on('connection', function connection(websocket) {
   websocket.on('message', function incoming(msg) {
+    logMsg(false, "WebSocket message: " + msg);
     handleWsMessage(websocket, msg);
   });
 });
