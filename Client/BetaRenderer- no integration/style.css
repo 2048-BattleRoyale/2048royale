@@ -14,31 +14,34 @@ url('ClearSans-Bold.eot');
   border-radius: 2vmin;
   background-color: rgba(0, 0, 0, 0);
   border: 2vmin solid black;
-  width:80vmin;
-  height:80vmin;
+  width:83.5vmin;
+  height:83.5vmin;
   z-index: 1555;
+
 }
 
 .vline {
   position: absolute;
   width:.5vmin;
-  height: 80vmin;
+  height: 81vmin;
   background-color: rgb(128, 128, 128);
   margin-left: -.5vmin;
-  z-index: 0;
+  z-index: 0 !IMPORTANT;
 }
 .hline {
   
   position: absolute;
-  width:80vmin;
+  width:81vmin;
   height:.5vmin;
   background-color: rgb(128, 128, 128);
   margin-top: -.5vmin;
   margin-bottom: .5vmin;
   z-index: 0;
 }
-#tiles {
-  z-index: -3;
+.gridternals {
+  margin-left:1.872vmin;
+  margin-top: 1.872vmin;
+  position: absolute;
 }
 .tile{
   border-radius: 1.25vmin;
@@ -52,4 +55,14 @@ url('ClearSans-Bold.eot');
   background-color: darkolivegreen;
   z-index: -3;
 }
-  
+.Board{
+  width:83.5vmin;
+  height:83.5vmin;
+  position: absolute;
+  transform: translate(60%,20%);
+  }
+
+.Title {
+  font-size:10vmin;
+  font-family: ClearSans-Bold, sans-serif;
+}

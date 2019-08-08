@@ -32,7 +32,7 @@ var players={};
 var eventuallyRemove=[];
 var socket = new WebSocket('ws://echo.websocket.org');
 var board = {"Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":1,"owner":1,"justMerged":false},"2":{"enabled":true,"tileNum":512,"tileID":85,"owner":2,"justMerged":false},"3":{"enabled":true,"tileNum":4096,"tileID":96,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileID":37,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":193,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileID":112,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileID":196,"owner":1,"justMerged":false}}};
-var boardTest = {"Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":2,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileID":21,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":12,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileID":98,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileID":34,"owner":1,"justMerged":false},"8":{"enabled":true,"tileNum":4096,"tileID":88,"owner":1,"justMerged":false},"9":{"enabled":true,"tileNum":2,"tileID":127,"owner":1,"justMerged":false}}};
+var boardTest = {"Players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"Boxes":{"1":{"enabled":true,"tileNum":2,"tileID":2,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileID":21,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileID":12,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileID":98,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileID":34,"owner":1,"justMerged":false},"8":{"enabled":true,"tileNum":4096,"tileID":88,"owner":1,"justMerged":false},"9":{"enabled":true,"tileNum":2,"tileID":127,"owner":1,"justMerged":false},"10":{"enabled":true,"tileNum":16,"tileID":63,"owner":1,"justMerged":false}}};
 
 //Test/Example board used for testing out a real board object.
 //console.log(board.Players[1].Score);
@@ -163,17 +163,17 @@ function newTile(Box) {
       targets: '#'+'tile'+(box.id).toString(),
       scale:[{
         value:[0,1],
-        duration:350,
+        duration:300,
       },
     ],
     rotation:[{
       value:['20deg','-20deg','0deg'],
-      duration:350,
+      duration:300,
     },
   ],
       backgroundColor: [{
         value:['#FFFFFF', '#'+getColor(box.value)],
-        duration:750,
+        duration:300,
       },
     ],
     
@@ -235,11 +235,11 @@ console.log(Tile.y)
         
         value:['0vmin',((FutureTile.y-Tile.y)*5.735).toString()+'vmin'],
         //value:[5.735*0,5.735*-13],
-        duration:750,
+        duration:300,
     },
       translateX:{
         value:['0vmin',((FutureTile.x-Tile.x)*5.735).toString()+'vmin'],        //value:[5.735*0,5.735*-13],
-        duration:750,
+        duration:300,
       },
   
       backgroundColor: [{
@@ -265,17 +265,17 @@ function deleteTile(Tile) { //Play delete animation then kick that sorry thing o
     targets: '#'+'tile'+(Tile.id).toString(),
     scale:[{
       value:0,
-      duration:750,
+      duration:300,
     },
   ],
   rotation:[{
     value:'1turn',
-    duration:750,
+    duration:300,
   },
 ],
     backgroundColor: [{
       value:['#'+getColor(Tile.value), '#FFFFFF'],
-      duration:750,
+      duration:300,
     },
   ],
   
@@ -468,6 +468,8 @@ window.onload = function () {
       case 'boardUpdate':
         testBoard=event.data['board'];
         drawMovement(event.data['board'])
+        break
+      //More to come with time
     }
   };
 
@@ -492,7 +494,6 @@ window.onload = function () {
 
 };
 //window.onload();
-
 
 //Main Loop
 while (false) {
