@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -52,33 +52,33 @@
             </div>
           </nav>
     </div>
-    <ul style="text-align:center">
-    <div id="Board" class="Board container">
-      </ul>
+<div class="container text-center" style="align-items: center">
+    <div id="Board" class="Board " style="display: table-cell;vertical-align: middle;">
       <!--
         This is the overarching object that controls its internal components
       -->
-    <div id="grid" class="grid"></div>
+      <div id="grid" class="grid"></div>
 
 
-      <div class="gridternals" id="tiles">
-   <!--
-        Tiles to be drawn will be inserted here
+        <div class="gridternals" id="tiles">
+    <!--
+          Tiles to be drawn will be inserted here
+        -->
+
+
+        </div>
+
+
+      <div class="gridternals" id="gridlines">   
+        <!--
+        Lines of the grid will be inserted here
       -->
-
-
       </div>
-
-
-    <div class="gridternals" id="gridlines">   
-       <!--
-      Lines of the grid will be inserted here
-    -->
-    </div>
      
-    
-    
-  </div>
+    </div>
+</div>
+ 
+  
   <!-- Footer -->
   <div style="margin-top:110vmin">
 <footer class="page-footer font-small black pt-4">
@@ -86,7 +86,7 @@
         <div class="row">
         <div class="col-md-6 mt-md-0 mt-3 mx-auto">
           <h5 class="text-uppercase font-weight-bold">What is this?</h5>
-          <p>2048Royale is an innovative battle royale game conceptualized and started at MVHACKS 2019, written in VueJS, Bootstrap, Anime.JS, and JQuery.
+          <p>2048Royale is an innovative battle royale game conceptualized and started at MVHACKS 2019, written in Vue.JS, Bootstrap, Anime.JS, and JQuery.
             The game is maintained by <a href="https://github.com/AllDoge">Aidan Smith</a> and <a href="https://github.com/neilbalch">Neil Balch</a>, who have developed
             the client-side and server side respectively. Noticed a bug? Report it <i><a href="/brokenlink.html">here</a></i>. If you wish to look at the source code for the project, you can find that <i><a href="https://github.com/2048-BattleRoyale/2048royale">here</a></i>.
           </p>
@@ -116,4 +116,6 @@
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <!-- MDB core JavaScript -->
     <script type="text/javascript" src="js/mdb.min.js"></script>
+
+</body>
     </html>
