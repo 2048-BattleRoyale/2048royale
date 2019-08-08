@@ -133,7 +133,7 @@ function findposbyID(ID) { //Give this function an ID from a current Tile and it
   }
 }
 function getColor(values) {
-  return theme1[values];
+  return  JSON.parse($.cookie("colorTheme"))[values.toString()];
   // Future code here will allow for switchable themes that are admittedly quite snazzy
 }
 function divCleaner() { //Cleanup divs and make everything align
@@ -444,7 +444,9 @@ document.addEventListener('keydown', function(event){
   }
 } );
 window.onload = function () {
-
+if (document.cookie.indexOf('colorTheme')==-1) {
+  $.cookie("colorTheme", JSON.stringify(theme1));
+}
   // Create a new WebSocket.
    var socket = new WebSocket('ws://echo.websocket.org');
   //var socket = new WebSocket('ws://localhost:5500'); 
