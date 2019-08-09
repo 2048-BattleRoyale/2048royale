@@ -30,7 +30,7 @@ var currentArray=[];
 var modernArray=[];
 var players={};
 var eventuallyRemove=[];
-var socket = new WebSocket('ws://echo.websocket.org');
+var socket = new WebSocket('ws://127.0.0.1:8000/');
 var board = {"players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"boxes":{"1":{"enabled":true,"tileNum":2,"tileId":1,"owner":1,"justMerged":false},"2":{"enabled":true,"tileNum":512,"tileId":85,"owner":2,"justMerged":false},"3":{"enabled":true,"tileNum":4096,"tileId":96,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileId":37,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileId":193,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileId":112,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileId":196,"owner":1,"justMerged":false}}};
 var boardTest = {"players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"boxes":{"1":{"enabled":true,"tileNum":2,"tileId":2,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileId":21,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileId":12,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileId":98,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileId":34,"owner":1,"justMerged":false},"8":{"enabled":true,"tileNum":4096,"tileId":88,"owner":1,"justMerged":false},"9":{"enabled":true,"tileNum":2,"tileId":127,"owner":1,"justMerged":false},"10":{"enabled":true,"tileNum":16,"tileId":63,"owner":1,"justMerged":false}}};
 var boardTestTest={"players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"boxes":{"1":{"enabled":true,"tileNum":2,"tileId":2,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileId":21,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileId":12,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileId":98,"owner":1,"justMerged":false},"9":{"enabled":true,"tileNum":2,"tileId":51,"owner":1,"justMerged":false},"11":{"enabled":true,"tileNum":4,"tileId":25,"owner":1,"justMerged":false}}};
@@ -393,10 +393,11 @@ document.addEventListener('keydown', function(event){
     case 87:
     case 38:
       alert("Up! To be replaced by sockets when ready.");
-      socket.send({
-        "msgType": "playerMove",
-        "direction": "up"
-      })
+      socket.send(JSON.stringify({
+        msgType: "playMove",
+        direction: "up",
+        sessionID:"bazb7aMs"
+      }));
       break;
     case 39:
     case 68:
@@ -430,8 +431,8 @@ window.onload = function () {
     $.cookie("colorTheme", JSON.stringify(theme1));
   }
   // Create a new WebSocket.
-   var socket = new WebSocket('ws://echo.websocket.org');
-  //var socket = new WebSocket('ws://localhost:5500'); 
+   //var socket = new WebSocket('ws://echo.websocket.org');
+  var socket = new WebSocket('ws://localhost:8000'); 
 
 
   // Handle any errors that occur.
@@ -443,30 +444,55 @@ window.onload = function () {
   // Show a connected message when the WebSocket is opened.
   socket.onopen = function (event) {
     console.log("Socket is connected.");
+    socket.send(JSON.stringify({
+      msgType: "signup",
+      sessionID: "bazb7aMs",
+      name: "Billy Bob"
+    }));
   };
 
+/*
+<div class="alert alert-dark" role="alert">
+  A simple dark alert with <a href="#" class="alert-link">an example link</a>. Give it a click if you like.
+</div>
+*/
 
   // Handle messages sent by the server.
   socket.onmessage = function (event) {
-    switch(event.data[messageType]) {
+    console.log(event);
+    data=(JSON.parse(event.data));
+    console.log(data.msgType)
+    switch(data.msgType) {
       case 'boardUpdate':
-        testBoard=event.data['board'];
-        drawMovement(event.data['board'])
+        testBoard=jsonParser(data.board)
+        console.log(testBoard);
+        drawMovement(testBoard)
         break
-      //More to come with time
-    }
+      case 'waitingForPlayers':
+          if(!$("#googlymoogle").length) {
+            var alert = document.createElement('div');
+            alert.className='alert alert-dismissible alert-dark fade show';
+            alert.id='googlymoogle'
+            alert.role="alert";
+            alert.innerHTML="Welcome to the queue. We are currently waiting on "+data.numLeft+" players. Thank you for your patience";
+            document.getElementById("alertCenter").appendChild(alert);
+      }
+      else {
+        document.getElementById("googlymoogle").innerHTML="Welcome to the queue. We are currently waiting on "+data.numLeft+" players. Thank you for your patience";
+      }
+      $('#googlymoogle').on('click', function(event) {
+        $('#googlymoogle').alert('close');
+      })
+         
+          
   };
 
 
   // Show a disconnected message when the WebSocket is closed.
   socket.onclose = function (event) {
     console.log("Socket is disconnected");
+    var socket = new WebSocket('ws://localhost:8000'); 
   };
-  $('#title').on('click', function(event) {
-    window.location.href = "index.html";
-    console.log('he')
-  });
-
   
 
 
@@ -474,6 +500,11 @@ window.onload = function () {
 
 
 };
+$('#title').on('click', function(event) {
+  window.location.href = "index.html";
+  console.log('he')
+});
+}
 //window.onload();
 
 //Main Loop
