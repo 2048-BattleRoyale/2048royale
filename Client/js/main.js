@@ -35,7 +35,7 @@ var board = {"players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score"
 var boardTest = {"players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"boxes":{"1":{"enabled":true,"tileNum":2,"tileId":2,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileId":21,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileId":12,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileId":98,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileId":34,"owner":1,"justMerged":false},"8":{"enabled":true,"tileNum":4096,"tileId":88,"owner":1,"justMerged":false},"9":{"enabled":true,"tileNum":2,"tileId":127,"owner":1,"justMerged":false},"10":{"enabled":true,"tileNum":16,"tileId":63,"owner":1,"justMerged":false}}};
 var boardTestTest={"players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"boxes":{"1":{"enabled":true,"tileNum":2,"tileId":2,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileId":21,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileId":12,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileId":98,"owner":1,"justMerged":false},"9":{"enabled":true,"tileNum":2,"tileId":51,"owner":1,"justMerged":false},"11":{"enabled":true,"tileNum":4,"tileId":25,"owner":1,"justMerged":false}}};
 var newBoard;
-
+var gamestarted=false;
 //Test/Example board used for testing out a real board object.
 //Color Profiles Stored Dynamically Online- this is the default
 var theme1={ //This is a blue and pink theme. 
@@ -132,6 +132,7 @@ badJSON={"players":[{"name":"Billy Bob","score":0},{"name":"Jane Bob","score":0}
 //console.log(JSON.parse(badJSON));
 //console.log(JSON.parse(worseJSON))
 function jsonParser(miscommunication) {
+  
   var goodboard={"players":{},"boxes":{}};
   for (let i=0;i<miscommunication.players.length;i++) {
     goodboard.players[i+1]=miscommunication.players[0];
@@ -141,12 +142,14 @@ function jsonParser(miscommunication) {
     if (!miscommunication.boxes[j].enabled ||miscommunication.boxes[j].tileNum==0) {
       continue;
     }
+
     testOb=miscommunication.boxes[j];
    //Ignore; bug fixing console.log(testOb)
     tempID=miscommunication.boxes[j].tileId;
     testOb.tileId=j+1;
     goodboard.boxes[tempID.toString()]=testOb;
   }
+  console.log("MRS:")
   
   return (goodboard);
 
@@ -162,7 +165,7 @@ eventuallyRemove=[];
 //Primary Functions
 
 function newTile(Box) {
-  console.log(Box);
+  //console.log(Box);
   var box=new Tile(totalB+1,calcX(Box.tileId%14),calcY(Box.tileId),Box.tileNum,Box.owner,Box.enabled);
   totalB+=1;
   currentArray.push(box);  
@@ -304,7 +307,7 @@ function deleteTile(Tile) { //Play delete animation then kick that sorry thing o
 function firstDraw(tempBoard) { //When the board is first recieved, call this function on it.
       for (let i=1; i<(Object.keys(tempBoard.boxes).length+1);i++) {
      //console.log(Board.boxes[i.toString()]);
-     console.log(tempBoard.boxes[i+1]) 
+//     console.log(tempBoard.boxes[i+1]) 
      newTile(tempBoard.boxes[i]);
     }
     players=Board.players;
@@ -387,7 +390,7 @@ var i=0;
 
 
 //Listeners
-document.addEventListener('keydown', function(event){
+document.addEventListener('keyup', function(event){
   //alert(event.keyCode); (Uncomment this line if you need to add future keyswitch codes)
   switch(event.keyCode) {
     case 87:
@@ -466,8 +469,14 @@ window.onload = function () {
       case 'boardUpdate':
         testBoard=jsonParser(data.board)
         console.log(testBoard);
-        drawMovement(testBoard)
-        break
+        if (gamestarted==false) {
+        firstDraw(testBoard);
+        gamestarted=true;
+        }
+        else {
+          drawMovement(testBoard);
+        }
+      break
       case 'waitingForPlayers':
           if(!$("#googlymoogle").length) {
             var alert = document.createElement('div');
@@ -483,6 +492,9 @@ window.onload = function () {
       $('#googlymoogle').on('click', function(event) {
         $('#googlymoogle').alert('close');
       })
+      break;
+      case 'gameStarting':
+          gamestarted=false;
          
           
   };
@@ -512,8 +524,10 @@ while (false) {
   break;
 }
 
-
+/*
 //firstDraw(board);
 newBoard=jsonParser(badJSON);
 console.log(newBoard);
 firstDraw(newBoard);
+
+*/
