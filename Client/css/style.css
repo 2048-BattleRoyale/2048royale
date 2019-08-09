@@ -66,3 +66,7 @@ url('ClearSans-Bold.eot');
   font-size:10vmin;
   font-family: ClearSans-Bold, sans-serif;
 }
+.rightpl {
+  transform: translate(90vmin,12%);
+  width:30vmin !important;
+}

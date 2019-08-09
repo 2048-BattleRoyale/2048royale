@@ -143,7 +143,7 @@ badJSON={"players":[{"name":"Billy Bob","score":0},{"name":"Jane Bob","score":0}
 //console.log(JSON.parse(badJSON));
 //console.log(JSON.parse(worseJSON))
 function jsonParser(miscommunication) {
-  
+  //Do something with the player values here
   var goodboard={"players":{},"boxes":{}};
   for (let i=0;i<miscommunication.players.length;i++) {
     goodboard.players[i+1]=miscommunication.players[0];
