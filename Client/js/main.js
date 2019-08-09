@@ -494,7 +494,7 @@ window.onload = function () {
     socket.send(JSON.stringify({ //Modify this with cookies, to make sure one player gets reconnected with their correct session etc... and can't join several times.
       msgType: "signup",
       sessionID: sessionID.toString(),
-      name: "Billy Bob"
+      name: "Player"+Math.floor(Math.random()*10)
     }));
   };
 
@@ -522,7 +522,10 @@ window.onload = function () {
         }
       break
       case 'waitingForPlayers':
+        if (myPlayerNum==4) {
           myPlayerNum=4-data.numLeft;
+          changemade=true;
+        }
           if(!$("#googlymoogle").length) {
             var alert = document.createElement('div');
             alert.className='alert alert-dismissible alert-dark fade show';
@@ -543,6 +546,7 @@ window.onload = function () {
       break;
       case 'gameStarting':
           gamestarted=false;
+          changemade=true;
           break;
       case 'ERR':
         console.log("FATAL ERROR IN WEBSOCKET- COLLECTING LOG");
