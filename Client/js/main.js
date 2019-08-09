@@ -37,6 +37,7 @@ var boardTestTest={"players":{1:{"Name":"String","Score":0},2:{"Name":"String","
 var newBoard;
 var gamestarted=false;
 var sessionID;
+var myPlayerNum=4;
 
 //Test/Example board used for testing out a real board object.
 //Color Profiles Stored Dynamically Online- this is the default
@@ -150,6 +151,8 @@ function jsonParser(miscommunication) {
     goodboard.players[i+1]=miscommunication.players[i];
     if (gamestarted==false) {
       players.push(miscommunication.players[i].name);
+      document.getElementById("player"+myPlayerNum).classList.add("indigo");
+      document.getElementById("player"+myPlayerNum).classList.remove("elegant-color-dark");
       }
     document.getElementById("player"+(i+1).toString()).innerHTML=miscommunication.players[i].name + "   " + "<span class=\"badge badge-primary badge-pill elegant-color \" id=\"player1sc\">"+miscommunication.players[i].score+"</span>";
   }
@@ -476,6 +479,13 @@ window.onload = function () {
     if (document.cookie.indexOf('sessionID')==-1) {
       sessionID=getSessionID();
       $.cookie("sessionID", JSON.stringify(sessionID),{ expires: .005 });
+   /* Uncomment this when you want cookie persistence
+      socket.send(JSON.stringify({ //Modify this with cookies, to make sure one player gets reconnected with their correct session etc... and can't join several times.
+      msgType: "signup",
+      sessionID: sessionID.toString(),
+      name: "Billy Bob"
+    }));
+    */
       }
       else {
         console.log(JSON.parse($.cookie("sessionID")))
@@ -512,6 +522,7 @@ window.onload = function () {
         }
       break
       case 'waitingForPlayers':
+          myPlayerNum=4-data.numLeft;
           if(!$("#googlymoogle").length) {
             var alert = document.createElement('div');
             alert.className='alert alert-dismissible alert-dark fade show';
