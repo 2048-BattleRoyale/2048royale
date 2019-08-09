@@ -36,6 +36,7 @@ var boardTest = {"players":{1:{"Name":"String","Score":0},2:{"Name":"String","Sc
 var boardTestTest={"players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"boxes":{"1":{"enabled":true,"tileNum":2,"tileId":2,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileId":21,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileId":12,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileId":98,"owner":1,"justMerged":false},"9":{"enabled":true,"tileNum":2,"tileId":51,"owner":1,"justMerged":false},"11":{"enabled":true,"tileNum":4,"tileId":25,"owner":1,"justMerged":false}}};
 var newBoard;
 var gamestarted=false;
+var sessionID;
 //Test/Example board used for testing out a real board object.
 //Color Profiles Stored Dynamically Online- this is the default
 var theme1={ //This is a blue and pink theme. 
@@ -123,6 +124,16 @@ function findposbyID(ID) { //Give this function an ID from a current Tile and it
       }
   }
 }
+function getSessionID()
+{
+  /*
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", "http://127.0.0.1:7000", false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+  */
+  return Math.random()*10000;
+  }
 function getColor(values) {
   return  JSON.parse($.cookie("colorTheme"))[values.toString()];
   // Future code here will allow for switchable themes that are admittedly quite snazzy
@@ -392,41 +403,46 @@ var i=0;
 //Listeners
 document.addEventListener('keyup', function(event){
   //alert(event.keyCode); (Uncomment this line if you need to add future keyswitch codes)
-  switch(event.keyCode) {
-    case 87:
-    case 38:
-      alert("Up! To be replaced by sockets when ready.");
-      socket.send(JSON.stringify({
-        msgType: "playMove",
-        direction: "up",
-        sessionID:"bazb7aMs"
-      }));
-      break;
-    case 39:
-    case 68:
-        alert("Right! To be replaced by sockets when ready.");
-        socket.send({
-          "msgType": "playerMove",
-          "direction": "right"
-        })
+  if (true && gamestarted) {
+    switch(event.keyCode) {
+      case 87:
+      case 38:
+        alert("Up! To be replaced by sockets when ready.");
+        socket.send(JSON.stringify({
+          msgType: "playMove",
+          direction: "up",
+          sessionID:JSON.parse($.cookie("sessionID"))
+        }));
         break;
-    case 40:
-    case 83:
-        alert("Down! To be replaced by sockets when ready.");
-        socket.send({
-          "msgType": "playerMove",
-          "direction": "down"
-        })
-        break;
-    case 37:
-    case 65:
-        alert("Left! To be replaced by sockets when ready.");
-        socket.send({
-          "msgType": "playerMove",
-          "direction": "left"
-        })
-        break;
+      case 39:
+      case 68:
+          alert("Right! To be replaced by sockets when ready.");
+          socket.send(JSON.stringify({
+            msgType: "playMove",
+            direction: "right",
+            sessionID:JSON.parse($.cookie("sessionID"))
+          }));
+          break;
+      case 40:
+      case 83:
+          alert("Down! To be replaced by sockets when ready.");
+          socket.send(JSON.stringify({
+            msgType: "playMove",
+            direction: "down",
+            sessionID:JSON.parse($.cookie("sessionID"))
+          }));
+          break;
+      case 37:
+      case 65:
+          alert("Left! To be replaced by sockets when ready.");
+          socket.send(JSON.stringify({
+            msgType: "playMove",
+            direction: "left",
+            sessionID:JSON.parse($.cookie("sessionID"))
+          }));
+          break;
 
+    }
   }
 } );
 window.onload = function () {
@@ -447,9 +463,17 @@ window.onload = function () {
   // Show a connected message when the WebSocket is opened.
   socket.onopen = function (event) {
     console.log("Socket is connected.");
-    socket.send(JSON.stringify({
+    if (document.cookie.indexOf('sessionID')==-1) {
+      sessionID=getSessionID();
+      $.cookie("sessionID", JSON.stringify(sessionID),{ expires: .005 });
+      }
+      else {
+        console.log(JSON.parse($.cookie("sessionID")))
+        sessionID= JSON.parse($.cookie("sessionID"))
+      }
+    socket.send(JSON.stringify({ //Modify this with cookies, to make sure one player gets reconnected with their correct session etc... and can't join several times.
       msgType: "signup",
-      sessionID: "bazb7aMs",
+      sessionID: sessionID.toString(),
       name: "Billy Bob"
     }));
   };
@@ -483,11 +507,11 @@ window.onload = function () {
             alert.className='alert alert-dismissible alert-dark fade show';
             alert.id='googlymoogle'
             alert.role="alert";
-            alert.innerHTML="Welcome to the queue. We are currently waiting on "+data.numLeft+" players. Thank you for your patience";
+            alert.innerHTML="Welcome to the queue. We are currently waiting on "+data.numLeft+" players. Thank you for your patience.";
             document.getElementById("alertCenter").appendChild(alert);
       }
       else {
-        document.getElementById("googlymoogle").innerHTML="Welcome to the queue. We are currently waiting on "+data.numLeft+" players. Thank you for your patience";
+        document.getElementById("googlymoogle").innerHTML="Welcome to the queue. We are currently waiting on "+data.numLeft+" players. Thank you for your patience.";
       }
       $('#googlymoogle').on('click', function(event) {
         $('#googlymoogle').alert('close');
@@ -495,6 +519,11 @@ window.onload = function () {
       break;
       case 'gameStarting':
           gamestarted=false;
+          break;
+      case 'ERR':
+        console.log("FATAL ERROR IN WEBSOCKET- COLLECTING LOG");
+        break;
+      
          
           
   };
