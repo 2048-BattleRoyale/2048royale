@@ -12,6 +12,9 @@ console.log("CONFIG: ws on port:\t" + wsPort);
 // {Board, Board, Board, ...}
 var boardsList = [];
 
+// Log a message to the terminal.
+// critical (bool): Is the message critical or debug?
+// msg (string): Message to print.
 function logMsg(critical, msg) {
   if (critical) {
     console.log("CRITICAL ERR: " + msg);
@@ -34,15 +37,43 @@ function makeSessionID(length) {
 
 // Send board update to all players in the board.
 function sendBoardUpdate(board) {
-  for (var i = 0; i < board.getPlayers.length; i++) {
-    board.getPlayers[i].connection.send(JSON.stringify({
+  for (var i = 0; i < board.getPlayers().length; i++) {
+    // logMsg(false, "Sending to sessionID: " + board.getPlayers()[i].sID)
+    board.getPlayers()[i].connection.send(JSON.stringify({
       msgType: "boardUpdate",
       board: board.getAsJSON()
     }));
   }
 }
 
+// Find the board that this player is on.
+// ws (websocket connection): WebSocket to use for a possible error message.
+// sesssionID (string): sessionID of the query user.
+function findPlayersBoard(ws, sessionID) {
+  var board = null;
+  for (var i = 0; i < boardsList.length; i++) {
+    var playersList = boardsList[i].getPlayers();
+    for (var j = 0; j < playersList.length; j++) {
+      if (playersList[j].sID === sessionID) {
+        board = boardsList[i];
+        break;
+      }
+    }
+  }
+
+  // IF no board was found, error out.
+  if (board == null) {
+    ws.send(JSON.stringify({
+      msgType: "ERR",
+      err: "Board not found"
+    }));
+    return null;
+  } else return board;
+}
+
 // Handles an incoming WebSockets message.
+// ws (websocket connection): WebSocket to use for communication with the current client.
+// msg (JSON string): Unparsed JSON string with the message body.
 function handleWsMessage(ws, msg) {
   // ws.send(msg);
   var parsedMsg = JSON.parse(msg);
@@ -68,10 +99,10 @@ function handleWsMessage(ws, msg) {
         // Initialize the board, so that it has boxes.
         boardsList[freeBoard].initBoard();
 
-        // Tell all of the players that the game is starting and send the first board object.
+        // Tell all players that the game is starting and send the first board object.
         var playersList = boardsList[freeBoard].getPlayers();
         for (var i = 0; i < playersList.length; i++) {
-          logMsg(false, "Sending game stating message to board: " + freeBoard + ", player: " + i)
+          // logMsg(false, "Sending game starting message to board: " + freeBoard + ", player: " + i)
           playersList[i].connection.send(JSON.stringify({
             msgType: "gameStarting"
           }));
@@ -80,61 +111,37 @@ function handleWsMessage(ws, msg) {
             board: boardsList[freeBoard].getAsJSON()
           }));
         }
-      } else {
-        // Otherwise, just send a waiting message.
+      } else { // Tell all players that the game how many players still need to join.
         logMsg(false, "Nope, just sending waiting message.")
-        ws.send(JSON.stringify({
-          msgType: "waitingForPlayers"
-        }));
+        var playersList = boardsList[freeBoard].getPlayers();
+        var numLeft = 4 - playersList.length;
+        for (var i = 0; i < playersList.length; i++) {
+          playersList[i].connection.send(JSON.stringify({
+            msgType: "waitingForPlayers",
+            numLeft: numLeft
+          }));
+        }
       }
       break;
     case "playerMove":
       // Find the board that this player is on.
       var sessionID = parsedMsg.sessionID;
-      var board = null;
-      for (var i = 0; i < boardsList.length; i++) {
-        var playersList = boardsList[i].getPlayers;
-        for (var j = 0; j < playersList.length; j++) {
-          if (playersList[j].sID === sessionID) board = boardsList[i];
-        }
+      var board = findPlayersBoard(ws, sessionID);
+      // If the player's board was found, handle the gosh darn box!
+      if (board != null) {
+        board.handleBoardMove(parsedMsg.direction);
+        sendBoardUpdate(board);
       }
-
-      // IF no board was found, error out.
-      if (board == null) {
-        ws.send(JSON.stringify({
-          msgType: "ERR",
-          err: "Board not found"
-        }));
-        return;
-      }
-
-      // Otherwise, handle the gosh darn box!
-      board.handleBoardMove(parsedMsg.direction);
-      sendBoardUpdate(board);
       break;
     case "unlockBox":
       // Find the board that this player is on.
       var sessionID = parsedMsg.sessionID;
-      var board = null;
-      for (var i = 0; i < boardsList.length; i++) {
-        var playersList = boardsList[i].getPlayers;
-        for (var j = 0; j < playersList.length; j++) {
-          if (playersList[j].sID === sessionID) board = boardsList[i];
-        }
+      var board = findPlayersBoard(ws, sessionID);
+      // If the player's board was found, enable the gosh darn box!
+      if (board != null) {
+        board.enableBox(parsedMsg.x, parsedMsg.y);
+        sendBoardUpdate(board);
       }
-
-      // IF no board was found, error out.
-      if (board == null) {
-        ws.send(JSON.stringify({
-          msgType: "ERR",
-          err: "Board not found"
-        }));
-        return;
-      }
-
-      // Otherwise, enable the gosh darn box!
-      board.enableBox(parsedMsg.x, parsedMsg.y);
-      sendBoardUpdate(board);
       break;
     default:
       ws.send(JSON.stringify({
@@ -144,6 +151,10 @@ function handleWsMessage(ws, msg) {
       break;
   }
 }
+
+// *****************************************************************************
+// HTTP and WebSockets Server init and setup.
+// *****************************************************************************
 
 // Start HTTP Server to listen for new clients to sign in.
 http.createServer(function (request, response) {

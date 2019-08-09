@@ -32,7 +32,7 @@ class Board {
     for(var i = 0; i < this.playersInGame.length; i++)
       playersList.push({name: this.playersInGame[i].name, score: this.playersInGame[i].score});
 
-    return {players: playersList, boxes: this.boxes};
+    return {players: playersList, boxes: this.boxes.flat()};
   }
 
   // Initialize a new boxes. Fill it with nulled elements and set up the initial boxes state.
