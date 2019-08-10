@@ -16,7 +16,7 @@ url('ClearSans-Bold.eot');
   border: 2vmin solid #776e65;
   width:83.5vmin;
   height:83.5vmin;
-  z-index: -100;
+  z-index: -10000;
 
 }
 
@@ -53,7 +53,7 @@ url('ClearSans-Bold.eot');
   font-family: ClearSans-Bold, sans-serif;
   width:  5.31769230769vmin;
   height: 5.31769230769vmin;
-  background-color: darkolivegreen;
+  background-color: rgb(72, 255, 96);
   z-index: -5;
 }
 .blocked{
@@ -68,7 +68,7 @@ url('ClearSans-Bold.eot');
   width:  5.31769230769vmin;
   height: 5.31769230769vmin;
   background-color:rgba(238, 228, 218, 0.35);
-  z-index: -4;
+  z-index: -5554;
 }
 .Board{
   width:83.5vmin;

@@ -34,14 +34,17 @@ var socket = new WebSocket('ws://127.0.0.1:8000/');
 var board = {"players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"boxes":{"1":{"enabled":true,"tileNum":2,"tileId":1,"owner":1,"justMerged":false},"2":{"enabled":true,"tileNum":512,"tileId":85,"owner":2,"justMerged":false},"3":{"enabled":true,"tileNum":4096,"tileId":96,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileId":37,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileId":193,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileId":112,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileId":196,"owner":1,"justMerged":false}}};
 var boardTest = {"players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"boxes":{"1":{"enabled":true,"tileNum":2,"tileId":2,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileId":21,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileId":12,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileId":98,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileId":34,"owner":1,"justMerged":false},"8":{"enabled":true,"tileNum":4096,"tileId":88,"owner":1,"justMerged":false},"9":{"enabled":true,"tileNum":2,"tileId":127,"owner":1,"justMerged":false},"10":{"enabled":true,"tileNum":16,"tileId":63,"owner":1,"justMerged":false}}};
 var boardTestTest={"players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"boxes":{"1":{"enabled":true,"tileNum":2,"tileId":2,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileId":21,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileId":12,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileId":98,"owner":1,"justMerged":false},"9":{"enabled":true,"tileNum":2,"tileId":51,"owner":1,"justMerged":false},"11":{"enabled":true,"tileNum":4,"tileId":25,"owner":1,"justMerged":false}}};
-badJSON={"players":[{"name":"Billy Bob","score":0},{"name":"Jane Bob","score":4},{"name":"Joe Smith","score":2220},{"name":"Jack Sprat","score":0}],"boxes":[{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":2,"tileId":2,"owner":1},{"enabled":true,"tileNum":2,"tileId":3,"owner":1},{"enabled":true,"tileNum":64,"tileId":1,"owner":3},{"enabled":true,"tileNum":2,"tileId":4,"owner":1},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":2,"tileId":6,"owner":1},{"enabled":true,"tileNum":2,"tileId":7,"owner":1},{"enabled":true,"tileNum":2,"tileId":5,"owner":2},{"enabled":true,"tileNum":2,"tileId":8,"owner":1},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},
-{"enabled":true,"tileNum":128,"tileId":19,"owner":3},{"enabled":true,"tileNum":16384,"tileId":17,"owner":2},{"enabled":true,"tileNum":2048,"tileId":18,"owner":4},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":2,"tileId":10,"owner":1},{"enabled":true,"tileNum":2,"tileId":11,"owner":1},{"enabled":true,"tileNum":2,"tileId":9,"owner":3},{"enabled":true,"tileNum":4,"tileId":12,"owner":2},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":2,"tileId":14,"owner":1},{"enabled":true,"tileNum":2,"tileId":15,"owner":1},{"enabled":true,"tileNum":2,"tileId":13,"owner":4},{"enabled":true,"tileNum":2,"tileId":16,"owner":1},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0}]};
+badJSON={"players":[{"name":"Billy Bob","score":0},{"name":"Jane Bob","score":4},{"name":"Joe Smith","score":2220},{"name":"Jack Sprat","score":0}],"boxes":[{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":8,"tileId":2,"owner":1},{"enabled":true,"tileNum":2,"tileId":3,"owner":1},{"enabled":true,"tileNum":64,"tileId":1,"owner":3},{"enabled":true,"tileNum":2,"tileId":4,"owner":1},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":2,"tileId":6,"owner":1},{"enabled":true,"tileNum":2,"tileId":7,"owner":1},{"enabled":true,"tileNum":2,"tileId":5,"owner":2},{"enabled":true,"tileNum":2,"tileId":8,"owner":1},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},
+{"enabled":true,"tileNum":128,"tileId":19,"owner":3},{"enabled":true,"tileNum":16384,"tileId":17,"owner":2},{"enabled":true,"tileNum":2048,"tileId":18,"owner":4},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":8,"tileId":10,"owner":1},{"enabled":true,"tileNum":2,"tileId":11,"owner":1},{"enabled":true,"tileNum":2,"tileId":9,"owner":3},{"enabled":true,"tileNum":4,"tileId":12,"owner":2},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":2,"tileId":14,"owner":1},{"enabled":true,"tileNum":2,"tileId":15,"owner":1},{"enabled":true,"tileNum":2,"tileId":13,"owner":4},{"enabled":true,"tileNum":2,"tileId":16,"owner":1},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0}]};
 var newBoard;
 var gamestarted=false;
 var sessionID;
 var myPlayerNum=4;
 var lockedBoxes=[];
-
+var lightColor='FFFFFF';
+var darkColor='000000';
+var transformnumx=5.741924954411;
+var transformnumy=5.747124954411;
 //Test/Example board used for testing out a real board object.
 //Color Profiles Stored Dynamically Online- this is the default
 var theme1={ //This is the standard 2048 theme
@@ -59,8 +62,12 @@ var theme1={ //This is the standard 2048 theme
     "4096":"F4DA81",
     "8192":"FBF2D5",
     "16384":"FFFFFF"
-    }
-  
+}
+var extraInfo={
+  "gridBackground":"bbada0",
+  "lineBorder":"776e65",
+  "blocked":"eee4da"
+}
 
 //Tile class is the object that's stored in each array.
 //console.log(board.boxes["3"].tileId);
@@ -144,7 +151,14 @@ function getColor(values) {
   return  JSON.parse($.cookie("colorTheme"))[values.toString()];
   // Future code here will allow for switchable themes that are admittedly quite snazzy
 }
-
+function darkOrLight(bgColor) { //Thanks https://stackoverflow.com/questions/3942878/how-to-decide-font-color-in-white-or-black-depending-on-background-color
+  var color = (bgColor.charAt(0) === '#') ? bgColor.substring(1, 7) : bgColor;
+  var r = parseInt(color.substring(0, 2), 16); // hexToR
+  var g = parseInt(color.substring(2, 4), 16); // hexToG
+  var b = parseInt(color.substring(4, 6), 16); // hexToB
+  return (((r * 0.299) + (g * 0.587) + (b * 0.114)) > 215) ?
+    darkColor : lightColor;
+}
 function jsonParser(miscommunication) {
   //Do something with the player values here
   var goodboard={"players":{},"boxes":{}};
@@ -199,11 +213,9 @@ function newTile(Box) {
   currentArray.push(box);  
     var tile_div=document.createElement('div');
     tile_div.className='tile';
-    tile_div.innerHTML=(box.value).toString()+"<div><div style=\"font-size:1vmin;transform: translate(0, -3.5vmin);\">"+players[Box.owner-1]+"</div></div>"
+    tile_div.innerHTML=(box.value).toString()+"<div><div style=\"font-size:1vmin;transform: translate(0, -3.2vmin);\">"+players[Box.owner-1]+"</div></div>"
     tile_div.id='tile'+(box.id).toString();
     grid.appendChild(tile_div);
-    var transformnumx=5.741924954411;
-    var transformnumy=5.748124954411;
 
    // document.getElementById('tile'+(Tile.id).toString()).style.transform="translate(1vmin,0vmin)" //Static transform to accomodate for the earlier margin one
     document.getElementById('tile'+(box.id).toString()).style.transform="translate("+(transformnumx*(box.x-1))+"vmin,"+((box.y-1)*transformnumy)+"vmin)" //Original position transform
@@ -231,7 +243,8 @@ function newTile(Box) {
       
     
     })
-    
+    document.getElementById('tile'+(box.id).toString()).style.color='#'+darkOrLight(getColor(box.value));
+
     switch(Box.tileNum) {
       case(2):
       case(4):
@@ -284,6 +297,7 @@ function drawLocked() {
     document.getElementById('blocked'+(lockedBoxes[i]).toString()).style.transform=document.getElementById('blocked'+(lockedBoxes[i]).toString()).style.transform+" translateX(0vmin)"+" translateY(0vmin)"; //Original position transform
 
   }
+  $(".blocked").css("background-color","#"+JSON.parse($.cookie("boardTheme"))["blocked"])  
 }
 function idInCurrentArray(id) {
   for (let i=0;i<currentArray.length;i++) {
@@ -302,11 +316,11 @@ function moveTile(Tile,FutureTile) { //TIle is the tile as it sits NOW, FutureTi
       targets: '#'+'tile'+(Tile.id).toString(),
       translateY:{
         
-        value:['0vmin',((FutureTile.y-Tile.y)*5.735).toString()+'vmin'],
+        value:['0vmin',((FutureTile.y-Tile.y)*transformnumy).toString()+'vmin'],
         duration:300,
     },
       translateX:{
-        value:['0vmin',((FutureTile.x-Tile.x)*5.735).toString()+'vmin'],        //value:[5.735*0,5.735*-13],
+        value:['0vmin',((FutureTile.x-Tile.x)*transformnumx).toString()+'vmin'],        //value:[5.735*0,5.735*-13],
         duration:300,
       },
   
@@ -320,7 +334,8 @@ function moveTile(Tile,FutureTile) { //TIle is the tile as it sits NOW, FutureTi
       update: function() {
         progress+=1
         if (progress>40) {
-        document.getElementById('tile'+(Tile.id).toString()).innerHTML=(FutureTile.value).toString()+"<div><div style=\"font-size:1vmin;transform: translate(0, -3.5vmin);\">"+players[FutureTile.owner-1]+"</div></div>"
+          document.getElementById('tile'+(Tile.id).toString()).style.color='#'+darkOrLight(getColor(FutureTile.value));
+        document.getElementById('tile'+(Tile.id).toString()).innerHTML=(FutureTile.value).toString()+"<div><div style=\"font-size:1vmin;transform: translate(0, -3.2vmin);\">"+players[FutureTile.owner-1]+"</div></div>"
         }
       }
     
@@ -490,9 +505,33 @@ document.addEventListener('keyup', function(event){
 window.onload = function () {
 //Add something here which reenables firstdraw
 
-  if (document.cookie.indexOf('colorTheme')==-1) {
-    $.cookie("colorTheme", JSON.stringify(theme1));
-  }
+//Cookie Jar
+if (document.cookie.indexOf('colorTheme')==-1) {
+  $.cookie("colorTheme", JSON.stringify(theme1));
+}
+
+if (document.cookie.indexOf('boardTheme')==-1) {
+    $.cookie("boardTheme", JSON.stringify(extraInfo));
+}
+$(".vline, .hline").css("background-color","#"+JSON.parse($.cookie("boardTheme"))["lineBorder"])  
+$(".grid").css("border","2vmin solid #"+JSON.parse($.cookie("boardTheme"))["lineBorder"])  
+$(".grid").css("background-color","#"+JSON.parse($.cookie("boardTheme"))["gridBackground"])  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // Create a new WebSocket.
    //var socket = new WebSocket('ws://echo.websocket.org');
   var socket = new WebSocket('ws://localhost:8000'); 

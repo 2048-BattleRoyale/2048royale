@@ -13,18 +13,43 @@ var testTheme={ //Default Theme- Change if other desired
   "2048":"EDC22E",
   "4096":"F4DA81",
   "8192":"FBF2D5",
-  "16384":"FFFFFF"
+  "16384":"cc66ff"
   }
+var extraInfo={
+  "gridBackground":"bbada0",
+  "lineBorder":"776e65",
+  "blocked":"eee4da"
+}
 
 function changeJSON(number, color) {
   //console.log(color);
   testTheme[number.toString()]=color;
 }
+function changeJSON2(string, color) {
+  switch(string) {
+    case(1):
+    extraInfo["gridBackground"]=color;
+    break;
+    case(2):
+    extraInfo["lineBorder"]=color;
+    break;
+    case(3):
+    extraInfo["blocked"]=color;
+    break;
+
+  }
+}
+
 $('.exportJSON').on('click', function(event) {
   $.cookie("colorTheme", JSON.stringify(testTheme));
   window.location.href = "index.html"; //Go home after setting the cookie
 
 });
+$('.export2JSON').on('click', function(event) {
+  $.cookie("boardTheme", JSON.stringify(extraInfo));
+  window.location.href = "index.html"; //Go home after setting the cookie
+});
+
 $('#title').on('click', function(event) {
   window.location.href = "index.html"; //Go home
   console.log('he')
