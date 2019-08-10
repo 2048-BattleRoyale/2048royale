@@ -24,7 +24,7 @@ url('ClearSans-Bold.eot');
   position: absolute;
   width:.5vmin;
   height: 81vmin;
-  background-color: rgb(97, 97, 97);
+  background-color: rgba(97, 97, 97);
   margin-left: -.5vmin;
   z-index: 0 !IMPORTANT;
 }
@@ -44,6 +44,7 @@ url('ClearSans-Bold.eot');
   position: absolute;
 }
 .tile{
+  margin: 0 auto;
   border-radius: 1.1vmin;
   position: absolute;
   text-align: center;
