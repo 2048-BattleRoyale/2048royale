@@ -41,6 +41,7 @@ var gamestarted=false;
 var sessionID;
 var myPlayerNum=4;
 var lockedBoxes=[];
+
 //Test/Example board used for testing out a real board object.
 //Color Profiles Stored Dynamically Online- this is the default
 var theme1={ //This is a blue and pink theme. 
@@ -157,11 +158,13 @@ function jsonParser(miscommunication) {
   }
   console.log(goodboard.players);
   console.log(players)
+  lockedBoxes=[];
   for (let j=0;j<miscommunication.boxes.length;j++) {
   //  console.log("found box"+(j+1));
   if (!miscommunication.boxes[j].enabled) {
-    lockedBoxes.push(j);
+    lockedBoxes.push(j+1);
   }
+  //console.log(lockedBoxes);
   if (miscommunication.boxes[j].tileNum==0) { //Catch-all needs to be replaced soon
       continue;
     }
@@ -173,6 +176,7 @@ function jsonParser(miscommunication) {
     testOb.tileId=j+1;
     goodboard.boxes[tempID.toString()]=testOb;
   }
+  drawLocked();
   // FOR NOW console.log("MRS:")
   return (goodboard);
 
@@ -262,6 +266,24 @@ function newTile(Box) {
     
 
   }
+function drawLocked() {
+  if (!gamestarted==false) {
+    $('.blocked').remove()
+  }
+  console.log(lockedBoxes.length)
+  for (let i=0;i<lockedBoxes.length;i++) {
+    
+    var blocked_tile=document.createElement('div');
+    blocked_tile.className='blocked';
+    blocked_tile.id='blocked'+lockedBoxes[i];
+    grid.appendChild(blocked_tile);
+    var transformnumx=5.741924954411;
+    var transformnumy=5.748124954411;
+    document.getElementById('blocked'+(lockedBoxes[i]).toString()).style.transform="translate("+(transformnumx*(calcX(lockedBoxes[i]%14)-1))+"vmin,"+(calcY(lockedBoxes[i])-1)*transformnumy+"vmin)" //Original position transform
+    document.getElementById('blocked'+(lockedBoxes[i]).toString()).style.transform=document.getElementById('blocked'+(lockedBoxes[i]).toString()).style.transform+" translateX(0vmin)"+" translateY(0vmin)"; //Original position transform
+
+  }
+}
 function idInCurrentArray(id) {
   for (let i=0;i<currentArray.length;i++) {
     if (currentArray[i].id==parseInt(id,10)) {
