@@ -11,12 +11,12 @@ url('ClearSans-Bold.eot');
 .grid{
 
   position: absolute;
-  border-radius: 2vmin;
-  background-color: rgba(0, 0, 0, 0);
-  border: 2vmin solid black;
+  border-radius: .8vmin;
+  background-color: #bbada0;
+  border: 2vmin solid #776e65;
   width:83.5vmin;
   height:83.5vmin;
-  z-index: 100;
+  z-index: -100;
 
 }
 
@@ -24,7 +24,7 @@ url('ClearSans-Bold.eot');
   position: absolute;
   width:.5vmin;
   height: 80vmin;
-  background-color: rgba(97, 97, 97);
+  background-color: #776e65;
   margin-left: -.5vmin;
   z-index: 0 !IMPORTANT;
 }
@@ -33,7 +33,7 @@ url('ClearSans-Bold.eot');
   position: absolute;
   width:80vmin;
   height:.5vmin;
-  background-color: rgb(97, 97, 97);
+  background-color: #776e65;
   margin-top: -.5vmin;
   margin-bottom: .5vmin;
   z-index: 0;
@@ -45,7 +45,7 @@ url('ClearSans-Bold.eot');
 }
 .tile{
   margin: 0 auto;
-  border-radius: .9vmin;
+  border-radius: .4vmin;
   position: absolute;
   text-align: center;
   line-height: 5vmin;
@@ -59,7 +59,7 @@ url('ClearSans-Bold.eot');
 .blocked{
   position: absolute;
   margin: 0 auto;
-  border-radius: .9vmin;
+  border-radius: 0vmin;
   position: absolute;
   text-align: center;
   line-height: 5vmin;
@@ -67,7 +67,7 @@ url('ClearSans-Bold.eot');
   font-family: ClearSans-Bold, sans-serif;
   width:  5.31769230769vmin;
   height: 5.31769230769vmin;
-  background-color: rgb(225, 235, 143);
+  background-color:rgba(238, 228, 218, 0.35);
   z-index: -4;
 }
 .Board{

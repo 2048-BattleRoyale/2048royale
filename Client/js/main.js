@@ -44,22 +44,23 @@ var lockedBoxes=[];
 
 //Test/Example board used for testing out a real board object.
 //Color Profiles Stored Dynamically Online- this is the default
-var theme1={ //This is a blue and pink theme. 
-  "2":"A8DEF5",
-  "4":"AFDBF3",
-  "8":"B7D8F2",
-  "16":"BFD5F1",
-  "32":"C7D2EF",
-  "64":"CFCFEE",
-  "128":"D6CCED",
-  "256":"DEC9EC",
-  "512":"E6C6EA",
-  "1024":"EEC3E9",
-  "2048":"F6C0E8",
-  "4096":"FEBEE7",
-  "8192":"FF8AD5",
-  "16384":"FF47BD"
-  }
+var theme1={ //This is the standard 2048 theme
+    "2":"EEE4DA",
+    "4":"ede0c8",
+    "8":"F2B179",
+    "16":"F59563",
+    "32":"F67C5F",
+    "64":"F65E3B",
+    "128":"EDCF72",
+    "256":"EDCC61",
+    "512":"EDC850",
+    "1024":"EDC53F",
+    "2048":"EDC22E",
+    "4096":"F4DA81",
+    "8192":"FBF2D5",
+    "16384":"FFFFFF"
+    }
+  
 
 //Tile class is the object that's stored in each array.
 //console.log(board.boxes["3"].tileId);
