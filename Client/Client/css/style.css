@@ -45,7 +45,7 @@ url('ClearSans-Bold.eot');
 }
 .tile{
   margin: 0 auto;
-  border-radius: .4vmin;
+  border-radius: .5vmin;
   position: absolute;
   text-align: center;
   line-height: 5vmin;

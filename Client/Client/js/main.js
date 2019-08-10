@@ -61,16 +61,15 @@ var theme1={ //This is the standard 2048 theme
     "2048":"EDC22E",
     "4096":"F4DA81",
     "8192":"FBF2D5",
-    "16384":"FFFFFF"
+    "16384":"9000FF"
 }
 var extraInfo={
-  "gridBackground":"bbada0",
-  "lineBorder":"776e65",
-  "blocked":"eee4da",
+  "gridBackground":"CDC1B4",
+  "lineBorder":"BBADA0",
+  "blocked":"978F86",
   "darkColor":"776e65",
   "lightColor":"F9F6F2"
 }
-
 
 //Tile class is the object that's stored in each array.
 //console.log(board.boxes["3"].tileId);
@@ -374,7 +373,8 @@ function deleteTile(Tile) { //Play delete animation then kick that sorry thing o
   eventuallyRemove.push((Tile.id).toString());
 }
 function firstDraw(tempBoard) { //When the board is first recieved, call this function on it.
-      for (let i=1; i<(Object.keys(tempBoard.boxes).length+1);i++) {
+  
+  for (let i=1; i<(Object.keys(tempBoard.boxes).length+1);i++) {
      //console.log(Board.boxes[i.toString()]);
 //     console.log(tempBoard.boxes[i+1]) 
      newTile(tempBoard.boxes[i]);
@@ -578,6 +578,7 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
     switch(data.msgType) {
       case 'boardUpdate':
         testBoard=jsonParser(data.board)
+        $.cookie("lastBoard", JSON.stringify(testBoard));
         console.log(testBoard);
         if (gamestarted==false) {
         firstDraw(testBoard);
@@ -624,6 +625,8 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
       case 'ERR':
         console.log("FATAL ERROR IN WEBSOCKET- COLLECTING LOG");
         break;
+      case 'gameOver':
+        //Delete Cookies
       
          
   };
@@ -642,10 +645,4 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
 
 };
 
-//window.onload();
-
-//Main Loop
-while (false) {
-  break;
-}
 }

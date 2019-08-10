@@ -11,7 +11,7 @@
   <link href="css/style.css" rel="stylesheet">
   <link  href="dark-mode.css">
 
-  <title>2048 Local Client</title>
+  <title>2048 Royale</title>
 </head>
 <body>
   <!-----Navigation Bar at the top-->
@@ -155,8 +155,28 @@
 
   </footer>
  <!-- Footer -->
+ 
+
+    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+    <!-- include only the Firebase features as you need -->
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script>
+      // Your web app's Firebase configuration
+        var firebaseConfig = {
+          apiKey: "AIzaSyATaYiqZRcDmtmpKHi6CbesA_lj79_f1ik",
+          authDomain: "royale-51adb.firebaseapp.com",
+          databaseURL: "https://royale-51adb.firebaseio.com",
+          projectId: "royale-51adb",
+          storageBucket: "royale-51adb.appspot.com",
+          messagingSenderId: "313344352578",
+          appId: "1:313344352578:web:318ef1ee882556ba"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+      </script>
 
     <!-- JQuery -->
+
     <script type="text/javascript" src="js/jquery-3.4.1.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <!-- Bootstrap tooltips -->

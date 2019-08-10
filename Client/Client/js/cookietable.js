@@ -13,12 +13,12 @@ var testTheme={ //Default Theme- Change if other desired
   "2048":"EDC22E",
   "4096":"F4DA81",
   "8192":"FBF2D5",
-  "16384":"cc66ff"
+  "16384":"9000FF"
   }
 var extraInfo={
-  "gridBackground":"bbada0",
-  "lineBorder":"776e65",
-  "blocked":"eee4da",
+  "gridBackground":"CDC1B4",
+  "lineBorder":"BBADA0",
+  "blocked":"978F86",
   "darkColor":"776e65",
   "lightColor":"F9F6F2"
 }
