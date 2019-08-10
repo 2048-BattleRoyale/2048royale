@@ -23,7 +23,7 @@ url('ClearSans-Bold.eot');
 .vline {
   position: absolute;
   width:.5vmin;
-  height: 81vmin;
+  height: 80vmin;
   background-color: rgba(97, 97, 97);
   margin-left: -.5vmin;
   z-index: 0 !IMPORTANT;
@@ -31,7 +31,7 @@ url('ClearSans-Bold.eot');
 .hline {
   
   position: absolute;
-  width:81vmin;
+  width:80vmin;
   height:.5vmin;
   background-color: rgb(97, 97, 97);
   margin-top: -.5vmin;
@@ -45,16 +45,16 @@ url('ClearSans-Bold.eot');
 }
 .tile{
   margin: 0 auto;
-  border-radius: 1.1vmin;
+  border-radius: 1.2vmin;
   position: absolute;
   text-align: center;
   line-height: 5vmin;
   font-size:5vmin;
   font-family: ClearSans-Bold, sans-serif;
-  width:5.5vmin;
-  height: 5.5vmin;
+  width:  5.31769230769vmin;
+  height: 5.31769230769vmin;
   background-color: darkolivegreen;
-  z-index: -3;
+  z-index: -5;
 }
 .Board{
   width:83.5vmin;

@@ -197,8 +197,11 @@ function newTile(Box) {
     tile_div.innerHTML=(box.value).toString()+"<div><div style=\"font-size:1vmin;transform: translate(0, -3.5vmin);\">"+players[Box.owner-1]+"</div></div>"
     tile_div.id='tile'+(box.id).toString();
     grid.appendChild(tile_div);
+    var transformnumx=5.741924954411;
+    var transformnumy=5.748124954411;
+
    // document.getElementById('tile'+(Tile.id).toString()).style.transform="translate(1vmin,0vmin)" //Static transform to accomodate for the earlier margin one
-    document.getElementById('tile'+(box.id).toString()).style.transform="translate("+(+5.74*(box.x-1))+"vmin,"+((box.y-1)*5.74)+"vmin)" //Original position transform
+    document.getElementById('tile'+(box.id).toString()).style.transform="translate("+(transformnumx*(box.x-1))+"vmin,"+((box.y-1)*transformnumy)+"vmin)" //Original position transform
     document.getElementById('tile'+(box.id).toString()).style.backgroundColor='#'+getColor(box.value);
     document.getElementById('tile'+(box.id).toString()).style.transform=document.getElementById('tile'+(box.id).toString()).style.transform+" translateX(0vmin)"+" translateY(0vmin)"; //Original position transform
     anime({
