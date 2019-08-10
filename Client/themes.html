@@ -14,28 +14,48 @@
   <title>2048 Local Client</title>
 </head>
 <body>
-    <div class="sticky-top"><nav class="navbar navbar-dark bg-dark">
+    <!-----Navigation Bar at the top-->
+    <div class="sticky-top"><nav class="navbar navbar-dark bg-dark elegant-color">
       
         <a class="navbar-brand" href="index.html">
           <img src="logo.png" width="80vmin" height="80vmin" class="d-inline-block align-top">
         </a>
         <ul class=" ml-auto">
-        <span class="navbar-brand align-middle" id="title"  style="font-size:7vmin;font-family:ClearSans-Bold, sans-serif;">2048Royale</span>
-        </ul>
+        <span class="navbar-brand align-middle " id='title' style="font-size:7vmin;font-family:ClearSans-Bold, sans-serif;">2048Royale</span>
+       </ul>
         <div class="align-bottom ml-auto">
-                
-           <span class="navbar-text" style="font-size:2vmin">Welcome, guest.</span>
-         
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent" style="font-size:4vmin;font-family:ClearSans-Bold">
-              <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                  <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+          
+          <div class="collapse navbar-collapse mx-auto" id="navbarSupportedContent" style="font-size:4vmin;font-family:Clearsans-Bold;transform:translate(26vmin,0vmin)">
+              
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item active">
+                  <div class='row'>
+                      <div class="col-sm" style="width:30vmin">
+                      <a class="nav-link elegant-color-dark" style="width:11.5vmin" href="index.html">Home <span class="sr-only">(current)</span></a>
+                      </div>
+                    <div class="col-sm">
+                        <a class="nav-link" style="width:12vmin"href="#">Login</a>
+                    </div>
+                    <div class="col-sm">                        
+                      <button class="ripple elegant-color-dark btn btn-large dropdown-toggle" style="font-size:3.7vmin;font-family:Clearsans-Bold;color:white;text-align: center;transform:translate(0px,-.5vmin);text-transform: none;" type="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">Settings</button>
+                        <div class="dropdown-menu elegant-color-dark" style="color:white">
+                          <a class="dropdown-item" style="color:white" href="themes.html">Board Settings</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" style="color:white" href="#">Account Settings</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item"  style="color:white" href="#">Feature Request</a>
+                        </div>
+                      </div>
+                  </div>
+                
                 </li>
-                <li class="nav-item">
+
+                <!----<li class="nav-item">
                   <a class="nav-link" href="#">Login</a>
                 </li>
                 <li class="nav-item dropdown">
@@ -43,7 +63,7 @@
                     Settings
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item active" href="themes.html">Board Colors</a>
+                    <a class="dropdown-item" href="themes.html">Board Colors</a>
                     <div class="dropdown-divider"></div>
                     <div class="custom-control custom-switch">
                         <input type="checkbox" class="custom-control-input" id="darkSwitch" />
@@ -51,7 +71,7 @@
                       </div>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Account Settings</a>
-                  </div>
+                  </div> -->
                 </li>
               </ul>
             </div>
@@ -267,7 +287,7 @@
           <h5 class="text-uppercase font-weight-bold">What is this?</h5>
           <p>2048Royale is an innovative battle royale game conceptualized and started at MVHACKS 2019, written in Vue.JS, Bootstrap, Anime.JS, and JQuery.
             The game is maintained by <a href="https://github.com/AllDoge">Aidan Smith</a> and <a href="https://github.com/neilbalch">Neil Balch</a>, who have developed
-            the client-side and server side respectively. Noticed a bug? Report it <i><a href="/brokenlink.html">here</a></i>. If you wish to look at the source code for the project, you can find that <i><a href="https://github.com/2048-BattleRoyale/2048royale">here</a></i>.
+            the client-side and server side respectively. Noticed a bug? Report it <i><a href="https://forms.gle/S8LP1fQNKeB3VZyY8">here</a></i>. If you wish to look at the source code for the project, you can find that <i><a href="https://github.com/2048-BattleRoyale/2048royale">here</a></i>.
           </p>
         </div>
       </div>
