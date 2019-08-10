@@ -24,19 +24,36 @@
         <span class="navbar-brand align-middle " id='title' style="font-size:7vmin;font-family:ClearSans-Bold, sans-serif;">2048Royale</span>
        </ul>
         <div class="align-bottom ml-auto">
-                
-           <span class="navbar-text" style="font-size:2vminl;font-family:Verdana, Geneva, Tahoma, sans-serif">Welcome, guest.</span>
-         
         </div>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent" style="font-size:4vmin;font-family:Clearsans-Bold">
-              <ul class="navbar-nav mr-auto">
+          <div class="collapse navbar-collapse mx-auto" id="navbarSupportedContent" style="font-size:4vmin;font-family:Clearsans-Bold;transform:translate(26vmin,0vmin)">
+              <ul class="navbar-nav mx-auto">
                 <li class="nav-item active">
-                  <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                  <div class='row'>
+                      <div class="col-sm" style="width:30vmin">
+                      <a class="nav-link elegant-color-dark" style="width:11.5vmin" href="index.html">Home <span class="sr-only">(current)</span></a>
+                      </div>
+                    <div class="col-sm">
+                        <a class="nav-link" style="width:12vmin"href="#">Login</a>
+                    </div>
+                    <div class="col-sm">                        
+                      <button class="ripple elegant-color-dark btn btn-large dropdown-toggle" style="font-size:3.7vmin;font-family:Clearsans-Bold;color:white;text-align: center;transform:translate(0px,-.5vmin);text-transform: none;" type="button" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">Settings</button>
+                        <div class="dropdown-menu elegant-color-dark" style="color:white">
+                          <a class="dropdown-item" style="color:white" href="#">Board Settings</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item" style="color:white" href="#">Account Settings</a>
+                          <div class="dropdown-divider"></div>
+                          <a class="dropdown-item"  style="color:white" href="#">Feature Request</a>
+                        </div>
+                      </div>
+                  </div>
+                
                 </li>
-                <li class="nav-item">
+
+                <!----<li class="nav-item">
                   <a class="nav-link" href="#">Login</a>
                 </li>
                 <li class="nav-item dropdown">
@@ -52,7 +69,7 @@
                       </div>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="#">Account Settings</a>
-                  </div>
+                  </div> -->
                 </li>
               </ul>
             </div>
@@ -150,7 +167,6 @@
     <script type="text/javascript" src="js/mdb.min.js"></script>
 
     <script src="js/dark-mode-switch.min.js"></script>
-   <!---- <script src="js/jscolor.js"></script>-->
     <script src="js/cookietable.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.0.1/lib/anime.min.js"></script>
     <script src="js/main.js"></script>

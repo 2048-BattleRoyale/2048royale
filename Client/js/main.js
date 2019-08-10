@@ -511,7 +511,7 @@ $('#title').on('click', function(event) {
   window.location.href = "index.html";
   console.log('he')
 });
-}
+
 
 //Cookie Jar
 if (document.cookie.indexOf('colorTheme')==-1) {
@@ -526,20 +526,6 @@ $(".grid").css("border","2vmin solid #"+JSON.parse($.cookie("boardTheme"))["line
 $(".grid").css("background-color","#"+JSON.parse($.cookie("boardTheme"))["gridBackground"]);
 darkColor=JSON.parse($.cookie("boardTheme"))["darkColor"];
 lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   // Create a new WebSocket.
@@ -662,11 +648,4 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
 while (false) {
   break;
 }
-
-/*
-//firstDraw(board);
-newBoard=jsonParser(badJSON);
-console.log(newBoard);
-firstDraw(newBoard);
-
-*/
+}
