@@ -18,7 +18,9 @@ var testTheme={ //Default Theme- Change if other desired
 var extraInfo={
   "gridBackground":"bbada0",
   "lineBorder":"776e65",
-  "blocked":"eee4da"
+  "blocked":"eee4da",
+  "darkColor":"776e65",
+  "lightColor":"F9F6F2"
 }
 
 function changeJSON(number, color) {
@@ -35,6 +37,12 @@ function changeJSON2(string, color) {
     break;
     case(3):
     extraInfo["blocked"]=color;
+    break;
+    case(4):
+    extraInfo["darkColor"]=color;
+    break;
+    case(5):
+    extraInfo["lightColor"]=color;
     break;
 
   }

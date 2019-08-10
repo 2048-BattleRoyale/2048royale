@@ -41,8 +41,8 @@ var gamestarted=false;
 var sessionID;
 var myPlayerNum=4;
 var lockedBoxes=[];
-var lightColor='FFFFFF';
-var darkColor='000000';
+var lightColor='F9F6F2';
+var darkColor='776E65';
 var transformnumx=5.741924954411;
 var transformnumy=5.747124954411;
 //Test/Example board used for testing out a real board object.
@@ -66,8 +66,11 @@ var theme1={ //This is the standard 2048 theme
 var extraInfo={
   "gridBackground":"bbada0",
   "lineBorder":"776e65",
-  "blocked":"eee4da"
+  "blocked":"eee4da",
+  "darkColor":"776e65",
+  "lightColor":"F9F6F2"
 }
+
 
 //Tile class is the object that's stored in each array.
 //console.log(board.boxes["3"].tileId);
@@ -503,7 +506,12 @@ document.addEventListener('keyup', function(event){
   }
 } );
 window.onload = function () {
-//Add something here which reenables firstdraw
+//Random Jquery Stuff to keep site running
+$('#title').on('click', function(event) {
+  window.location.href = "index.html";
+  console.log('he')
+});
+}
 
 //Cookie Jar
 if (document.cookie.indexOf('colorTheme')==-1) {
@@ -513,9 +521,11 @@ if (document.cookie.indexOf('colorTheme')==-1) {
 if (document.cookie.indexOf('boardTheme')==-1) {
     $.cookie("boardTheme", JSON.stringify(extraInfo));
 }
-$(".vline, .hline").css("background-color","#"+JSON.parse($.cookie("boardTheme"))["lineBorder"])  
-$(".grid").css("border","2vmin solid #"+JSON.parse($.cookie("boardTheme"))["lineBorder"])  
-$(".grid").css("background-color","#"+JSON.parse($.cookie("boardTheme"))["gridBackground"])  
+$(".vline, .hline").css("background-color","#"+JSON.parse($.cookie("boardTheme"))["lineBorder"]);  
+$(".grid").css("border","2vmin solid #"+JSON.parse($.cookie("boardTheme"))["lineBorder"]);  
+$(".grid").css("background-color","#"+JSON.parse($.cookie("boardTheme"))["gridBackground"]);
+darkColor=JSON.parse($.cookie("boardTheme"))["darkColor"];
+lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
 
 
 
@@ -645,11 +655,7 @@ $(".grid").css("background-color","#"+JSON.parse($.cookie("boardTheme"))["gridBa
 
 
 };
-$('#title').on('click', function(event) {
-  window.location.href = "index.html";
-  console.log('he')
-});
-}
+
 //window.onload();
 
 //Main Loop
