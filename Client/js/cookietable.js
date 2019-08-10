@@ -1,5 +1,5 @@
 
-var testTheme={ 
+var testTheme={ //Default Theme- Change if other desired
   "2":"A8DEF5",
   "4":"AFDBF3",
   "8":"B7D8F2",
@@ -22,9 +22,10 @@ function changeJSON(number, color) {
 }
 $('.exportJSON').on('click', function(event) {
   $.cookie("colorTheme", JSON.stringify(testTheme));
+  window.location.href = "index.html"; //Go home after setting the cookie
 
 });
 $('#title').on('click', function(event) {
-  window.location.href = "index.html";
+  window.location.href = "index.html"; //Go home
   console.log('he')
 });

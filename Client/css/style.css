@@ -24,7 +24,7 @@ url('ClearSans-Bold.eot');
   position: absolute;
   width:.5vmin;
   height: 81vmin;
-  background-color: rgb(128, 128, 128);
+  background-color: rgb(97, 97, 97);
   margin-left: -.5vmin;
   z-index: 0 !IMPORTANT;
 }
@@ -33,7 +33,7 @@ url('ClearSans-Bold.eot');
   position: absolute;
   width:81vmin;
   height:.5vmin;
-  background-color: rgb(128, 128, 128);
+  background-color: rgb(97, 97, 97);
   margin-top: -.5vmin;
   margin-bottom: .5vmin;
   z-index: 0;
@@ -44,7 +44,7 @@ url('ClearSans-Bold.eot');
   position: absolute;
 }
 .tile{
-  border-radius: 1.25vmin;
+  border-radius: 1.1vmin;
   position: absolute;
   text-align: center;
   line-height: 5vmin;
