@@ -18,7 +18,8 @@ class Board {
       sID: sessionID,
       connection: connection,
       name: name,
-      score: 0
+      score: 0,
+      hasLost: false
     });
   }
 
@@ -39,7 +40,8 @@ class Board {
     for (var i = 0; i < this.playersInGame.length; i++)
       playersList.push({
         name: this.playersInGame[i].name,
-        score: this.playersInGame[i].score
+        score: this.playersInGame[i].score,
+        hasLost: this.playersList[i].hasLost
       });
 
     return {
@@ -217,10 +219,30 @@ class Board {
     }
   }
 
+  // Adds in a new tile of random value (~60% 2, 40% 4).
+  // x (int): X-coordinate of the new tile.
+  // y (int): Y-coordinate of the new tile.
+  addNewTile(row, col, player) {
+    // Create the new box at the specified location.
+    // ~60% of the time select 2, 40% select 4.
+    this.boxes[row][col] = {
+      enabled: true,
+      tileNum: Math.random() > 0.60 ? 4 : 2,
+      tileId: this.nextTileId,
+      owner: player
+    };
+    this.nextTileId++;
+  }
+
   // Handle all aspects of a this.boxes move
   // direction (string): "up", "down", "left", or "right" of the player's desired move.
   // plater (int): Player number on the board who is making the move.
   handleBoardMove(direction, player) {
+    // For all directions:
+    // 1. Move tiles
+    // 2. Consolidate tiles by merger
+    // 3. Move tiles again
+    // 4. Add new tile
     switch (direction) {
       case "up":
         this.handleTileMove(direction, player);
@@ -336,19 +358,10 @@ class Board {
           }
         } while (viableBoxFound == false && colsWithPlayerTiles.length != 0)
 
-        // TODO(Neil): if viableRow == -1 and viableCol == -1, then the player has lost.
-
-        // Create the new box at the specified location.
-        // ~60% of the time select 2, 40% select 4.
-        var newTileNum = Math.random() > 0.60 ? 4 : 2;
-        this.boxes[viableRow][viableCol] = {
-          enabled: true,
-          tileNum: newTileNum,
-          tileId: this.nextTileId,
-          owner: player
-        };
-        this.nextTileId++;
-
+        // If no viable box exists for the additional piece, the player has lost.
+        if (viableCol == -1 && viableRow == -1) {
+          this.playersList[player].hasLost = true;
+        } else this.addNewTile(viableRow, viableCol, player);
         break;
 
       case "down":
@@ -465,19 +478,10 @@ class Board {
           }
         } while (viableBoxFound == false && colsWithPlayerTiles.length != 0)
 
-        // TODO(Neil): if viableRow == -1 and viableCol == -1, then the player has lost.
-
-        // Create the new box at the specified location.
-        // ~60% of the time select 2, 40% select 4.
-        var newTileNum = Math.random() > 0.60 ? 4 : 2;
-        this.boxes[viableRow][viableCol] = {
-          enabled: true,
-          tileNum: newTileNum,
-          tileId: this.nextTileId,
-          owner: player
-        };
-        this.nextTileId++;
-
+        // If no viable box exists for the additional piece, the player has lost.
+        if (viableCol == -1 && viableRow == -1) {
+          this.playersList[player].hasLost = true;
+        } else this.addNewTile(viableRow, viableCol, player);
         break;
 
       case "left":
@@ -594,19 +598,10 @@ class Board {
           }
         } while (viableBoxFound == false && rowsWithPlayerTiles.length != 0)
 
-        // TODO(Neil): if viableRow == -1 and viableCol == -1, then the player has lost.
-
-        // Create the new box at the specified location.
-        // ~60% of the time select 2, 40% select 4.
-        var newTileNum = Math.random() > 0.60 ? 4 : 2;
-        this.boxes[viableRow][viableCol] = {
-          enabled: true,
-          tileNum: newTileNum,
-          tileId: this.nextTileId,
-          owner: player
-        };
-        this.nextTileId++;
-
+        // If no viable box exists for the additional piece, the player has lost.
+        if (viableCol == -1 && viableRow == -1) {
+          this.playersList[player].hasLost = true;
+        } else this.addNewTile(viableRow, viableCol, player);
         break;
 
       case "right":
@@ -723,19 +718,10 @@ class Board {
           }
         } while (viableBoxFound == false && rowsWithPlayerTiles.length != 0)
 
-        // TODO(Neil): if viableRow == -1 and viableCol == -1, then the player has lost.
-
-        // Create the new box at the specified location.
-        // ~60% of the time select 2, 40% select 4.
-        var newTileNum = Math.random() > 0.60 ? 4 : 2;
-        this.boxes[viableRow][viableCol] = {
-          enabled: true,
-          tileNum: newTileNum,
-          tileId: this.nextTileId,
-          owner: player
-        };
-        this.nextTileId++;
-
+        // If no viable box exists for the additional piece, the player has lost.
+        if (viableCol == -1 && viableRow == -1) {
+          this.playersList[player].hasLost = true;
+        } else this.addNewTile(viableRow, viableCol, player);
         break;
 
       default:
