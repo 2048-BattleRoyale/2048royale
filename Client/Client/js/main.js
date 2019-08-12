@@ -45,6 +45,7 @@ var lightColor='F9F6F2';
 var darkColor='776E65';
 var transformnumx=5.741924954411;
 var transformnumy=5.747124954411;
+var debug=false;
 //Test/Example board used for testing out a real board object.
 //Color Profiles Stored Dynamically Online- this is the default
 var theme1={ //This is the standard 2048 theme
@@ -84,9 +85,6 @@ class Tile {
   }
 
 }
-
-
-console.log(currentArray)
 
 //Practical side-functions
 function findCurrentAnim(id,xory) { // Useful in the console to find X or Y
@@ -173,8 +171,8 @@ function jsonParser(miscommunication) {
       }
     document.getElementById("player"+(i+1).toString()).innerHTML=miscommunication.players[i].name + "   " + "<span class=\"badge badge-primary badge-pill elegant-color \" id=\"player1sc\">"+miscommunication.players[i].score+"</span>";
   }
-  console.log(goodboard.players);
-  console.log(players)
+  //console.log(goodboard.players);
+  //console.log(players)
   lockedBoxes=[];
   for (let j=0;j<miscommunication.boxes.length;j++) {
   //  console.log("found box"+(j+1));
@@ -286,7 +284,6 @@ function drawLocked() {
   if (!gamestarted==false) {
     $('.blocked').remove()
   }
-  console.log(lockedBoxes.length)
   for (let i=0;i<lockedBoxes.length;i++) {
     
     var blocked_tile=document.createElement('div');
@@ -450,7 +447,9 @@ ketamine=Object.keys(newBoard.boxes);
 var i=0;
   for (i in ketamine) {
     if (true /*idInCurrentArray(ketamine)[0]*/) {
+      if (debug) {
       console.log("RECIEVED"+i)
+      }
       Box=newBoard.boxes[ketamine[i]];
       moveTile(currentArray[idInCurrentArray(ketamine[i])[1]],new Tile(ketamine[i],calcX(Box.tileId%14),calcY(Box.tileId),Box.tileNum,Box.owner,Box.enabled));
     }
@@ -473,6 +472,13 @@ document.addEventListener('keyup', function(event){
           direction: "up",
           sessionID:JSON.parse($.cookie("sessionID"))
         }));
+        if (debug) {console.log(
+          JSON.stringify({
+            msgType: "playMove",
+            direction: "up",
+            sessionID:JSON.parse($.cookie("sessionID"))
+          }))
+        }
         break;
       case 39:
       case 68:
@@ -482,6 +488,13 @@ document.addEventListener('keyup', function(event){
             direction: "right",
             sessionID:JSON.parse($.cookie("sessionID"))
           }));
+          if (debug) {console.log(
+            JSON.stringify({
+              msgType: "playMove",
+              direction: "right",
+              sessionID:JSON.parse($.cookie("sessionID"))
+            }))
+          }
           break;
       case 40:
       case 83:
@@ -491,6 +504,13 @@ document.addEventListener('keyup', function(event){
             direction: "down",
             sessionID:JSON.parse($.cookie("sessionID"))
           }));
+          if (debug) {console.log(
+            JSON.stringify({
+              msgType: "playMove",
+              direction: "down",
+              sessionID:JSON.parse($.cookie("sessionID"))
+            }))
+          }
           break;
       case 37:
       case 65:
@@ -500,6 +520,13 @@ document.addEventListener('keyup', function(event){
             direction: "left",
             sessionID:JSON.parse($.cookie("sessionID"))
           }));
+          if (debug) {console.log(
+            JSON.stringify({
+              msgType: "playMove",
+              direction: "left",
+              sessionID:JSON.parse($.cookie("sessionID"))
+            }))
+          }
           break;
 
     }
@@ -509,7 +536,7 @@ window.onload = function () {
 //Random Jquery Stuff to keep site running
 $('#title').on('click', function(event) {
   window.location.href = "index.html";
-  console.log('he')
+  console.log('home')
 });
 
 
@@ -572,14 +599,15 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
 
   // Handle messages sent by the server.
   socket.onmessage = function (event) {
-    console.log(event);
+    if (debug) {console.log(event.data)};
+
     data=(JSON.parse(event.data));
     console.log(data.msgType)
     switch(data.msgType) {
       case 'boardUpdate':
         testBoard=jsonParser(data.board)
-        $.cookie("lastBoard", JSON.stringify(testBoard));
-        console.log(testBoard);
+        $.cookie("lastBoard", JSON.stringify(testBoard)); //Also log currentArray, somehow, in order to redraw smooothly.
+        //console.log(testBoard);
         if (gamestarted==false) {
         firstDraw(testBoard);
         gamestarted=true;
