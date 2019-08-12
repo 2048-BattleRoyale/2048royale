@@ -7,6 +7,10 @@ class Board {
     this.playersInGame = [];
   }
 
+  // Adds a new player to the game board.
+  // sessionID (string): Client-provided session ID.
+  // connection (WS connection): WebSockets connection to use to reach the client at a later time.
+  // name (string): Client-provided name of the player.
   addPlayer(sessionID, connection, name) {
     if (this.isFull()) return;
 
@@ -18,16 +22,19 @@ class Board {
     });
   }
 
+  // Is the board full of players? (4/4)
   isFull() {
     if (this.playersInGame.length >= 4) return true;
     else return false;
   }
 
+  // Returns a list of the players in the game.
   getPlayers() {
     return this.playersInGame;
   }
 
-  getAsJSON() {
+  // Returns a JS formatted array to be JSON.stringify()'ied and send to the client.
+  getAsArray() {
     var playersList = [];
     for (var i = 0; i < this.playersInGame.length; i++)
       playersList.push({
@@ -76,27 +83,11 @@ class Board {
     for (var r = 0; r < 2; r++) {
       for (var c = 0; c < 2; c++) {
         // Randomize coordinates within the 4x4 space
-        // var x = Math.trunc(Math.random() * 4);
-        // var y = Math.trunc(Math.random() * 4);
-        var x = 2;
-        var y = 2;
+        var x = Math.trunc(Math.random() * 4);
+        var y = Math.trunc(Math.random() * 4);
 
         this.boxes[(r * 6 + 2) + y][(c * 6 + 2) + x].tileNum = 2;
         this.boxes[(r * 6 + 2) + y][(c * 6 + 2) + x].tileId = this.nextTileId;
-        this.nextTileId++;
-
-        // Obliterate this section
-        this.boxes[(r * 6 + 2) + y][(c * 6) + x].tileNum = 2;
-        this.boxes[(r * 6 + 2) + y][(c * 6) + x].tileId = this.nextTileId;
-        this.boxes[(r * 6 + 2) + y][(c * 6) + x].owner = 1;
-        this.nextTileId++;
-        this.boxes[(r * 6 + 2) + y][(c * 6 + 1) + x].tileNum = 2;
-        this.boxes[(r * 6 + 2) + y][(c * 6 + 1) + x].tileId = this.nextTileId;
-        this.boxes[(r * 6 + 2) + y][(c * 6 + 1) + x].owner = 1;
-        this.nextTileId++;
-        this.boxes[(r * 6 + 2) + y][(c * 6 + 3) + x].tileNum = 2;
-        this.boxes[(r * 6 + 2) + y][(c * 6 + 3) + x].tileId = this.nextTileId;
-        this.boxes[(r * 6 + 2) + y][(c * 6 + 3) + x].owner = 1;
         this.nextTileId++;
 
         if (r == 0 && c == 0) this.boxes[(r * 6 + 2) + y][(c * 6 + 2) + x].owner = 1;
@@ -134,11 +125,14 @@ class Board {
   }
 
   // Enable a new box on the this.boxes
+  // x (int): X-coordinate of the box to be enabled.
+  // y (int): Y-coordinate of the box to be enabled.
   enableBox(x, y) {
     this.boxes[x][y].enabled = true;
   }
 
-  // Handle the tile moving process, noting which tiles were moved in changeList
+  // INTERNAL FUNCTION, don't call from outside!!!
+  // Handle the tile moving process, noting which tiles were moved in changeList.
   handleTileMove(direction, player) {
     switch (direction) {
       case "up":
@@ -224,7 +218,8 @@ class Board {
   }
 
   // Handle all aspects of a this.boxes move
-  // TODO(Neil): Add tiles when move is executed
+  // direction (string): "up", "down", "left", or "right" of the player's desired move.
+  // plater (int): Player number on the board who is making the move.
   handleBoardMove(direction, player) {
     switch (direction) {
       case "up":
@@ -310,20 +305,10 @@ class Board {
           // Does this column have any connections between the top and bottom?
           if ((player == 1 || player == 2) &&
             !(this.boxes[6][col].enabled && this.boxes[7][col].enabled)) {
-            // If not, find the first unlocked box from the bottom of the top
-            // home board and record its column number.
-            var firstUnlockedInCol = -1;
-            for (var r = 5; r > 0; r--) {
-              if (this.boxes[r][col].enabled) {
-                firstUnlockedInCol = r;
-                break;
-              }
-            }
-
-            // If the first unlocked box in the column isn't occupied exit the loop.
-            if (this.boxes[firstUnlockedInCol][col].tileId == 0) {
+            // If not, if the first unlocked box in the column isn't occupied exit the loop.
+            if (this.boxes[5][col].tileId == 0) {
               viableBoxFound = true;
-              viableRow = firstUnlockedInCol;
+              viableRow = 5;
               viableCol = col;
             } else {
               // https://stackoverflow.com/a/20690490/3339274
@@ -449,20 +434,10 @@ class Board {
           // Does this column have any connections between the top and bottom?
           if ((player == 3 || player == 4) &&
             !(this.boxes[6][col].enabled && this.boxes[7][col].enabled)) {
-            // If not, find the first unlocked box from the top of the bottom
-            // home board and record its column number.
-            var firstUnlockedInCol = -1;
-            for (var r = 8; r < this.boxes.length; r++) {
-              if (this.boxes[r][col].enabled) {
-                firstUnlockedInCol = r;
-                break;
-              }
-            }
-
-            // If the first unlocked box in the column isn't occupied exit the loop.
-            if (this.boxes[firstUnlockedInCol][col].tileId == 0) {
+            // If not, if the first unlocked box in the column isn't occupied exit the loop.
+            if (this.boxes[8][col].tileId == 0) {
               viableBoxFound = true;
-              viableRow = firstUnlockedInCol;
+              viableRow = 8;
               viableCol = col;
             } else {
               // https://stackoverflow.com/a/20690490/3339274
@@ -588,21 +563,11 @@ class Board {
           // Does this row have any connections between the left and right?
           if ((player == 1 || player == 3) &&
             !(this.boxes[row][6].enabled && this.boxes[row][7].enabled)) {
-            // If not, find the first unlocked box from the right of the top
-            // home board and record its column number.
-            var firstUnlockedInRow = -1;
-            for (var c = 5; c > 0; c--) {
-              if (this.boxes[row][c].enabled) {
-                firstUnlockedInRow = c;
-                break;
-              }
-            }
-
-            // If the first unlocked box in the column isn't occupied exit the loop.
-            if (this.boxes[row][firstUnlockedInRow].tileId == 0) {
+            // If not, if the first unlocked box in the column isn't occupied exit the loop.
+            if (this.boxes[row][5].tileId == 0) {
               viableBoxFound = true;
               viableRow = row;
-              viableCol = firstUnlockedInRow;
+              viableCol = 5;
             } else {
               // https://stackoverflow.com/a/20690490/3339274
               rowsWithPlayerTiles = rowsWithPlayerTiles.filter(item => ![row].includes(item))
@@ -727,21 +692,11 @@ class Board {
           // Does this row have any connections between the left and right?
           if ((player == 2 || player == 4) &&
             !(this.boxes[row][6].enabled && this.boxes[row][7].enabled)) {
-            // If not, find the first unlocked box from the right of the top
-            // home board and record its column number.
-            var firstUnlockedInRow = -1;
-            for (var c = 8; c < this.boxes[row].length; c++) {
-              if (this.boxes[row][c].enabled) {
-                firstUnlockedInRow = c;
-                break;
-              }
-            }
-
-            // If the first unlocked box in the column isn't occupied exit the loop.
-            if (this.boxes[row][firstUnlockedInRow].tileId == 0) {
+            // If not, if the first unlocked box in the column isn't occupied exit the loop.
+            if (this.boxes[row][8].tileId == 0) {
               viableBoxFound = true;
               viableRow = row;
-              viableCol = firstUnlockedInRow;
+              viableCol = 8;
             } else {
               // https://stackoverflow.com/a/20690490/3339274
               rowsWithPlayerTiles = rowsWithPlayerTiles.filter(item => ![row].includes(item))

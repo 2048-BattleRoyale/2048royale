@@ -41,7 +41,7 @@ function sendBoardUpdate(board) {
     // logMsg(false, "Sending to sessionID: " + board.getPlayers()[i].sID)
     board.getPlayers()[i].connection.send(JSON.stringify({
       msgType: "boardUpdate",
-      board: board.getAsJSON()
+      board: board.getAsArray()
     }));
   }
 }
@@ -73,7 +73,7 @@ function findPlayersBoard(ws, sessionID) {
 
 // Handles an incoming WebSockets message.
 // ws (websocket connection): WebSocket to use for communication with the current client.
-// msg (JSON string): Unparsed JSON string with the message body.
+// msg (JSON string): Non-parsed JSON string with the message body.
 function handleWsMessage(ws, msg) {
   // ws.send(msg);
   var parsedMsg = JSON.parse(msg);
@@ -108,7 +108,7 @@ function handleWsMessage(ws, msg) {
           }));
           playersList[i].connection.send(JSON.stringify({
             msgType: "boardUpdate",
-            board: boardsList[freeBoard].getAsJSON()
+            board: boardsList[freeBoard].getAsArray()
           }));
         }
       } else { // Tell all players that the game how many players still need to join.
