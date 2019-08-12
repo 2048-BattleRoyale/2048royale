@@ -1,7 +1,7 @@
 class Board {
   constructor() {
     this.boxes = [
-      // []
+      []
     ];
     this.nextTileId = 1;
     this.playersInGame = [];
@@ -238,6 +238,7 @@ class Board {
   // direction (string): "up", "down", "left", or "right" of the player's desired move.
   // plater (int): Player number on the board who is making the move.
   handleBoardMove(direction, player) {
+    // console.time("handleBoardMove");
     // For all directions:
     // 1. Move tiles
     // 2. Consolidate tiles by merger
@@ -287,17 +288,8 @@ class Board {
         // In which columns does the player have tiles?
         var colsWithPlayerTiles = [];
         // Add the player's home board.
-        if (player == 1 || player == 3) {
-          colsWithPlayerTiles.push(2);
-          colsWithPlayerTiles.push(3);
-          colsWithPlayerTiles.push(4);
-          colsWithPlayerTiles.push(5);
-        } else {
-          colsWithPlayerTiles.push(8);
-          colsWithPlayerTiles.push(9);
-          colsWithPlayerTiles.push(10);
-          colsWithPlayerTiles.push(11);
-        }
+        if (player == 1 || player == 3) colsWithPlayerTiles = [2, 3, 4, 5];
+        else colsWithPlayerTiles = [8, 9, 10, 11];
 
         for (var r = 0; r < this.boxes.length; r++) {
           for (var c = 0; c < this.boxes[r].length; c++) {
@@ -306,7 +298,7 @@ class Board {
               for (var i = 0; i < colsWithPlayerTiles.length; i++) {
                 if (colsWithPlayerTiles[i] == c) {
                   existsAlready = true;
-                  break; // Does this cause problems?
+                  break;
                 }
               }
 
@@ -315,7 +307,7 @@ class Board {
           }
         }
 
-        // Identify the column and row combination that works.
+        // Identify a location where the new tile can be placed.
         var viableBoxFound = false;
         var viableRow = -1;
         var viableCol = -1;
@@ -407,17 +399,8 @@ class Board {
         // In which columns does the player have tiles?
         var colsWithPlayerTiles = [];
         // Add the player's home board.
-        if (player == 1 || player == 3) {
-          colsWithPlayerTiles.push(2);
-          colsWithPlayerTiles.push(3);
-          colsWithPlayerTiles.push(4);
-          colsWithPlayerTiles.push(5);
-        } else {
-          colsWithPlayerTiles.push(8);
-          colsWithPlayerTiles.push(9);
-          colsWithPlayerTiles.push(10);
-          colsWithPlayerTiles.push(11);
-        }
+        if (player == 1 || player == 3) colsWithPlayerTiles = [2, 3, 4, 5];
+        else colsWithPlayerTiles = [8, 9, 10, 11];
 
         for (var r = 0; r < this.boxes.length; r++) {
           for (var c = 0; c < this.boxes[r].length; c++) {
@@ -426,7 +409,7 @@ class Board {
               for (var i = 0; i < colsWithPlayerTiles.length; i++) {
                 if (colsWithPlayerTiles[i] == c) {
                   existsAlready = true;
-                  break; // Does this cause problems?
+                  break;
                 }
               }
 
@@ -435,7 +418,7 @@ class Board {
           }
         }
 
-        // Identify the column and row combination that works.
+        // Identify a location where the new tile can be placed.
         var viableBoxFound = false;
         var viableRow = -1;
         var viableCol = -1;
@@ -527,17 +510,8 @@ class Board {
         // In which rows does the player have tiles?
         var rowsWithPlayerTiles = [];
         // Add the player's home board.
-        if (player == 1 || player == 2) {
-          rowsWithPlayerTiles.push(2);
-          rowsWithPlayerTiles.push(3);
-          rowsWithPlayerTiles.push(4);
-          rowsWithPlayerTiles.push(5);
-        } else {
-          rowsWithPlayerTiles.push(8);
-          rowsWithPlayerTiles.push(9);
-          rowsWithPlayerTiles.push(10);
-          rowsWithPlayerTiles.push(11);
-        }
+        if (player == 1 || player == 2) colsWithPlayerTiles = [2, 3, 4, 5];
+        else colsWithPlayerTiles = [8, 9, 10, 11];
 
         for (var r = 0; r < this.boxes.length; r++) {
           for (var c = 0; c < this.boxes[r].length; c++) {
@@ -555,7 +529,7 @@ class Board {
           }
         }
 
-        // Identify the column and row combination that works.
+        // Identify a location where the new tile can be placed.
         var viableBoxFound = false;
         var viableRow = -1;
         var viableCol = -1;
@@ -647,17 +621,8 @@ class Board {
         // In which rows does the player have tiles?
         var rowsWithPlayerTiles = [];
         // Add the player's home board.
-        if (player == 1 || player == 2) {
-          rowsWithPlayerTiles.push(2);
-          rowsWithPlayerTiles.push(3);
-          rowsWithPlayerTiles.push(4);
-          rowsWithPlayerTiles.push(5);
-        } else {
-          rowsWithPlayerTiles.push(8);
-          rowsWithPlayerTiles.push(9);
-          rowsWithPlayerTiles.push(10);
-          rowsWithPlayerTiles.push(11);
-        }
+        if (player == 1 || player == 2) colsWithPlayerTiles = [2, 3, 4, 5];
+        else colsWithPlayerTiles = [8, 9, 10, 11];
 
         for (var r = 0; r < this.boxes.length; r++) {
           for (var c = 0; c < this.boxes[r].length; c++) {
@@ -675,7 +640,7 @@ class Board {
           }
         }
 
-        // Identify the column and row combination that works.
+        // Identify a location where the new tile can be placed.
         var viableBoxFound = false;
         var viableRow = -1;
         var viableCol = -1;
@@ -728,6 +693,7 @@ class Board {
         console.log("ERROR: (handleBoardMoveDirection) direction isn't up/down/left/right");
         break;
     }
+    // console.timeEnd("handleBoardMove");
   }
 }
 
