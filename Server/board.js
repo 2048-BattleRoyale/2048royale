@@ -1,7 +1,7 @@
 class Board {
   constructor() {
     this.boxes = [
-      []
+      // []
     ];
     this.nextTileId = 1;
     this.playersInGame = [];
