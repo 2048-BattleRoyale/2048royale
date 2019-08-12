@@ -29,10 +29,16 @@ class Board {
 
   getAsJSON() {
     var playersList = [];
-    for(var i = 0; i < this.playersInGame.length; i++)
-      playersList.push({name: this.playersInGame[i].name, score: this.playersInGame[i].score});
+    for (var i = 0; i < this.playersInGame.length; i++)
+      playersList.push({
+        name: this.playersInGame[i].name,
+        score: this.playersInGame[i].score
+      });
 
-    return {players: playersList, boxes: this.boxes.flat()};
+    return {
+      players: playersList,
+      boxes: this.boxes.flat()
+    };
   }
 
   // Initialize a new boxes. Fill it with nulled elements and set up the initial boxes state.
@@ -259,6 +265,105 @@ class Board {
         }
 
         this.handleTileMove(direction, player);
+
+        // Add new tile to the bottom of the board.
+        // In which columns does the player have tiles?
+        var colsWithPlayerTiles = [];
+        // Add the player's home board.
+        if (player == 1 || player == 3) {
+          colsWithPlayerTiles.push(2);
+          colsWithPlayerTiles.push(3);
+          colsWithPlayerTiles.push(4);
+          colsWithPlayerTiles.push(5);
+        } else {
+          colsWithPlayerTiles.push(8);
+          colsWithPlayerTiles.push(9);
+          colsWithPlayerTiles.push(10);
+          colsWithPlayerTiles.push(11);
+        }
+
+        for (var r = 0; r < this.boxes.length; r++) {
+          for (var c = 0; c < this.boxes[r].length; c++) {
+            if (this.boxes[r][c].owner == player) {
+              var existsAlready = false;
+              for (var i = 0; i < colsWithPlayerTiles.length; i++) {
+                if (colsWithPlayerTiles[i] == c) {
+                  existsAlready = true;
+                  break; // Does this cause problems?
+                }
+              }
+
+              if (!existsAlready) colsWithPlayerTiles.push(c);
+            }
+          }
+        }
+
+        // Identify the column and row combination that works.
+        var viableBoxFound = false;
+        var viableRow = -1;
+        var viableCol = -1;
+        do {
+          var col = colsWithPlayerTiles[Math.floor(Math.random() * colsWithPlayerTiles.length)];
+
+          // Players 1 and 2 have home boards at the top of the game board. We
+          // need extra logic here...
+          // Does this column have any connections between the top and bottom?
+          if ((player == 1 || player == 2) &&
+            !(this.boxes[6][col].enabled && this.boxes[7][col].enabled)) {
+            // If not, find the first unlocked box from the bottom of the top
+            // home board and record its column number.
+            var firstUnlockedInCol = -1;
+            for (var r = 5; r > 0; r--) {
+              if (this.boxes[r][col].enabled) {
+                firstUnlockedInCol = r;
+                break;
+              }
+            }
+
+            // If the first unlocked box in the column isn't occupied exit the loop.
+            if (this.boxes[firstUnlockedInCol][col].tileId == 0) {
+              viableBoxFound = true;
+              viableRow = firstUnlockedInCol;
+              viableCol = col;
+            } else {
+              // https://stackoverflow.com/a/20690490/3339274
+              colsWithPlayerTiles = colsWithPlayerTiles.filter(item => ![col].includes(item))
+            }
+          } else {
+            // From the bottom, find the first unlocked box and record its column number.
+            var firstUnlockedInCol = -1;
+            for (var r = this.boxes.length - 1; r > 0; r--) {
+              if (this.boxes[r][col].enabled) {
+                firstUnlockedInCol = r;
+                break;
+              }
+            }
+
+            // If the first unlocked box in the column isn't occupied exit the loop.
+            if (this.boxes[firstUnlockedInCol][col].tileId == 0) {
+              viableBoxFound = true;
+              viableRow = firstUnlockedInCol;
+              viableCol = col;
+            } else {
+              // https://stackoverflow.com/a/20690490/3339274
+              colsWithPlayerTiles = colsWithPlayerTiles.filter(item => ![col].includes(item))
+            }
+          }
+        } while (viableBoxFound == false && colsWithPlayerTiles.length != 0)
+
+        // TODO(Neil): if viableRow == -1 and viableCol == -1, then the player has lost.
+
+        // Create the new box at the specified location.
+        // ~60% of the time select 2, 40% select 4.
+        var newTileNum = Math.random() > 0.60 ? 4 : 2;
+        this.boxes[viableRow][viableCol] = {
+          enabled: true,
+          tileNum: newTileNum,
+          tileId: this.nextTileId,
+          owner: player
+        };
+        this.nextTileId++;
+
         break;
 
       case "down":
@@ -299,6 +404,105 @@ class Board {
         }
 
         this.handleTileMove(direction, player);
+
+        // Add new tile to the top of the board.
+        // In which columns does the player have tiles?
+        var colsWithPlayerTiles = [];
+        // Add the player's home board.
+        if (player == 1 || player == 3) {
+          colsWithPlayerTiles.push(2);
+          colsWithPlayerTiles.push(3);
+          colsWithPlayerTiles.push(4);
+          colsWithPlayerTiles.push(5);
+        } else {
+          colsWithPlayerTiles.push(8);
+          colsWithPlayerTiles.push(9);
+          colsWithPlayerTiles.push(10);
+          colsWithPlayerTiles.push(11);
+        }
+
+        for (var r = 0; r < this.boxes.length; r++) {
+          for (var c = 0; c < this.boxes[r].length; c++) {
+            if (this.boxes[r][c].owner == player) {
+              var existsAlready = false;
+              for (var i = 0; i < colsWithPlayerTiles.length; i++) {
+                if (colsWithPlayerTiles[i] == c) {
+                  existsAlready = true;
+                  break; // Does this cause problems?
+                }
+              }
+
+              if (!existsAlready) colsWithPlayerTiles.push(c);
+            }
+          }
+        }
+
+        // Identify the column and row combination that works.
+        var viableBoxFound = false;
+        var viableRow = -1;
+        var viableCol = -1;
+        do {
+          var col = colsWithPlayerTiles[Math.floor(Math.random() * colsWithPlayerTiles.length)];
+
+          // Players 3 and 4 have home boards at the bottom of the game board. We
+          // need extra logic here...
+          // Does this column have any connections between the top and bottom?
+          if ((player == 3 || player == 4) &&
+            !(this.boxes[6][col].enabled && this.boxes[7][col].enabled)) {
+            // If not, find the first unlocked box from the top of the bottom
+            // home board and record its column number.
+            var firstUnlockedInCol = -1;
+            for (var r = 8; r < this.boxes.length; r++) {
+              if (this.boxes[r][col].enabled) {
+                firstUnlockedInCol = r;
+                break;
+              }
+            }
+
+            // If the first unlocked box in the column isn't occupied exit the loop.
+            if (this.boxes[firstUnlockedInCol][col].tileId == 0) {
+              viableBoxFound = true;
+              viableRow = firstUnlockedInCol;
+              viableCol = col;
+            } else {
+              // https://stackoverflow.com/a/20690490/3339274
+              colsWithPlayerTiles = colsWithPlayerTiles.filter(item => ![col].includes(item))
+            }
+          } else {
+            // From the top, find the first unlocked box and record its column number.
+            var firstUnlockedInCol = -1;
+            for (var r = 0; r < this.boxes.length - 1; r++) {
+              if (this.boxes[r][col].enabled) {
+                firstUnlockedInCol = r;
+                break;
+              }
+            }
+
+            // If the first unlocked box in the column isn't occupied exit the loop.
+            if (this.boxes[firstUnlockedInCol][col].tileId == 0) {
+              viableBoxFound = true;
+              viableRow = firstUnlockedInCol;
+              viableCol = col;
+            } else {
+              // https://stackoverflow.com/a/20690490/3339274
+              colsWithPlayerTiles = colsWithPlayerTiles.filter(item => ![col].includes(item))
+            }
+          }
+        } while (viableBoxFound == false && colsWithPlayerTiles.length != 0)
+
+        // TODO(Neil): if viableRow == -1 and viableCol == -1, then the player has lost.
+
+        // Create the new box at the specified location.
+        // ~60% of the time select 2, 40% select 4.
+        var newTileNum = Math.random() > 0.60 ? 4 : 2;
+        this.boxes[viableRow][viableCol] = {
+          enabled: true,
+          tileNum: newTileNum,
+          tileId: this.nextTileId,
+          owner: player
+        };
+        this.nextTileId++;
+
         break;
 
       case "left":
@@ -339,6 +543,105 @@ class Board {
         }
 
         this.handleTileMove(direction, player);
+
+        // Add new tile to the right of the board.
+        // In which rows does the player have tiles?
+        var rowsWithPlayerTiles = [];
+        // Add the player's home board.
+        if (player == 1 || player == 2) {
+          rowsWithPlayerTiles.push(2);
+          rowsWithPlayerTiles.push(3);
+          rowsWithPlayerTiles.push(4);
+          rowsWithPlayerTiles.push(5);
+        } else {
+          rowsWithPlayerTiles.push(8);
+          rowsWithPlayerTiles.push(9);
+          rowsWithPlayerTiles.push(10);
+          rowsWithPlayerTiles.push(11);
+        }
+
+        for (var r = 0; r < this.boxes.length; r++) {
+          for (var c = 0; c < this.boxes[r].length; c++) {
+            if (this.boxes[r][c].owner == player) {
+              var existsAlready = false;
+              for (var i = 0; i < rowsWithPlayerTiles.length; i++) {
+                if (rowsWithPlayerTiles[i] == r) {
+                  existsAlready = true;
+                  break;
+                }
+              }
+
+              if (!existsAlready) rowsWithPlayerTiles.push(r);
+            }
+          }
+        }
+
+        // Identify the column and row combination that works.
+        var viableBoxFound = false;
+        var viableRow = -1;
+        var viableCol = -1;
+        do {
+          var row = rowsWithPlayerTiles[Math.floor(Math.random() * rowsWithPlayerTiles.length)];
+
+          // Players 1 and 3 have home boards at the left of the game board. We
+          // need extra logic here...
+          // Does this row have any connections between the left and right?
+          if ((player == 1 || player == 3) &&
+            !(this.boxes[row][6].enabled && this.boxes[row][7].enabled)) {
+            // If not, find the first unlocked box from the right of the top
+            // home board and record its column number.
+            var firstUnlockedInRow = -1;
+            for (var c = 5; c > 0; c--) {
+              if (this.boxes[row][c].enabled) {
+                firstUnlockedInRow = c;
+                break;
+              }
+            }
+
+            // If the first unlocked box in the column isn't occupied exit the loop.
+            if (this.boxes[row][firstUnlockedInRow].tileId == 0) {
+              viableBoxFound = true;
+              viableRow = row;
+              viableCol = firstUnlockedInRow;
+            } else {
+              // https://stackoverflow.com/a/20690490/3339274
+              rowsWithPlayerTiles = rowsWithPlayerTiles.filter(item => ![row].includes(item))
+            }
+          } else {
+            // From the right, find the first unlocked box and record its column number.
+            var firstUnlockedInRow = -1;
+            for (var c = this.boxes[row].length - 1; c > 0; c--) {
+              if (this.boxes[row][c].enabled) {
+                firstUnlockedInRow = c;
+                break;
+              }
+            }
+
+            // If the first unlocked box in the column isn't occupied exit the loop.
+            if (this.boxes[row][firstUnlockedInRow].tileId == 0) {
+              viableBoxFound = true;
+              viableRow = row;
+              viableCol = firstUnlockedInRow;
+            } else {
+              // https://stackoverflow.com/a/20690490/3339274
+              rowsWithPlayerTiles = rowsWithPlayerTiles.filter(item => ![row].includes(item))
+            }
+          }
+        } while (viableBoxFound == false && rowsWithPlayerTiles.length != 0)
+
+        // TODO(Neil): if viableRow == -1 and viableCol == -1, then the player has lost.
+
+        // Create the new box at the specified location.
+        // ~60% of the time select 2, 40% select 4.
+        var newTileNum = Math.random() > 0.60 ? 4 : 2;
+        this.boxes[viableRow][viableCol] = {
+          enabled: true,
+          tileNum: newTileNum,
+          tileId: this.nextTileId,
+          owner: player
+        };
+        this.nextTileId++;
+
         break;
 
       case "right":
@@ -379,6 +682,105 @@ class Board {
         }
 
         this.handleTileMove(direction, player);
+
+        // Add new tile to the left of the board.
+        // In which rows does the player have tiles?
+        var rowsWithPlayerTiles = [];
+        // Add the player's home board.
+        if (player == 1 || player == 2) {
+          rowsWithPlayerTiles.push(2);
+          rowsWithPlayerTiles.push(3);
+          rowsWithPlayerTiles.push(4);
+          rowsWithPlayerTiles.push(5);
+        } else {
+          rowsWithPlayerTiles.push(8);
+          rowsWithPlayerTiles.push(9);
+          rowsWithPlayerTiles.push(10);
+          rowsWithPlayerTiles.push(11);
+        }
+
+        for (var r = 0; r < this.boxes.length; r++) {
+          for (var c = 0; c < this.boxes[r].length; c++) {
+            if (this.boxes[r][c].owner == player) {
+              var existsAlready = false;
+              for (var i = 0; i < rowsWithPlayerTiles.length; i++) {
+                if (rowsWithPlayerTiles[i] == r) {
+                  existsAlready = true;
+                  break;
+                }
+              }
+
+              if (!existsAlready) rowsWithPlayerTiles.push(r);
+            }
+          }
+        }
+
+        // Identify the column and row combination that works.
+        var viableBoxFound = false;
+        var viableRow = -1;
+        var viableCol = -1;
+        do {
+          var row = rowsWithPlayerTiles[Math.floor(Math.random() * rowsWithPlayerTiles.length)];
+
+          // Players 2 and 4 have home boards at the right of the game board. We
+          // need extra logic here...
+          // Does this row have any connections between the left and right?
+          if ((player == 2 || player == 4) &&
+            !(this.boxes[row][6].enabled && this.boxes[row][7].enabled)) {
+            // If not, find the first unlocked box from the right of the top
+            // home board and record its column number.
+            var firstUnlockedInRow = -1;
+            for (var c = 8; c < this.boxes[row].length; c++) {
+              if (this.boxes[row][c].enabled) {
+                firstUnlockedInRow = c;
+                break;
+              }
+            }
+
+            // If the first unlocked box in the column isn't occupied exit the loop.
+            if (this.boxes[row][firstUnlockedInRow].tileId == 0) {
+              viableBoxFound = true;
+              viableRow = row;
+              viableCol = firstUnlockedInRow;
+            } else {
+              // https://stackoverflow.com/a/20690490/3339274
+              rowsWithPlayerTiles = rowsWithPlayerTiles.filter(item => ![row].includes(item))
+            }
+          } else {
+            // From the left, find the first unlocked box and record its column number.
+            var firstUnlockedInRow = -1;
+            for (var c = 0; c < this.boxes[row].length - 1; c++) {
+              if (this.boxes[row][c].enabled) {
+                firstUnlockedInRow = c;
+                break;
+              }
+            }
+
+            // If the first unlocked box in the column isn't occupied exit the loop.
+            if (this.boxes[row][firstUnlockedInRow].tileId == 0) {
+              viableBoxFound = true;
+              viableRow = row;
+              viableCol = firstUnlockedInRow;
+            } else {
+              // https://stackoverflow.com/a/20690490/3339274
+              rowsWithPlayerTiles = rowsWithPlayerTiles.filter(item => ![row].includes(item))
+            }
+          }
+        } while (viableBoxFound == false && rowsWithPlayerTiles.length != 0)
+
+        // TODO(Neil): if viableRow == -1 and viableCol == -1, then the player has lost.
+
+        // Create the new box at the specified location.
+        // ~60% of the time select 2, 40% select 4.
+        var newTileNum = Math.random() > 0.60 ? 4 : 2;
+        this.boxes[viableRow][viableCol] = {
+          enabled: true,
+          tileNum: newTileNum,
+          tileId: this.nextTileId,
+          owner: player
+        };
+        this.nextTileId++;
+
         break;
 
       default:
