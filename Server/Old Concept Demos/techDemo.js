@@ -1,5 +1,5 @@
 const readline = require('readline');
-const Board = require("./board.js");
+const Board = require("../board.js");
 
 var board = new Board();
 
