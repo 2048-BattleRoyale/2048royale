@@ -41,7 +41,7 @@ class Board {
       playersList.push({
         name: this.playersInGame[i].name,
         score: this.playersInGame[i].score,
-        hasLost: this.playersList[i].hasLost
+        hasLost: this.playersInGame[i].hasLost
       });
 
     return {
