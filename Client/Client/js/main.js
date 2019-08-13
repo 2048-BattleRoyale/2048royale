@@ -460,6 +460,7 @@ var i=0;
 
 //Listeners
 document.addEventListener('keyup', function(event){
+  var socket = new WebSocket('wss://tfrserver.herokuapp.com/'); 
   //alert(event.keyCode); (Uncomment this line if you need to add future keyswitch codes)
   if (true && gamestarted) {
     switch(event.keyCode) {
