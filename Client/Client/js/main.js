@@ -30,7 +30,6 @@ var currentArray=[];
 var modernArray=[];
 var players=[];
 var eventuallyRemove=[];
-var socket = new WebSocket('ws://127.0.0.1:8000/');
 var board = {"players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"boxes":{"1":{"enabled":true,"tileNum":2,"tileId":1,"owner":1,"justMerged":false},"2":{"enabled":true,"tileNum":512,"tileId":85,"owner":2,"justMerged":false},"3":{"enabled":true,"tileNum":4096,"tileId":96,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileId":37,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileId":193,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileId":112,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileId":196,"owner":1,"justMerged":false}}};
 var boardTest = {"players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"boxes":{"1":{"enabled":true,"tileNum":2,"tileId":2,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileId":21,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileId":12,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileId":98,"owner":1,"justMerged":false},"7":{"enabled":true,"tileNum":256,"tileId":34,"owner":1,"justMerged":false},"8":{"enabled":true,"tileNum":4096,"tileId":88,"owner":1,"justMerged":false},"9":{"enabled":true,"tileNum":2,"tileId":127,"owner":1,"justMerged":false},"10":{"enabled":true,"tileNum":16,"tileId":63,"owner":1,"justMerged":false}}};
 var boardTestTest={"players":{1:{"Name":"String","Score":0},2:{"Name":"String","Score":0},3:{"Name":"String","Score":4},4:{"Name":"String","Score":0}},"boxes":{"1":{"enabled":true,"tileNum":2,"tileId":2,"owner":1,"justMerged":false},"4":{"enabled":true,"tileNum":128,"tileId":21,"owner":1,"justMerged":false},"5":{"enabled":true,"tileNum":32,"tileId":12,"owner":1,"justMerged":false},"6":{"enabled":true,"tileNum":2,"tileId":98,"owner":1,"justMerged":false},"9":{"enabled":true,"tileNum":2,"tileId":51,"owner":1,"justMerged":false},"11":{"enabled":true,"tileNum":4,"tileId":25,"owner":1,"justMerged":false}}};
@@ -557,7 +556,7 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
 
   // Create a new WebSocket.
    //var socket = new WebSocket('ws://echo.websocket.org');
-  var socket = new WebSocket('ws://localhost:8000'); 
+  var socket = new WebSocket('wss://tfrserver.herokuapp.com/'); 
 
 
   // Handle any errors that occur.
@@ -663,7 +662,7 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
   // Show a disconnected message when the WebSocket is closed.
   socket.onclose = function (event) {
     console.log("Socket is disconnected");
-    var socket = new WebSocket('ws://localhost:8000'); 
+    var socket = new WebSocket('wss://tfrserver.herokuapp.com/'); 
   };
   
 

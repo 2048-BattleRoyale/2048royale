@@ -8,9 +8,17 @@
     "start": "nodemon ./index.js",
     "stopall": "killall node"
   },
+    "engines": {
+    "node": "10.3.0"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node board.js"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/2048-BattleRoyale/2048royale.git"
+    "url": "https://github.com/2048-BattleRoyale/2048royale-server"
   },
   "author": "Neil Balch, etc.",
   "license": "ISC",
@@ -20,6 +28,8 @@
   "homepage": "https://github.com/2048-BattleRoyale/2048royale#readme",
   "dependencies": {
     "nodemon": "^1.19.1",
-    "ws": "^7.1.0"
+    "ws": "^7.1.0",
+     "ejs": "~1.0.0",
+    "express": "~4.9.8"
   }
 }
