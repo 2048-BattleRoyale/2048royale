@@ -120,14 +120,6 @@ function calcY(tileId) { //See above... but for Y
     return Math.floor(tileId/14+1);
   }
 }
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
-}
 function findposbyID(ID) { //Give this function an ID from a current Tile and it'll tell you its position in the array
   for (i=0;i<currentArray.length;i++) {
       if (currentArray[i].id == ID) {
@@ -136,7 +128,7 @@ function findposbyID(ID) { //Give this function an ID from a current Tile and it
       }
   }
 }
-function getSessionID()
+function getSessionID() //This is a placeholder function, to be replaced when the server is entirely running.
 {
   /*
     var xmlHttp = new XMLHttpRequest();
@@ -147,8 +139,8 @@ function getSessionID()
   return Math.random()*10000;
   }
 function getColor(values) {
+  //Takes the color of a tile with a certain number and steals it from the cookie table
   return  JSON.parse($.cookie("colorTheme"))[values.toString()];
-  // Future code here will allow for switchable themes that are admittedly quite snazzy
 }
 function darkOrLight(bgColor) { //Thanks https://stackoverflow.com/questions/3942878/how-to-decide-font-color-in-white-or-black-depending-on-background-color
   var color = (bgColor.charAt(0) === '#') ? bgColor.substring(1, 7) : bgColor;
@@ -468,13 +460,13 @@ document.addEventListener('keyup', function(event){
       case 38:
         alert("Up! To be replaced by sockets when ready.");
         socket.send(JSON.stringify({
-          msgType: "playMove",
+          msgType: "playerMove",
           direction: "up",
           sessionID:JSON.parse($.cookie("sessionID"))
         }));
         if (debug) {console.log(
           JSON.stringify({
-            msgType: "playMove",
+            msgType: "playerMove",
             direction: "up",
             sessionID:JSON.parse($.cookie("sessionID"))
           }))
@@ -484,13 +476,13 @@ document.addEventListener('keyup', function(event){
       case 68:
           alert("Right! To be replaced by sockets when ready.");
           socket.send(JSON.stringify({
-            msgType: "playMove",
+            msgType: "playerMove",
             direction: "right",
             sessionID:JSON.parse($.cookie("sessionID"))
           }));
           if (debug) {console.log(
             JSON.stringify({
-              msgType: "playMove",
+              msgType: "playerMove",
               direction: "right",
               sessionID:JSON.parse($.cookie("sessionID"))
             }))
@@ -500,13 +492,13 @@ document.addEventListener('keyup', function(event){
       case 83:
           alert("Down! To be replaced by sockets when ready.");
           socket.send(JSON.stringify({
-            msgType: "playMove",
+            msgType: "playerMove",
             direction: "down",
             sessionID:JSON.parse($.cookie("sessionID"))
           }));
           if (debug) {console.log(
             JSON.stringify({
-              msgType: "playMove",
+              msgType: "playerMove",
               direction: "down",
               sessionID:JSON.parse($.cookie("sessionID"))
             }))
@@ -516,13 +508,13 @@ document.addEventListener('keyup', function(event){
       case 65:
           alert("Left! To be replaced by sockets when ready.");
           socket.send(JSON.stringify({
-            msgType: "playMove",
+            msgType: "playerMove",
             direction: "left",
             sessionID:JSON.parse($.cookie("sessionID"))
           }));
           if (debug) {console.log(
             JSON.stringify({
-              msgType: "playMove",
+              msgType: "playerMove",
               direction: "left",
               sessionID:JSON.parse($.cookie("sessionID"))
             }))
