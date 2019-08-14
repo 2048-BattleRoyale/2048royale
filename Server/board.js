@@ -334,8 +334,6 @@ class Board {
             // From the bottom, find the first unlocked box and record its column number.
             var firstUnlockedInCol = -1;
             for (var r = this.boxes.length - 1; r > 0; r--) {
-              console.log(r)
-              console.log(col)
               if (this.boxes[r][col].enabled) {
                 firstUnlockedInCol = r;
                 break;
