@@ -1,7 +1,7 @@
 class Board {
   constructor() {
     this.boxes = [
-      []
+      // []
     ];
     this.nextTileId = 1;
     this.playersInGame = [];
@@ -46,7 +46,9 @@ class Board {
 
     return {
       players: playersList,
-      boxes: this.boxes.flat()
+      // Required for Windows operation.
+      // boxes: this.boxes.flat()
+      boxes: [].concat.apply([], this.boxes)
     };
   }
 
@@ -332,6 +334,8 @@ class Board {
             // From the bottom, find the first unlocked box and record its column number.
             var firstUnlockedInCol = -1;
             for (var r = this.boxes.length - 1; r > 0; r--) {
+              console.log(r)
+              console.log(col)
               if (this.boxes[r][col].enabled) {
                 firstUnlockedInCol = r;
                 break;
@@ -698,4 +702,5 @@ class Board {
 }
 
 // JS can go to hell. https://stackoverflow.com/questions/32657516/how-to-properly-export-an-es6-class-in-node-4
+>>>>>>> Stashed changes
 module.exports = Board;
