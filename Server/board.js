@@ -702,5 +702,4 @@ class Board {
 }
 
 // JS can go to hell. https://stackoverflow.com/questions/32657516/how-to-properly-export-an-es6-class-in-node-4
->>>>>>> Stashed changes
 module.exports = Board;
