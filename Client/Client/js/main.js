@@ -150,10 +150,12 @@ function darkOrLight(bgColor) { //Thanks https://stackoverflow.com/questions/394
   return (((r * 0.299) + (g * 0.587) + (b * 0.114)) > 215) ?
     darkColor : lightColor;
 }
+var thedevil;
 function jsonParser(miscommunication) {
   //Do something with the player values here
+  thedevil=miscommunication;
   var goodboard={"players":{},"boxes":{}};
-  for (let i=0;i<miscommunication.players.length;i++) {
+  for (let i=0;i<miscommunication.players.length;i++) { //Players stuff
     goodboard.players[i+1]=miscommunication.players[i];
     if (gamestarted==false) {
       players.push(miscommunication.players[i].name);
@@ -184,6 +186,9 @@ function jsonParser(miscommunication) {
   }
   drawLocked();
   // FOR NOW console.log("MRS:")
+  console.log(goodboard)
+  console.log("sacrebluwu")
+
   return (goodboard);
 
 }
@@ -332,9 +337,11 @@ function moveTile(Tile,FutureTile) { //TIle is the tile as it sits NOW, FutureTi
     
     })
     //document.getElementById('tile'+(Tile.id).toString()).innerHTML=(FutureTile.value).toString()+'\n'; This is a blanket update, the progress updater above will do a better job 99% of the time, but uncomment this if a corner-case arises
-    currentArray[findposbyID(Tile)]=FutureTile;
+    currentArray[idInCurrentArray(Tile.id)[1]]=FutureTile;
+    console.log(currentArray);
   }
 function deleteTile(Tile) { //Play delete animation then kick that sorry thing off of the array.
+  console.log("DELETING " +id)
   anime({
     targets: '#'+'tile'+(Tile.id).toString(),
     scale:[{
@@ -400,7 +407,7 @@ for(i=0;i<newArrayKeys.length;i++) {
     additions2.push(newArrayKeys[i]);
   }
 }
-console.log(additions);
+//console.log(additions);
 //Then, you check to see if there are any elements (by id) that the old array has and new doesn't  (deletions)
 deletions=[]
 for(i=0;i<currentArrayKeys.length;i++) {
@@ -415,7 +422,7 @@ for(i=0;i<currentArrayKeys.length;i++) {
     deletions.push(currentArrayKeys[i]);
   }
 }
-console.log(deletions);
+//console.log(deletions);
 //Remove these from the lists; they'll be parsed seperately
 //Parse Deletions
 do{
@@ -431,8 +438,6 @@ do{
   additions.shift();
   }
   }while(additions.length>0); 
-console.log(newBoard);
-
 
 ketamine=Object.keys(newBoard.boxes);
 var i=0;
@@ -442,7 +447,9 @@ var i=0;
       console.log("RECIEVED"+i)
       }
       Box=newBoard.boxes[ketamine[i]];
+
       moveTile(currentArray[idInCurrentArray(ketamine[i])[1]],new Tile(ketamine[i],calcX(Box.tileId%14),calcY(Box.tileId),Box.tileNum,Box.owner,Box.enabled));
+    //  console.log(Box)
     }
    }
 
@@ -452,7 +459,7 @@ var i=0;
 
 //Listeners
 document.addEventListener('keyup', function(event){
-  var socket = new WebSocket('wss://tfrserver.herokuapp.com/'); 
+  var socket = new WebSocket('ws://127.0.0.1:8000'); 
   //alert(event.keyCode); (Uncomment this line if you need to add future keyswitch codes)
   if (true && gamestarted) {
     switch(event.keyCode) {
@@ -462,15 +469,16 @@ document.addEventListener('keyup', function(event){
         socket.send(JSON.stringify({
           msgType: "playerMove",
           direction: "up",
-          sessionID:JSON.parse($.cookie("sessionID"))
+          sessionID:JSON.parse($.cookie("sessionID")).toString()
         }));
         if (debug) {console.log(
           JSON.stringify({
             msgType: "playerMove",
             direction: "up",
-            sessionID:JSON.parse($.cookie("sessionID"))
+            sessionID:JSON.parse($.cookie("sessionID")).toString()
           }))
         }
+        
         break;
       case 39:
       case 68:
@@ -478,13 +486,13 @@ document.addEventListener('keyup', function(event){
           socket.send(JSON.stringify({
             msgType: "playerMove",
             direction: "right",
-            sessionID:JSON.parse($.cookie("sessionID"))
+            sessionID:JSON.parse($.cookie("sessionID")).toString()
           }));
           if (debug) {console.log(
             JSON.stringify({
               msgType: "playerMove",
               direction: "right",
-              sessionID:JSON.parse($.cookie("sessionID"))
+              sessionID:JSON.parse($.cookie("sessionID")).toString()
             }))
           }
           break;
@@ -494,15 +502,16 @@ document.addEventListener('keyup', function(event){
           socket.send(JSON.stringify({
             msgType: "playerMove",
             direction: "down",
-            sessionID:JSON.parse($.cookie("sessionID"))
+            sessionID:JSON.parse($.cookie("sessionID")).toString()
           }));
           if (debug) {console.log(
             JSON.stringify({
               msgType: "playerMove",
               direction: "down",
-              sessionID:JSON.parse($.cookie("sessionID"))
+              sessionID:JSON.parse($.cookie("sessionID")).toString()
             }))
           }
+          
           break;
       case 37:
       case 65:
@@ -510,13 +519,13 @@ document.addEventListener('keyup', function(event){
           socket.send(JSON.stringify({
             msgType: "playerMove",
             direction: "left",
-            sessionID:JSON.parse($.cookie("sessionID"))
+            sessionID:JSON.parse($.cookie("sessionID")).toString()
           }));
           if (debug) {console.log(
             JSON.stringify({
               msgType: "playerMove",
               direction: "left",
-              sessionID:JSON.parse($.cookie("sessionID"))
+              sessionID:JSON.parse($.cookie("sessionID")).toString()
             }))
           }
           break;
@@ -549,7 +558,7 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
 
   // Create a new WebSocket.
    //var socket = new WebSocket('ws://echo.websocket.org');
-  var socket = new WebSocket('wss://tfrserver.herokuapp.com/'); 
+  var socket = new WebSocket('ws://127.0.0.1:8000'); 
 
 
   // Handle any errors that occur.
@@ -597,16 +606,19 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
     console.log(data.msgType)
     switch(data.msgType) {
       case 'boardUpdate':
+        console.log(currentArray)
         testBoard=jsonParser(data.board)
         $.cookie("lastBoard", JSON.stringify(testBoard)); //Also log currentArray, somehow, in order to redraw smooothly.
         //console.log(testBoard);
+        console.log(testBoard)
+
         if (gamestarted==false) {
         firstDraw(testBoard);
         gamestarted=true;
         }
         else {
           drawMovement(testBoard);
-        }
+        } 
       break
       case 'waitingForPlayers':
         if (myPlayerNum==4) {
@@ -643,6 +655,7 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
           }
           break;
       case 'ERR':
+        console.log(data);
         console.log("FATAL ERROR IN WEBSOCKET- COLLECTING LOG");
         break;
       case 'gameOver':
@@ -655,7 +668,7 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
   // Show a disconnected message when the WebSocket is closed.
   socket.onclose = function (event) {
     console.log("Socket is disconnected");
-    var socket = new WebSocket('wss://tfrserver.herokuapp.com/'); 
+    var socket = new WebSocket('ws://127.0.0.1:8000'); 
   };
   
 

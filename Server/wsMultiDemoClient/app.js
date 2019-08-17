@@ -8,7 +8,7 @@ function handleBox(number) {
 
   // Create a new WebSocket.
   // var socket = new WebSocket('ws://echo.websocket.org');
-  var sck = new WebSocket('ws://localhost:8000');
+  var sck = new WebSocket('ws://127.0.0.1:8000');
 
   // Handle any errors that occur.
   sck.onerror = function (error) {
