@@ -1,0 +1,10 @@
+[debug] [2019-08-14T19:31:51.397Z] ----------------------------------------------------------------------
+[debug] [2019-08-14T19:31:51.399Z] Command:       /usr/bin/node /usr/bin/firebase serve --only hosting
+[debug] [2019-08-14T19:31:51.400Z] CLI Version:   7.2.2
+[debug] [2019-08-14T19:31:51.400Z] Platform:      linux
+[debug] [2019-08-14T19:31:51.400Z] Node Version:  v11.15.0
+[debug] [2019-08-14T19:31:51.401Z] Time:          Wed Aug 14 2019 12:31:51 GMT-0700 (Pacific Daylight Time)
+[debug] [2019-08-14T19:31:51.401Z] ----------------------------------------------------------------------
+[debug] 
+[error] 
+[error] Error: Not in a Firebase app directory (could not locate firebase.json)
