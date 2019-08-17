@@ -105,7 +105,7 @@ class Board {
   // Log the tile numbers and owners as well as the enabled/disabled state of each box.
   logTileInfo() {
     console.log();
-    console.log("Tiles (number)\t\tTiles (owner)");
+    console.log("Tiles (number)\t\tTiles (owner)\t\tTiles (ID)");
 
     for (var r = 0; r < this.boxes.length; r++) {
       var output = "";
@@ -123,6 +123,15 @@ class Board {
           if (this.boxes[r][c].enabled) output += " ";
           else output += "*";
         } else output += this.boxes[r][c].owner + "";
+      }
+
+      output += "\t\t";
+
+      for (var c = 0; c < this.boxes[r].length; c++) {
+        if (this.boxes[r][c].tileId == 0) {
+          if (this.boxes[r][c].enabled) output += " ";
+          else output += "*";
+        } else output += this.boxes[r][c].tileId + "";
       }
       console.log(output);
     }
