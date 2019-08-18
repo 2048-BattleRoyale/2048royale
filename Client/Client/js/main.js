@@ -204,7 +204,7 @@ eventuallyRemove=[];
 
 
 function silentNew(id, Box) {
-  //console.log(Box);
+  console.log("SHHHHHHHHHH");
 //  document.getElementById("tile" + id).remove();
   var box=new Tile(id,calcX(Box.tileId%14),calcY(Box.tileId),Box.tileNum,Box.owner,Box.enabled);
     var tile_div=document.getElementById("tile" + id);
@@ -363,11 +363,11 @@ function moveTile(id,Tile,FutureTile) { //TIle is the tile as it sits NOW, Futur
       translateY:{
         
         value:[findCurrentAnim(id,"Y"),(((calcY(FutureTile.tileId))-calcY(Tile.tileId))*transformnumy).toString()+'vmin'],
-        duration:1000,
+        duration:300,
     },
       translateX:{
         value:[findCurrentAnim(id,"X"),(((((calcX(FutureTile.tileId)%14))-(calcX(Tile.tileId)%14)))*transformnumx).toString()+'vmin'],        //value:[5.735*0,5.735*-13],
-        duration:1000,
+        duration:300,
       },
   
       backgroundColor: [{
@@ -383,12 +383,11 @@ function moveTile(id,Tile,FutureTile) { //TIle is the tile as it sits NOW, Futur
           document.getElementById('tile'+(id).toString()).style.color='#'+darkOrLight(getColor(FutureTile.tileNum));
         document.getElementById('tile'+(id).toString()).innerHTML=(FutureTile.tileNum).toString()+"<div><div style=\"font-size:1vmin;transform: translate(0, -3.2vmin);\">"+players[FutureTile.owner-1]+"</div></div>"
         }
-        if (progress>99) {
+      },
+      complete: function() {
           silentNew(id,FutureTile);
           okayWork=true;
-        }
       }
-    
     
     })
     //document.getElementById('tile'+(Tile.id).toString()).innerHTML=(FutureTile.value).toString()+'\n'; This is a blanket update, the progress updater above will do a better job 99% of the time, but uncomment this if a corner-case arises
@@ -497,6 +496,7 @@ document.addEventListener('keyup', function(event){
   var socket = new WebSocket('wss://tfrserver.herokuapp.com'); 
   //alert(event.keyCode); (Uncomment this line if you need to add future keyswitch codes)
   if (true && gamestarted && okayWork) {
+    var socket = new WebSocket('wss://tfrserver.herokuapp.com'); 
     switch(event.keyCode) {
       case 87:
       case 38:
