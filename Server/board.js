@@ -521,8 +521,8 @@ class Board {
         // In which rows does the player have tiles?
         var rowsWithPlayerTiles = [];
         // Add the player's home board.
-        if (player == 1 || player == 2) colsWithPlayerTiles = [2, 3, 4, 5];
-        else colsWithPlayerTiles = [8, 9, 10, 11];
+        if (player == 1 || player == 2) rowsWithPlayerTiles = [2, 3, 4, 5];
+        else rowsWithPlayerTiles = [8, 9, 10, 11];
 
         for (var r = 0; r < this.boxes.length; r++) {
           for (var c = 0; c < this.boxes[r].length; c++) {
@@ -632,8 +632,8 @@ class Board {
         // In which rows does the player have tiles?
         var rowsWithPlayerTiles = [];
         // Add the player's home board.
-        if (player == 1 || player == 2) colsWithPlayerTiles = [2, 3, 4, 5];
-        else colsWithPlayerTiles = [8, 9, 10, 11];
+        if (player == 1 || player == 2) rowsWithPlayerTiles = [2, 3, 4, 5];
+        else rowsWithPlayerTiles = [8, 9, 10, 11];
 
         for (var r = 0; r < this.boxes.length; r++) {
           for (var c = 0; c < this.boxes[r].length; c++) {

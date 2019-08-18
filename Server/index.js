@@ -129,8 +129,18 @@ function handleWsMessage(ws, msg) {
       var board = findPlayersBoard(ws, sessionID);
       // If the player's board was found, handle the gosh darn box!
       if (board != null) {
-        board.handleBoardMove(parsedMsg.direction);
-        sendBoardUpdate(board);
+        var player;
+        for (var i = 0; i < board.getPlayers().length; i++) {
+          if (board.getPlayers()[i].sID == sessionID) {
+            player = i + 1;
+            break;
+          }
+        }
+        if(player != null) {
+          console.log(player)
+          board.handleBoardMove(parsedMsg.direction, player);
+          sendBoardUpdate(board);
+        }
       }
       break;
     case "unlockBox":
