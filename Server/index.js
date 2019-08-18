@@ -137,7 +137,6 @@ function handleWsMessage(ws, msg) {
           }
         }
         if(player != null) {
-          console.log(player)
           board.handleBoardMove(parsedMsg.direction, player);
           sendBoardUpdate(board);
         }
