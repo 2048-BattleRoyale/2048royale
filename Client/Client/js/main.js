@@ -494,7 +494,7 @@ var i=0;
 
 //Listeners
 document.addEventListener('keyup', function(event){
-  var socket = new WebSocket('ws://127.0.0.1:8000'); 
+  var socket = new WebSocket('wss://tfrserver.herokuapp.com'); 
   //alert(event.keyCode); (Uncomment this line if you need to add future keyswitch codes)
   if (true && gamestarted && okayWork) {
     switch(event.keyCode) {
@@ -593,7 +593,7 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
 
   // Create a new WebSocket.
    //var socket = new WebSocket('ws://echo.websocket.org');
-  var socket = new WebSocket('ws://127.0.0.1:8000'); 
+  var socket = new WebSocket('wss://tfrserver.herokuapp.com'); 
 
 
   // Handle any errors that occur.
@@ -696,7 +696,7 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
   // Show a disconnected message when the WebSocket is closed.
   socket.onclose = function (event) {
     console.log("Socket is disconnected");
-    var socket = new WebSocket('ws://127.0.0.1:8000'); 
+    var socket = new WebSocket('wss://tfrserver.herokuapp.com'); 
   };
   
 
