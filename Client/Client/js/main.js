@@ -34,7 +34,7 @@ var boardTestTest={"players":{1:{"Name":"String","Score":0},2:{"Name":"String","
 badJSON={"players":[{"name":"Billy Bob","score":0},{"name":"Jane Bob","score":4},{"name":"Joe Smith","score":2220},{"name":"Jack Sprat","score":0}],"boxes":[{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":8,"tileId":2,"owner":1},{"enabled":true,"tileNum":2,"tileId":3,"owner":1},{"enabled":true,"tileNum":64,"tileId":1,"owner":3},{"enabled":true,"tileNum":2,"tileId":4,"owner":1},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":2,"tileId":6,"owner":1},{"enabled":true,"tileNum":2,"tileId":7,"owner":1},{"enabled":true,"tileNum":2,"tileId":5,"owner":2},{"enabled":true,"tileNum":2,"tileId":8,"owner":1},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},
 {"enabled":true,"tileNum":128,"tileId":19,"owner":3},{"enabled":true,"tileNum":16384,"tileId":17,"owner":2},{"enabled":true,"tileNum":2048,"tileId":18,"owner":4},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":8,"tileId":10,"owner":1},{"enabled":true,"tileNum":2,"tileId":11,"owner":1},{"enabled":true,"tileNum":2,"tileId":9,"owner":3},{"enabled":true,"tileNum":4,"tileId":12,"owner":2},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":2,"tileId":14,"owner":1},{"enabled":true,"tileNum":2,"tileId":15,"owner":1},{"enabled":true,"tileNum":2,"tileId":13,"owner":4},{"enabled":true,"tileNum":2,"tileId":16,"owner":1},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":true,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0},{"enabled":false,"tileNum":0,"tileId":0,"owner":0}]};
 var newBoard;
-var gamestarted=false;
+var gameStarted=false;
 var sessionID;
 var myPlayerNum=4;
 var lockedBoxes=[];
@@ -67,7 +67,7 @@ var theme1={ //This is the standard 2048 theme
     "8192":"FBF2D5",
     "16384":"9000FF"
 }
-var extraInfo={
+var extraInfo={ //This is stored in the secondary colors Cookie
   "gridBackground":"CDC1B4",
   "lineBorder":"BBADA0",
   "blocked":"978F86",
@@ -77,7 +77,7 @@ var extraInfo={
 
 //Tile class is the object that's stored in each array.
 //console.log(board.boxes["3"].tileId);
-class Tile {
+class Tile { //A class used to reparse Board JSONs (somewhat legacy)
   constructor(id,x,y,value,owner,enabled) {
     this.x=x;
     this.y=y;
@@ -91,26 +91,26 @@ class Tile {
 
 //Practical side-functions
 function findCurrentAnim(id,xory) { // Useful in the console to find X or Y
-  var transforms=document.getElementById('tile'+id.toString()).style.transform;
-  transformY=((transforms.split('translateY'))[1].slice(0,(transforms.split('translateY'))[1].length-5));
+  var transforms=document.getElementById('tile'+id.toString()).style.transform; //Get the overarching CSS transform
+  transformY=((transforms.split('translateY'))[1].slice(0,(transforms.split('translateY'))[1].length-5)); //Use slices to break the Y transform down to just x + vmin
   transformY=transformY.slice(1,transformY.length-5)
-  transformX=((transforms.split('translateY'))[1].split('translateX'))[0].slice(0,(transforms.split('translateY'))[1].split('translateX')[0].length-5);
+  transformX=((transforms.split('translateY'))[1].split('translateX'))[0].slice(0,(transforms.split('translateY'))[1].split('translateX')[0].length-5); //See above.
   transformX=transformX.slice(1,transformX.length-5)
-  if (xory='X') {
+  if (xory='X') { //Want to find the X animation? This checks it. The same is true for the y.
     return transformX;
   }
   if (xory='Y') {
     return transformY;
   }
   else {
-    console.log("Fatal error on line 85.")
+    console.log("Fatal error on line 106.")
   }
 }
 
 
 function calcX(tileId) { //Used to parse the modulo values given in the Tile creation of newTile
   if(tileId==1) {
-    return 1;
+    return 1; //This basically turns the ID into an x value from 1-14.
   }
   if(tileId==0){
     return 14;
@@ -138,11 +138,12 @@ function getSessionID() //This is a placeholder function, to be replaced when th
   */
   return Math.random()*10000;
   }
-function getColor(values) {
-  //Takes the color of a tile with a certain number and steals it from the cookie table
+function getColor(values) { //Takes the color of a tile with a certain number and steals it from the cookie table
   return  JSON.parse($.cookie("colorTheme"))[values.toString()];
 }
 function darkOrLight(bgColor) { //Thanks https://stackoverflow.com/questions/3942878/how-to-decide-font-color-in-white-or-black-depending-on-background-color
+  //Figure out if the font color should be dark or light, given a hex value
+  
   var color = (bgColor.charAt(0) === '#') ? bgColor.substring(1, 7) : bgColor;
   var r = parseInt(color.substring(0, 2), 16); // hexToR
   var g = parseInt(color.substring(2, 4), 16); // hexToG
@@ -150,21 +151,21 @@ function darkOrLight(bgColor) { //Thanks https://stackoverflow.com/questions/394
   return (((r * 0.299) + (g * 0.587) + (b * 0.114)) > 215) ?
     darkColor : lightColor;
 }
-var thedevil;
-function jsonParser(miscommunication) {
+var theDevil;
+function jsonParser(miscommunication) { //Miscommunication is the name of the overall JSON, duh, Neil.
   //Do something with the player values here
-  thedevil=miscommunication;
-  var goodboard={"players":{},"boxes":{}};
-  for (let i=0;i<miscommunication.players.length;i++) { //Players stuff
-    goodboard.players[i+1]=miscommunication.players[i];
-    if (gamestarted==false) {
+  theDevil=miscommunication;
+  var goodBoard={"players":{},"boxes":{}};
+  for (let i=0;i<miscommunication.players.length;i++) { //This customizes the widget on the side of the screen, and adds the current players to it.
+    goodBoard.players[i+1]=miscommunication.players[i];
+    if (gameStarted==false) {
       players.push(miscommunication.players[i].name);
       document.getElementById("player"+myPlayerNum).classList.add("indigo");
       document.getElementById("player"+myPlayerNum).classList.remove("elegant-color-dark");
       }
     document.getElementById("player"+(i+1).toString()).innerHTML=miscommunication.players[i].name + "   " + "<span class=\"badge badge-primary badge-pill elegant-color \" id=\"player1sc\">"+miscommunication.players[i].score+"</span>";
   }
-  //console.log(goodboard.players);
+  //console.log(goodBoard.players);
   //console.log(players)
   lockedBoxes=[];
   for (let j=0;j<miscommunication.boxes.length;j++) {
@@ -181,21 +182,20 @@ function jsonParser(miscommunication) {
     testOb=miscommunication.boxes[j];
    //Ignore; bug fixing console.log(testOb)
    // tempID=miscommunication.boxes[j].tileId;
-   totalB+=1
    asdf=testOb.tileId
    testOb.tileId=j+1;
-    goodboard.boxes[asdf.toString()]=testOb;
+    goodBoard.boxes[asdf.toString()]=testOb;
   }
   drawLocked();
   // FOR NOW console.log("MRS:")
-  console.log(goodboard)
+  console.log(goodBoard)
   console.log("sacrebluwu")
 
-  return (goodboard);
+  return (goodBoard);
 
 }
 
-function divCleaner() { //Cleanup divs and make everything align
+function divCleaner() { //Cleanup divs and make everything align nicely.... A lategame function, for performance optimizations.
   for (i=0;i<eventuallyRemove.length;i++) {
   document.getElementById("tile"+eventuallyRemove[i]).remove();
   console.log("Removed tile"+eventuallyRemove[i]);
@@ -205,17 +205,13 @@ eventuallyRemove=[];
 //Primary Functions
 
 
-function silentNew(id, Box) {
-  console.log("SHHHHHHHHHH");
-//  document.getElementById("tile" + id).remove();
+function silentNew(id, Box) { //Redraws a given id with BOX data with no animation- hence, silent. See newtile, if you're confused, for further details.
+
   var box=new Tile(id,calcX(Box.tileId%14),calcY(Box.tileId),Box.tileNum,Box.owner,Box.enabled);
     var tile_div=document.getElementById("tile" + id);
     tile_div.className='tile';
     tile_div.innerHTML=(box.value).toString()+"<div><div style=\"font-size:1vmin;transform: translate(0, -3.2vmin);\">"+players[Box.owner-1]+"</div></div>"
     tile_div.id='tile'+(box.id).toString();
-    //grid.appendChild(tile_div);
-
-   // document.getElementById('tile'+(Tile.id).toString()).style.transform="translate(1vmin,0vmin)" //Static transform to accomodate for the earlier margin one
     document.getElementById('tile'+(box.id).toString()).style.transform="translate("+(transformnumx*(box.x-1))+"vmin,"+((box.y-1)*transformnumy)+"vmin)" //Original position transform
     document.getElementById('tile'+(box.id).toString()).style.backgroundColor='#'+getColor(box.value);
     document.getElementById('tile'+(box.id).toString()).style.transform=document.getElementById('tile'+(box.id).toString()).style.transform+" translateX(0vmin)"+" translateY(0vmin)"; //Original position transform
@@ -258,26 +254,18 @@ function silentNew(id, Box) {
   }
 
 
-
-
-
-
-
-
-function newTile(id, Box) {
-  //console.log(Box);
-  var box=new Tile(id,calcX(Box.tileId%14),calcY(Box.tileId),Box.tileNum,Box.owner,Box.enabled);
+function newTile(id, Box) { //Draws brand new Boxes
+  var box=new Tile(id,calcX(Box.tileId%14),calcY(Box.tileId),Box.tileNum,Box.owner,Box.enabled); // Turns the board box object into a compatible Tile object for easy access.
     var tile_div=document.createElement('div');
     tile_div.className='tile';
-    tile_div.innerHTML=(box.value).toString()+"<div><div style=\"font-size:1vmin;transform: translate(0, -3.2vmin);\">"+players[Box.owner-1]+"</div></div>"
+    tile_div.innerHTML=(box.value).toString()+"<div><div style=\"font-size:1vmin;transform: translate(0, -3.2vmin);\">"+players[Box.owner-1]+"</div></div>" //Work around for terrible CSS practices.
     tile_div.id='tile'+(box.id).toString();
-    grid.appendChild(tile_div);
+    grid.appendChild(tile_div); //Add this to the grid element.
 
-   // document.getElementById('tile'+(Tile.id).toString()).style.transform="translate(1vmin,0vmin)" //Static transform to accomodate for the earlier margin one
     document.getElementById('tile'+(box.id).toString()).style.transform="translate("+(transformnumx*(box.x-1))+"vmin,"+((box.y-1)*transformnumy)+"vmin)" //Original position transform
     document.getElementById('tile'+(box.id).toString()).style.backgroundColor='#'+getColor(box.value);
     document.getElementById('tile'+(box.id).toString()).style.transform=document.getElementById('tile'+(box.id).toString()).style.transform+" translateX(0vmin)"+" translateY(0vmin)"; //Original position transform
-    anime({
+    anime({ //Animate it all.
       targets: '#'+'tile'+(box.id).toString(),
       scale:[{
         value:[0,1],
@@ -285,12 +273,12 @@ function newTile(id, Box) {
       },
     ],
     rotation:[{
-      value:['20deg','-20deg','0deg'],
+      value:['20deg','-20deg','0deg'], //Legacy animation support- easy to turn on, by changing the property name.
       duration:300,
     },
   ],
       backgroundColor: [{
-        value:['#FFFFFF', '#'+getColor(box.value)],
+        value:['#FFFFFF', '#'+getColor(box.value)], //Using the getColor function to access the stored cookie JSON
         duration:300,
       },
     ],
@@ -299,9 +287,9 @@ function newTile(id, Box) {
       
     
     })
-    document.getElementById('tile'+(box.id).toString()).style.color='#'+darkOrLight(getColor(box.value));
+    document.getElementById('tile'+(box.id).toString()).style.color='#'+darkOrLight(getColor(box.value)); //Simply changes font color, in accordance with the dark or light function.
 
-    switch(Box.tileNum) {
+    switch(Box.tileNum) { //Allows for easy switching of max font size for each character length.... eventually a very important portion of the code.
       case(2):
       case(4):
       case(8):
@@ -336,10 +324,10 @@ function newTile(id, Box) {
     
 
   }
-function drawLocked() {
-  $('.blocked').remove()
+function drawLocked() { // Draw all of the locked, immobile boxes.
+  $('.blocked').remove() //kill all of the current locked boxes.
   
-  for (let i=0;i<lockedBoxes.length;i++) {
+  for (let i=0;i<lockedBoxes.length;i++) { //For each locked box, redraw it- this accomodates for blanks.
     
     var blocked_tile=document.createElement('div');
     blocked_tile.className='blocked';
@@ -351,35 +339,34 @@ function drawLocked() {
     document.getElementById('blocked'+(lockedBoxes[i]).toString()).style.transform=document.getElementById('blocked'+(lockedBoxes[i]).toString()).style.transform+" translateX(0vmin)"+" translateY(0vmin)"; //Original position transform
 
   }
-  $(".blocked").css("background-color","#"+JSON.parse($.cookie("boardTheme"))["blocked"])  
+  $(".blocked").css("background-color","#"+JSON.parse($.cookie("boardTheme"))["blocked"])   //Color it with the blocked box cookie.
 }
 
 
 function moveTile(id,Tile,FutureTile) { //TIle is the tile as it sits NOW, FutureTile is where you want it to move.
-  okayWork=false;
+  okayWork=false; //This is a bit of a bad variable name, but in essence, it states if the player can make a move- 300ms delay, at the moment.
   var progress=0;
-    //console.log("THE ID IS "+ id + Tile.tileId + FutureTile.tileId)
-    console.log("Finding the current animation of " + id + ". It is: " + findCurrentAnim(id,"X"));
+    ///console.log("Finding the current animation of " + id + ". It is: " + findCurrentAnim(id,"X")); Debug stuff.
     anime({
-      targets: '#'+'tile'+id,
+      targets: '#'+'tile'+id, //Target the appropriate div
       translateY:{
         
-        value:[findCurrentAnim(id,"Y"),(((calcY(FutureTile.tileId))-calcY(Tile.tileId))*transformnumy).toString()+'vmin'],
+        value:[findCurrentAnim(id,"Y"),(((calcY(FutureTile.tileId))-calcY(Tile.tileId))*transformnumy).toString()+'vmin'], // This might make very little sense, but it's due to the way CSS animations work. You need to find the current value  of it, and work from there, hence, the excessive code.
         duration:300,
     },
       translateX:{
-        value:[findCurrentAnim(id,"X"),(((((calcX(FutureTile.tileId)%14))-(calcX(Tile.tileId)%14)))*transformnumx).toString()+'vmin'],        //value:[5.735*0,5.735*-13],
+        value:[findCurrentAnim(id,"X"),(((((calcX(FutureTile.tileId)%14))-(calcX(Tile.tileId)%14)))*transformnumx).toString()+'vmin'],  //See above       //value:[5.735*0,5.735*-13],
         duration:300,
       },
   
       backgroundColor: [{
-        value:['#'+getColor(Tile.tileNum),'#'+getColor(FutureTile.tileNum)],
+        value:['#'+getColor(Tile.tileNum),'#'+getColor(FutureTile.tileNum)], //Animate colors for deletion+movement animations... not implemented yet, sadly, due to some arcane bug.
         duration:300,
       }
     ],
     
       easing: 'easeInOutQuad',
-      update: function() {
+      update: function() { //Change the text in a tile mid move, if it's merging.
         progress+=1
         if (progress>40 && progress<50) {
           document.getElementById('tile'+(id).toString()).style.color='#'+darkOrLight(getColor(FutureTile.tileNum));
@@ -387,16 +374,15 @@ function moveTile(id,Tile,FutureTile) { //TIle is the tile as it sits NOW, Futur
         }
       },
       complete: function() {
-          silentNew(id,FutureTile);
-          okayWork=true;
+          silentNew(id,FutureTile); //Reset the CSS properties with a silent deletion
+          okayWork=true; //Allow another move to be made
       }
     
     })
-    //document.getElementById('tile'+(Tile.id).toString()).innerHTML=(FutureTile.value).toString()+'\n'; This is a blanket update, the progress updater above will do a better job 99% of the time, but uncomment this if a corner-case arises
   }
 function deleteTile(id, Tile) { //Play delete animation then kick that sorry thing off of the array.
   console.log("DELETING " +id)
-  anime({
+  anime({ //Animate deletions.
     targets: '#'+'tile'+id,
     scale:[{
       value:0,
@@ -418,15 +404,15 @@ function deleteTile(id, Tile) { //Play delete animation then kick that sorry thi
     
   
   })
-  eventuallyRemove.push((id).toString());
-  document.getElementById('tile'+id).remove();
+  eventuallyRemove.push((id).toString()); //Add it to the eventually remove array.
+  document.getElementById('tile'+id).remove(); //Actually remove the div.
 }
 
-function drawMovement(newBoard) {
-board=newBoard;
-oldnew= JSON.parse(JSON.stringify(newBoard));
+function drawMovement(newBoard) { //Draw all movement using the most recent array as source, and an input one from the JSON parser.
+board=newBoard; 
+oldnew= JSON.parse(JSON.stringify(newBoard)); //This is the way garbage languages like JS require you to obfuscate a memory location.
   //Find Key Differences
-newArrayKeys=(Object.keys(newBoard.boxes));
+newArrayKeys=(Object.keys(newBoard.boxes)); //Find the keys, or ids, of each box in both arrays.
 newArrayKeys=newArrayKeys.map(function (x) { 
   return parseInt(x, 10); 
 });
@@ -452,15 +438,9 @@ deletions=currentArrayKeys.filter(x => !newArrayKeys.includes(x))
 
 console.log("Done deleting " + deletions)
 
-//console.log(deletions);
 //Remove these from the lists; they'll be parsed seperately
 //Parse Deletions
-do{
-  if (deletions.length>0) {
-    deleteTile(deletions[0],oldBoard.boxes[deletions[0]]);
-    deletions.shift();
-  }
-}while(deletions.length>0); 
+
 do{
   if (additions.length>0) {
   newTile(additions[0],newBoard.boxes[additions[0]]);
@@ -469,9 +449,7 @@ do{
   additions.shift();
   }
   }while(additions.length>0); 
-
-
-ketamine=currentArrayKeys.filter(x => newArrayKeys.includes(x));;
+ketamine=currentArrayKeys.filter(x => newArrayKeys.includes(x)); //Don't ask about the variable name.... this one was painful. These filters ultimately look for intersections in both arrays. Simple.
 console.log(ketamine);
 var i=0;
   for (i in ketamine) {
@@ -484,7 +462,12 @@ var i=0;
     //  console.log(Box)
     }
    }
-
+do{
+  if (deletions.length>0) {
+    deleteTile(deletions[0],oldBoard.boxes[deletions[0]]);
+    deletions.shift();
+  }
+}while(deletions.length>0); 
   console.log("THE OLD BOARD WAS" + Object.keys(oldBoard.boxes))
   oldBoard=oldnew;
   console.log("THE OLD BOARD IS" + Object.keys(oldBoard.boxes))
@@ -497,7 +480,7 @@ var i=0;
 document.addEventListener('keyup', function(event){// Read keypresses
   //var socket = new WebSocket('wss://tfrserver.herokuapp.com'); 
   //alert(event.keyCode); (Uncomment this line if you need to add future keyswitch codes)
-  if (true && gamestarted && okayWork) {
+  if (true && gameStarted && okayWork) {
     //var socket = new WebSocket('wss://tfrserver.herokuapp.com'); 
     switch(event.keyCode) {
       case 87:
@@ -660,11 +643,11 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
     console.log(data.msgType)
     switch(data.msgType) {
       case 'boardUpdate':
-        testBoard=jsonParser(data.board)
-        $.cookie("lastBoard", JSON.stringify(testBoard)); //Also log currentArray, somehow, in order to redraw smooothly.
-        //console.log(testBoard);
-        drawMovement(testBoard);
-        gamestarted=true;
+        parsedBoard=jsonParser(data.board)
+        $.cookie("lastBoard", JSON.stringify(parsedBoard)); //Also log currentArray, somehow, in order to redraw smooothly.
+        //console.log(parsedBoard);
+        drawMovement(parsedBoard);
+        gameStarted=true;
         recentboard=jsonParser(data.board);
         break
       case 'waitingForPlayers':
@@ -672,7 +655,7 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
           myPlayerNum=4-data.numLeft;
           changemade=true;
         }
-        if (gamestarted==false) {
+        if (gameStarted==false) {
           document.getElementById("player"+myPlayerNum).classList.add("indigo");
           document.getElementById("player"+myPlayerNum).classList.remove("elegant-color-dark");
           }
@@ -695,7 +678,7 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
       })
       break;
       case 'gameStarting':
-          gamestarted=false;
+          gameStarted=false;
           changemade=true;
           if(!$("#googlymoogle").length) {
             $('#googlymoogle').alert('close');
@@ -715,7 +698,7 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
   // Show a disconnected message when the WebSocket is closed.
   socket.onclose = function (event) {
     console.log("Socket is disconnected");
-    var socket = new WebSocket('wss://tfrserver.herokuapp.com'); 
+    location.reload();
   };
   
 
