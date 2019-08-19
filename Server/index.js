@@ -9,6 +9,10 @@ const wsPort = 8000;
 console.log("CONFIG: http on port:\t" + httpPort);
 console.log("CONFIG: ws on port:\t" + wsPort);
 
+// TODOS:
+// - Implement system to garbage collect unused boards.
+// - Implement detection of game end and time limit (20 mins?)
+
 // {Board, Board, Board, ...}
 var boardsList = [];
 
@@ -75,11 +79,12 @@ function findPlayersBoard(ws, sessionID) {
 // ws (websocket connection): WebSocket to use for communication with the current client.
 // msg (JSON string): Non-parsed JSON string with the message body.
 function handleWsMessage(ws, msg) {
-  // ws.send(msg);
   var parsedMsg = JSON.parse(msg);
 
   switch (parsedMsg.msgType) {
     case "signup":
+      logMsg(false, "Signup message received. Name: " + parsedMsg.name + ", sID:" +
+        parsedMsg.sessionID);
       // Look for boards which have less than a full set of players.
       var freeBoard = -1;
       for (var i = 0; i < boardsList.length; i++) {
@@ -102,7 +107,7 @@ function handleWsMessage(ws, msg) {
         // Tell all players that the game is starting and send the first board object.
         var playersList = boardsList[freeBoard].getPlayers();
         for (var i = 0; i < playersList.length; i++) {
-          // logMsg(false, "Sending game starting message to board: " + freeBoard + ", player: " + i)
+          logMsg(false, "Sending game starting message to board: " + freeBoard + ", player: " + i)
           playersList[i].connection.send(JSON.stringify({
             msgType: "gameStarting"
           }));
@@ -111,7 +116,8 @@ function handleWsMessage(ws, msg) {
             board: boardsList[freeBoard].getAsArray()
           }));
         }
-      } else { // Tell all players that the game how many players still need to join.
+        // Else, tell all players that the game how many players still need to join.
+      } else {
         logMsg(false, "Nope, just sending waiting message.")
         var playersList = boardsList[freeBoard].getPlayers();
         var numLeft = 4 - playersList.length;
@@ -124,11 +130,16 @@ function handleWsMessage(ws, msg) {
       }
       break;
     case "playerMove":
+      logMsg(false, "Player move message received. sID:" + parsedMsg.sessionID +
+        ", Direction: " + parsedMsg.direction);
       // Find the board that this player is on.
       var sessionID = parsedMsg.sessionID;
       var board = findPlayersBoard(ws, sessionID);
       // If the player's board was found, handle the gosh darn box!
-      if (board != null) {
+      if (board == null) {
+        logMsg(true, "Error!: Board not found for sessionID: " +
+          parsedMsg.sessionID)
+      } else {
         var player;
         for (var i = 0; i < board.getPlayers().length; i++) {
           if (board.getPlayers()[i].sID == sessionID) {
@@ -136,23 +147,32 @@ function handleWsMessage(ws, msg) {
             break;
           }
         }
-        if(player != null) {
+        if (player == null) {
+          logMsg(true, "Error!: Player not found in board for sessionID: " +
+            parsedMsg.sessionID)
+        } else {
           board.handleBoardMove(parsedMsg.direction, player);
           sendBoardUpdate(board);
         }
       }
       break;
     case "unlockBox":
+      logMsg(false, "Box unlock message received. sID:" + parsedMsg.sessionID +
+        ", x: " + parsedMsg.x + ", y: " + parsedMsg.y);
       // Find the board that this player is on.
       var sessionID = parsedMsg.sessionID;
       var board = findPlayersBoard(ws, sessionID);
       // If the player's board was found, enable the gosh darn box!
-      if (board != null) {
+      if (board == null) {
+        logMsg(true, "Error!: Board not found for sessionID: " +
+          parsedMsg.sessionID)
+      } else {
         board.enableBox(parsedMsg.x, parsedMsg.y);
         sendBoardUpdate(board);
       }
       break;
     default:
+      logMsg(true, "Error!: Unrecognized received. Message: " + parsedMsg);
       ws.send(JSON.stringify({
         msgType: "ERR",
         err: "Invalid message type"
@@ -201,7 +221,7 @@ const wsserver = new WebSocket.Server({
 });
 wsserver.on('connection', function connection(websocket) {
   websocket.on('message', function incoming(msg) {
-    logMsg(false, "WebSocket message: " + msg);
+    logMsg(false, "WebSocket message received: " + msg);
     handleWsMessage(websocket, msg);
   });
 });
