@@ -502,7 +502,7 @@ document.addEventListener('keyup', function(event){
     switch(event.keyCode) {
       case 87:
       case 38:
-        alert("Up! To be replaced by sockets when ready.");
+       // alert("Up! To be replaced by sockets when ready.");
         socket.send(JSON.stringify({
           msgType: "playerMove",
           direction: "up",
@@ -520,7 +520,7 @@ document.addEventListener('keyup', function(event){
         break;
       case 39:
       case 68:
-          alert("Right! To be replaced by sockets when ready.");
+       //   alert("Right! To be replaced by sockets when ready.");
           socket.send(JSON.stringify({
             msgType: "playerMove",
             direction: "right",
@@ -538,7 +538,7 @@ document.addEventListener('keyup', function(event){
           break;
       case 40:
       case 83:
-          alert("Down! To be replaced by sockets when ready.");
+        //  alert("Down! To be replaced by sockets when ready.");
           socket.send(JSON.stringify({
             msgType: "playerMove",
             direction: "down",
@@ -557,7 +557,7 @@ document.addEventListener('keyup', function(event){
           break;
       case 37:
       case 65:
-          alert("Left! To be replaced by sockets when ready.");
+         // alert("Left! To be replaced by sockets when ready.");
           socket.send(JSON.stringify({
             msgType: "playerMove",
             direction: "left",
