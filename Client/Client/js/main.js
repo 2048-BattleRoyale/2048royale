@@ -494,7 +494,7 @@ var i=0;
 
 
 //Listeners
-document.addEventListener('keyup', function(event){
+document.addEventListener('keyup', function(event){// Read keypresses
   //var socket = new WebSocket('wss://tfrserver.herokuapp.com'); 
   //alert(event.keyCode); (Uncomment this line if you need to add future keyswitch codes)
   if (true && gamestarted && okayWork) {
@@ -577,7 +577,17 @@ document.addEventListener('keyup', function(event){
     }
   }
 } );
-window.onload = function () {
+window.addEventListener("keydown", function(e) { // Prevent scrolling
+  // space and arrow keys
+  if([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+      e.preventDefault();
+  }
+}, false);
+
+
+window.onload = function () { //Ensure that sockets work when the site first loads 
+
+
 //Random Jquery Stuff to keep site running
 $('#title').on('click', function(event) {
   window.location.href = "index.html";
