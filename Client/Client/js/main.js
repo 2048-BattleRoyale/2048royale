@@ -47,6 +47,8 @@ var transformnumy=5.747124954411;
 var debug=false;
 var recentboard={"players":{},"boxes":{}};
 var okayWork=true;
+var socket = new WebSocket('wss://tfrserver.herokuapp.com'); 
+
 //Test/Example board used for testing out a real board object.
 //Color Profiles Stored Dynamically Online- this is the default
 var theme1={ //This is the standard 2048 theme
@@ -493,10 +495,10 @@ var i=0;
 
 //Listeners
 document.addEventListener('keyup', function(event){
-  var socket = new WebSocket('wss://tfrserver.herokuapp.com'); 
+  //var socket = new WebSocket('wss://tfrserver.herokuapp.com'); 
   //alert(event.keyCode); (Uncomment this line if you need to add future keyswitch codes)
   if (true && gamestarted && okayWork) {
-    var socket = new WebSocket('wss://tfrserver.herokuapp.com'); 
+    //var socket = new WebSocket('wss://tfrserver.herokuapp.com'); 
     switch(event.keyCode) {
       case 87:
       case 38:
@@ -506,6 +508,7 @@ document.addEventListener('keyup', function(event){
           direction: "up",
           sessionID:JSON.parse($.cookie("sessionID")).toString()
         }));
+        okayWork=false;
         if (debug) {console.log(
           JSON.stringify({
             msgType: "playerMove",
@@ -523,6 +526,8 @@ document.addEventListener('keyup', function(event){
             direction: "right",
             sessionID:JSON.parse($.cookie("sessionID")).toString()
           }));
+          okayWork=false;
+
           if (debug) {console.log(
             JSON.stringify({
               msgType: "playerMove",
@@ -539,6 +544,8 @@ document.addEventListener('keyup', function(event){
             direction: "down",
             sessionID:JSON.parse($.cookie("sessionID")).toString()
           }));
+          okayWork=false;
+
           if (debug) {console.log(
             JSON.stringify({
               msgType: "playerMove",
@@ -556,6 +563,8 @@ document.addEventListener('keyup', function(event){
             direction: "left",
             sessionID:JSON.parse($.cookie("sessionID")).toString()
           }));
+          okayWork=false;
+
           if (debug) {console.log(
             JSON.stringify({
               msgType: "playerMove",
@@ -593,7 +602,7 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
 
   // Create a new WebSocket.
    //var socket = new WebSocket('ws://echo.websocket.org');
-  var socket = new WebSocket('wss://tfrserver.herokuapp.com'); 
+  socket = new WebSocket('wss://tfrserver.herokuapp.com'); 
 
 
   // Handle any errors that occur.
