@@ -5,6 +5,7 @@ class Board {
     ];
     this.nextTileId = 1;
     this.playersInGame = [];
+    this.gameBeganAt = new Date(0);
   }
 
   // Adds a new player to the game board.
@@ -28,6 +29,8 @@ class Board {
     if (this.playersInGame.length >= 4) return true;
     else return false;
   }
+
+  getWhenGameBegan() { return this.gameBeganAt; }
 
   // Returns a list of the players in the game.
   getPlayers() {
@@ -100,6 +103,8 @@ class Board {
         else if (r == 1 && c == 1) this.boxes[(r * 6 + 2) + y][(c * 6 + 2) + x].owner = 4;
       }
     }
+
+    this.gameBeganAt = new Date();
   }
 
   // Log the tile numbers and owners as well as the enabled/disabled state of each box.

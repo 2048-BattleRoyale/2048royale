@@ -6,15 +6,23 @@ const Board = require("./board.js");
 const debugMsgs = true;
 const httpPort = 7000;
 const wsPort = 8000;
+const oldBoardTimeout = 20 /* mins */ * 60 /* secs */ * 1000 /* ms */ ;
+const timeBetweenOldBoardCleanupPasses = 1 /* mins */ * 60 /* secs */ * 1000 /* ms */ ;
 console.log("CONFIG: http on port:\t" + httpPort);
 console.log("CONFIG: ws on port:\t" + wsPort);
 
 // TODOS:
-// - Implement system to garbage collect unused boards.
+// - Implement system to garbage collect unused boards. (done?)
 // - Implement detection of game end and time limit (20 mins?)
+// - Implement client function to let server know that the client has been closed.
 
 // {Board, Board, Board, ...}
 var boardsList = [];
+boardsList.remove = function (index) {
+  // https://stackoverflow.com/a/53069926/3339274
+  numToRemove = 1;
+  this.splice(index, numToRemove);
+}
 
 // Log a message to the terminal.
 // critical (bool): Is the message critical or debug?
@@ -52,7 +60,7 @@ function sendBoardUpdate(board) {
 
 // Find the board that this player is on.
 // ws (websocket connection): WebSocket to use for a possible error message.
-// sesssionID (string): sessionID of the query user.
+// sessionID (string): sessionID of the query user.
 function findPlayersBoard(ws, sessionID) {
   var board = null;
   for (var i = 0; i < boardsList.length; i++) {
@@ -73,6 +81,29 @@ function findPlayersBoard(ws, sessionID) {
     }));
     return null;
   } else return board;
+}
+
+function cleanUpOldBoards() {
+  for (var i = 0; i < boardsList.length; i++) {
+    var creationTime = boardsList[i].getWhenGameBegan().getTime();
+
+    // If the board hasn't started yet, then don't delete it, you buffoon!
+    if(creationTime == 0) continue;
+
+    // If the board has been around longer than it's allowed to, clean it up.
+    if ((new Date()).getTime() - creationTime > oldBoardTimeout) {
+      // Send the cleanup message to all players.
+      for (var i = 0; i < board.getPlayers().length; i++) {
+        logMsg(false, "Sending board cleanup to sessionID: " + board.getPlayers()[i].sID)
+        board.getPlayers()[i].connection.send(JSON.stringify({
+          msgType: "gameTimeout",
+        }));
+      }
+
+      // Remove the board from the list.
+      boardsList.remove(i);
+    }
+  }
 }
 
 // Handles an incoming WebSockets message.
@@ -184,6 +215,11 @@ function handleWsMessage(ws, msg) {
 // *****************************************************************************
 // HTTP and WebSockets Server init and setup.
 // *****************************************************************************
+
+// Setup periodic cleanup of old boards.
+// https://stackoverflow.com/a/1224485/3339274
+var cleanupHandle = setInterval(cleanUpOldBoards, timeBetweenOldBoardCleanupPasses);
+//clearInterval(cleanupHandle)
 
 // Start HTTP Server to listen for new clients to sign in.
 http.createServer(function (request, response) {
