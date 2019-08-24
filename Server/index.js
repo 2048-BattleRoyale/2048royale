@@ -85,10 +85,11 @@ function findPlayersBoard(ws, sessionID) {
 
 function cleanUpOldBoards() {
   for (var i = 0; i < boardsList.length; i++) {
+    logMsg(false, "Cleaning up old boards.");
     var creationTime = boardsList[i].getWhenGameBegan().getTime();
 
     // If the board hasn't started yet, then don't delete it, you buffoon!
-    if(creationTime == 0) continue;
+    if (creationTime == 0) continue;
 
     // If the board has been around longer than it's allowed to, clean it up.
     if ((new Date()).getTime() - creationTime > oldBoardTimeout) {
@@ -160,6 +161,19 @@ function handleWsMessage(ws, msg) {
         }
       }
       break;
+    case "clientClosed":
+      logMsg(false, "Client closed message received. sID:" + parsedMsg.sessionID);
+      // Find the board that this player is on.
+      var sessionID = parsedMsg.sessionID;
+      var board = findPlayersBoard(ws, sessionID);
+      // If the player's board was found, delete the gosh darn player!
+      if (board == null) {
+        logMsg(true, "Error!: Board not found for sessionID: " +
+          parsedMsg.sessionID);
+      } else {
+        board.removePlayer(sessionID);
+      }
+      break;
     case "playerMove":
       logMsg(false, "Player move message received. sID:" + parsedMsg.sessionID +
         ", Direction: " + parsedMsg.direction);
@@ -169,7 +183,7 @@ function handleWsMessage(ws, msg) {
       // If the player's board was found, handle the gosh darn box!
       if (board == null) {
         logMsg(true, "Error!: Board not found for sessionID: " +
-          parsedMsg.sessionID)
+          parsedMsg.sessionID);
       } else {
         var player;
         for (var i = 0; i < board.getPlayers().length; i++) {
@@ -180,7 +194,7 @@ function handleWsMessage(ws, msg) {
         }
         if (player == null) {
           logMsg(true, "Error!: Player not found in board for sessionID: " +
-            parsedMsg.sessionID)
+            parsedMsg.sessionID);
         } else {
           board.handleBoardMove(parsedMsg.direction, player);
           sendBoardUpdate(board);

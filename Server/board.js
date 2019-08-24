@@ -5,6 +5,11 @@ class Board {
     ];
     this.nextTileId = 1;
     this.playersInGame = [];
+    this.playersInGame.remove = function (index) {
+      // https://stackoverflow.com/a/53069926/3339274
+      numToRemove = 1;
+      this.splice(index, numToRemove);
+    }
     this.gameBeganAt = new Date(0);
   }
 
@@ -22,6 +27,17 @@ class Board {
       score: 0,
       hasLost: false
     });
+  }
+
+  // Removes a player from the game board.
+  // sessionID (string): Client-provided session ID.
+  removePlayer(sessionID) {
+    for(var i = 0; i < this.playersInGame.length; i++) {
+      if(this.playersInGame[i].sessionID == sessionID) {
+        this.playersInGame.remove(i);
+        return;
+      }
+    }
   }
 
   // Is the board full of players? (4/4)
