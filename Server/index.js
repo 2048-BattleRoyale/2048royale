@@ -162,7 +162,7 @@ function handleWsMessage(ws, msg) {
       }
       break;
     case "clientClosed":
-      logMsg(false, "Client closed message received. sID:" + parsedMsg.sessionID);
+      logMsg(false, "Client closed message received. sID: " + parsedMsg.sessionID);
       // Find the board that this player is on.
       var sessionID = parsedMsg.sessionID;
       var board = findPlayersBoard(ws, sessionID);
@@ -175,7 +175,7 @@ function handleWsMessage(ws, msg) {
       }
       break;
     case "playerMove":
-      logMsg(false, "Player move message received. sID:" + parsedMsg.sessionID +
+      logMsg(false, "Player move message received. sID: " + parsedMsg.sessionID +
         ", Direction: " + parsedMsg.direction);
       // Find the board that this player is on.
       var sessionID = parsedMsg.sessionID;
@@ -202,7 +202,7 @@ function handleWsMessage(ws, msg) {
       }
       break;
     case "unlockBox":
-      logMsg(false, "Box unlock message received. sID:" + parsedMsg.sessionID +
+      logMsg(false, "Box unlock message received. sID: " + parsedMsg.sessionID +
         ", x: " + parsedMsg.x + ", y: " + parsedMsg.y);
       // Find the board that this player is on.
       var sessionID = parsedMsg.sessionID;
