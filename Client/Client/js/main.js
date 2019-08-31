@@ -704,8 +704,8 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
           if(!$("#googlymoogle").length) {
             $('#googlymoogle').alert('close');
           }
-          console.log("THIS IS MY PLAYER ID!!!!!!!!!" + data.playerId);
-          myPlayerNum=data.playerId;
+          console.log("THIS IS MY PLAYER ID!!!!!!!!!" + data.playerId+1);
+          myPlayerNum=data.playerId+1;
           if (gameStarted==false) {
             document.getElementById("player"+myPlayerNum).classList.add("indigo");
             document.getElementById("player"+myPlayerNum).classList.remove("elegant-color-dark");
