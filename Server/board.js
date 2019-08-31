@@ -11,6 +11,7 @@ class Board {
       this.splice(index, numToRemove);
     }
     this.gameBeganAt = new Date(0);
+    this.isGameWon = false;
   }
 
   // Adds a new player to the game board.
@@ -47,6 +48,22 @@ class Board {
   }
 
   getWhenGameBegan() { return this.gameBeganAt; }
+
+  // Updates the instance variable (and returns the player) whether or not a player has won.
+  updateGameWon() {
+    var playersStillInGame = 0;
+    var playerID = -1; // Will contain the ID of the last player alive, if applicable.
+
+    for(var i = 0; i < this.playersInGame.length; i++) {
+      if(!this.playersInGame[i].hasLost) {
+        playersStillInGame++;
+        playerID = i;
+      }
+    }
+
+    if(playersStillInGame == 1) return playerID;
+    else return -1;
+  }
 
   // Returns a list of the players in the game.
   getPlayers() {

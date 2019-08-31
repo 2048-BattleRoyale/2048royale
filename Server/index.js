@@ -3,18 +3,23 @@ const url = require('url');
 const WebSocket = require('ws');
 const Board = require("./board.js");
 
-const debugMsgs = true;
+const printDebugLevelMsgs = true;
 const httpPort = 7000;
 const wsPort = 8000;
 const oldBoardTimeout = 20 /* mins */ * 60 /* secs */ * 1000 /* ms */ ;
 const timeBetweenOldBoardCleanupPasses = 1 /* mins */ * 60 /* secs */ * 1000 /* ms */ ;
-console.log("CONFIG: http on port:\t" + httpPort);
-console.log("CONFIG: ws on port:\t" + wsPort);
+
+// Log config messages to the terminal.
+console.log("CONFIG: HTTP server on port:\t" + httpPort);
+console.log("CONFIG: WS server on port:\t" + wsPort);
+console.log("CONFIG: Time formatted in MM/DD/YYYY HH:MM::SS:MS, local server time zone");
+console.log("CONFIG: Server Timezone:\tUTC" + (-(new Date).getTimezoneOffset() / 60));
+console.log();
+console.log("BEGIN SERVER LOG OUTPUT");
 
 // TODOS:
-// - Implement system to garbage collect unused boards. (done?)
-// - Implement detection of game end and time limit (20 mins?)
 // - Implement client function to let server know that the client has been closed.
+// - Enable feature to reject sessionIDs not already in issuedSIDs.
 
 // {Board, Board, Board, ...}
 var boardsList = [];
@@ -28,27 +33,48 @@ boardsList.remove = function (index) {
 // critical (bool): Is the message critical or debug?
 // msg (string): Message to print.
 function logMsg(critical, msg) {
+  var date = new Date(Date.now());
+  var stringDate = date.getMonth() + "/" + date.getDate() + "/" + date.getFullYear() +
+    " " + date.getHours() + ":" + date.getMinutes() + ":" +
+    date.getSeconds() + ":" + date.getMilliseconds();
+
   if (critical) {
-    console.log("CRITICAL ERR: " + msg);
-  } else if (debugMsgs) {
-    console.log(msg);
+    console.log(stringDate + " -> CRITICAL ERR: " + msg);
+  } else if (printDebugLevelMsgs) {
+    console.log(stringDate + " -> DEBUG: " + msg);
   }
 }
 
+// List of issued session IDs which will be accepted by the WebSockets API.
+var issuedSIDs = [];
+
 // Creates a random string of characters length characters long.
 function makeSessionID(length) {
-  var result = '';
-  var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-  var charactersLength = characters.length;
-  for (var i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
+  logMsg(false, "Session ID of length " + length + " created");
 
-  return result;
+  // Make new session IDs until we find one that isn't already in use.
+  var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var newSessionID;
+  var viable = true;
+  do {
+    newSessionID = "";
+    for (var i = 0; i < length; i++)
+      newSessionID += characters.charAt(Math.floor(Math.random() * characters.length));
+
+    // Is the generated sessionID in use?
+    for (var i = 0; i < issuedSIDs.length; i++)
+      if (newSessionID === issuedSIDs[i]) viable = false;
+  } while (!viable)
+
+  // Push the new session ID onto the list of issued IDs.
+  issuedSIDs.push(newSessionID);
+
+  return newSessionID;
 }
 
 // Send board update to all players in the board.
 function sendBoardUpdate(board) {
+  logMsg(false, "Sending board object updates to all players");
   for (var i = 0; i < board.getPlayers().length; i++) {
     // logMsg(false, "Sending to sessionID: " + board.getPlayers()[i].sID)
     board.getPlayers()[i].connection.send(JSON.stringify({
@@ -83,9 +109,13 @@ function findPlayersBoard(ws, sessionID) {
   } else return board;
 }
 
+// Helper function called on a cycle timer which removes old and unused boards
+// from the list.
 function cleanUpOldBoards() {
+  logMsg(false, "Cleaning up old boards.");
+  var numBoardsRemoved = 0;
+
   for (var i = 0; i < boardsList.length; i++) {
-    logMsg(false, "Cleaning up old boards.");
     var creationTime = boardsList[i].getWhenGameBegan().getTime();
 
     // If the board hasn't started yet, then don't delete it, you buffoon!
@@ -103,20 +133,56 @@ function cleanUpOldBoards() {
 
       // Remove the board from the list.
       boardsList.remove(i);
+      numBoardsRemoved++;
     }
   }
+
+  if (numBoardsRemoved > 0) logMsg(false, "Cleanup routine removed " +
+    numBoardsRemoved + " empty/unused boards");
+  else logMsg(false, "Cleanup routine removed no boards");
 }
 
 // Handles an incoming WebSockets message.
 // ws (websocket connection): WebSocket to use for communication with the current client.
 // msg (JSON string): Non-parsed JSON string with the message body.
 function handleWsMessage(ws, msg) {
-  var parsedMsg = JSON.parse(msg);
+  // Try to parse the JSON, catching possible exceptions.
+  var parsedMsg;
+  try {
+    parsedMsg = JSON.parse(msg);
+  } catch (SyntaxError) {
+    logMsg(false, "ERROR!: Malformed JSON message received.");
+    ws.send(JSON.stringify({
+      msgType: "ERR",
+      err: "Malformed JSON"
+    }));
+    return;
+  }
+
+  // Is the provided session ID in the list of issued IDs?
+  // var validSID = false;
+  // for (var i = 0; i < issuedSIDs.length; i++) {
+  //   logMsg(false, "issuedID:\t" + issuedSIDs[i])
+  //   logMsg(false, "parsedMsg.sID:\t" + parsedMsg.sessionID)
+  //   if (parsedMsg.sessionID === issuedSIDs[i]) {
+  //     logMsg(false, "Same.")
+  //     validSID = true;
+  //     break;
+  //   }
+  // }
+  // if (!validSID) {
+  //   ws.send(JSON.stringify({
+  //     msgType: "ERR",
+  //     err: "SessionID isn't valid"
+  //   }));
+  //   return;
+  // }
 
   switch (parsedMsg.msgType) {
     case "signup":
-      logMsg(false, "Signup message received. Name: " + parsedMsg.name + ", sID:" +
+      logMsg(false, "Signup message received. Name: " + parsedMsg.name + ", sID: " +
         parsedMsg.sessionID);
+
       // Look for boards which have less than a full set of players.
       var freeBoard = -1;
       for (var i = 0; i < boardsList.length; i++) {
@@ -269,9 +335,10 @@ http.createServer(function (request, response) {
 const wsserver = new WebSocket.Server({
   port: wsPort
 });
-wsserver.on('connection', function connection(websocket) {
-  websocket.on('message', function incoming(msg) {
+wsserver.on('connection', function connection(socket) {
+  logMsg(false, "Connection established with new client");
+  socket.on('message', function incoming(msg) {
     logMsg(false, "WebSocket message received: " + msg);
-    handleWsMessage(websocket, msg);
+    handleWsMessage(socket, msg);
   });
 });
