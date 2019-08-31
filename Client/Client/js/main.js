@@ -42,7 +42,7 @@ var debug=false;
 var recentboard={"players":{},"boxes":{}};
 var okayWork=true;
 var socket = new WebSocket('wss://tfrserver.herokuapp.com'); 
-
+var boxClicked=false;
 //Test/Example board used for testing out a real board object.
 //Color Profiles Stored Dynamically Online- this is the default
 var theme1={ //This is the standard 2048 theme
@@ -570,7 +570,31 @@ $('#title').on('click', function(event) {
   console.log('home')
 });
 
-
+$('.newBox').on('click', function(event) {
+  if (true) { //REPLACE WITH SCORE FUNCTION SOON !!!!!!!IMPORTANT!!!!!!!!!!!
+    $(".blocked").css({"border-color": "#FFFFF", 
+    "border-width":"1px", 
+    "border-style":"solid"});
+    boxClicked=true;
+  }
+});
+$(document).on('click', '.blocked', function() {
+  var id =$(this).attr('id').split("blocked")[1];
+  console.log(id);
+  let xValue=calcX(id%14)-1;
+  let yValue=calcY(id)-1; 
+  console.log(xValue + "," + yValue);
+  if (boxClicked) {
+ 
+    socket.send(JSON.stringify({ //Modify this with cookies, to make sure one player gets reconnected with their correct session etc... and can't join several times.
+      msgType: "unlockBox",
+      sessionID: sessionID.toString(),
+      x:xValue.toString(),
+      y:yValue.toString(),
+    }));
+    delete document.getElementById('blocked'+id);
+  }
+});
 //Cookie Jar
 if (document.cookie.indexOf('colorTheme')==-1) {
   $.cookie("colorTheme", JSON.stringify(theme1));
