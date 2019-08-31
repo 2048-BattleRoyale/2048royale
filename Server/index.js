@@ -332,10 +332,9 @@ http.createServer(function (request, response) {
 }).listen(httpPort);
 
 // Start WebSocket Server to listen for new players making moves/actions.
-const wsserver = new WebSocket.Server({
+new WebSocket.Server({
   port: wsPort
-});
-wsserver.on('connection', function connection(socket) {
+}).on('connection', function connection(socket) {
   logMsg(false, "Connection established with new client");
   socket.on('message', function incoming(msg) {
     logMsg(false, "WebSocket message received: " + msg);
