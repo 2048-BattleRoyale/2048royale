@@ -124,9 +124,9 @@ function cleanUpOldBoards() {
     // If the board has been around longer than it's allowed to, clean it up.
     if ((new Date()).getTime() - creationTime > oldBoardTimeout) {
       // Send the cleanup message to all players.
-      for (var i = 0; i < boardsList[i].getPlayers().length; i++) {
-        logMsg(false, "Sending board cleanup to sessionID: " + board.getPlayers()[i].sID)
-        board.getPlayers()[i].connection.send(JSON.stringify({
+      for (var j = 0; j < boardsList[i].getPlayers().length; j++) {
+        logMsg(false, "Sending board cleanup to sessionID: " + boardsList[i].getPlayers()[j].sID)
+        boardsList[i].getPlayers()[j].connection.send(JSON.stringify({
           msgType: "gameTimeout",
         }));
       }
