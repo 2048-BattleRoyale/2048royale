@@ -5,7 +5,7 @@ const Board = require("./board.js");
 
 const printDebugLevelMsgs = true;
 const httpPort = 7000;
-const wsPort = 8000;
+const wsPort = process.env.PORT || 8000;
 const oldBoardTimeout = 20 /* mins */ * 60 /* secs */ * 1000 /* ms */ ;
 const timeBetweenOldBoardCleanupPasses = 1 /* mins */ * 60 /* secs */ * 1000 /* ms */ ;
 
@@ -124,7 +124,7 @@ function cleanUpOldBoards() {
     // If the board has been around longer than it's allowed to, clean it up.
     if ((new Date()).getTime() - creationTime > oldBoardTimeout) {
       // Send the cleanup message to all players.
-      for (var i = 0; i < board.getPlayers().length; i++) {
+      for (var i = 0; i < boardsList[i].getPlayers().length; i++) {
         logMsg(false, "Sending board cleanup to sessionID: " + board.getPlayers()[i].sID)
         board.getPlayers()[i].connection.send(JSON.stringify({
           msgType: "gameTimeout",
