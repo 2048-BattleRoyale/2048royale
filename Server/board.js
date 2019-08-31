@@ -182,6 +182,21 @@ class Board {
     this.boxes[r][c].enabled = true;
   }
 
+  // Adds in a new tile of random value (~60% 2, 40% 4).
+  // x (int): X-coordinate of the new tile.
+  // y (int): Y-coordinate of the new tile.
+  addNewTile(row, col, player) {
+    // Create the new box at the specified location.
+    // ~60% of the time select 2, 40% select 4.
+    this.boxes[row][col] = {
+      enabled: true,
+      tileNum: Math.random() > 0.60 ? 4 : 2,
+      tileId: this.nextTileId,
+      owner: player
+    };
+    this.nextTileId++;
+  }
+
   // INTERNAL FUNCTION, don't call from outside!!!
   // Handle the tile moving process, noting which tiles were moved in changeList.
   handleTileMove(direction, player) {
@@ -268,21 +283,6 @@ class Board {
     }
   }
 
-  // Adds in a new tile of random value (~60% 2, 40% 4).
-  // x (int): X-coordinate of the new tile.
-  // y (int): Y-coordinate of the new tile.
-  addNewTile(row, col, player) {
-    // Create the new box at the specified location.
-    // ~60% of the time select 2, 40% select 4.
-    this.boxes[row][col] = {
-      enabled: true,
-      tileNum: Math.random() > 0.60 ? 4 : 2,
-      tileId: this.nextTileId,
-      owner: player
-    };
-    this.nextTileId++;
-  }
-
   // Handle all aspects of a this.boxes move
   // direction (string): "up", "down", "left", or "right" of the player's desired move.
   // plater (int): Player number on the board who is making the move.
@@ -327,6 +327,9 @@ class Board {
                 tileId: 0,
                 owner: 0
               };
+
+              // Add the value of the new tile to the player's score.
+              this.playersInGame[player].score += num*2;
             }
           }
         }
@@ -438,6 +441,9 @@ class Board {
                 tileId: 0,
                 owner: 0
               };
+
+              // Add the value of the new tile to the player's score.
+              this.playersInGame[player].score += num*2;
             }
           }
         }
@@ -549,6 +555,9 @@ class Board {
                 tileId: 0,
                 owner: 0
               };
+
+              // Add the value of the new tile to the player's score.
+              this.playersInGame[player].score += num*2;
             }
           }
         }
@@ -660,6 +669,9 @@ class Board {
                 tileId: 0,
                 owner: 0
               };
+
+              // Add the value of the new tile to the player's score.
+              this.playersInGame[player].score += num*2;
             }
           }
         }
