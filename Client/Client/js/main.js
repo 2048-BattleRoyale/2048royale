@@ -698,22 +698,24 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
       })
       break;
       case 'gameStarting':
+        console.log(data);
           gameStarted=false;
           changemade=true;
           if(!$("#googlymoogle").length) {
             $('#googlymoogle').alert('close');
           }
+          console.log("THIS IS MY PLAYER ID!!!!!!!!!" + data.playerId);
+          myPlayerNum=data.playerId;
+          if (gameStarted==false) {
+            document.getElementById("player"+myPlayerNum).classList.add("indigo");
+            document.getElementById("player"+myPlayerNum).classList.remove("elegant-color-dark");
+            }
           break;
       case 'ERR':
         console.log(data);
         console.log("FATAL ERROR IN WEBSOCKET- COLLECTING LOG");
         break;
       case 'yourPlayerId':
-        myPlayerNum=data.id;
-        if (gameStarted==false) {
-          document.getElementById("player"+myPlayerNum).classList.add("indigo");
-          document.getElementById("player"+myPlayerNum).classList.remove("elegant-color-dark");
-          }
       case 'gameOver':
         //Delete Cookies
       
