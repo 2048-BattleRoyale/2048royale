@@ -262,17 +262,17 @@ function newTile(id, Box) { //Draws brand new Boxes
       targets: '#'+'tile'+(box.id).toString(),
       scale:[{
         value:[0,1],
-        duration:200,
+        duration:150,
       },
     ],
     rotation:[{
       value:['20deg','-20deg','0deg'], //Legacy animation support- easy to turn on, by changing the property name.
-      duration:200,
+      duration:150,
     },
   ],
       backgroundColor: [{
         value:['#FFFFFF', '#'+getColor(box.value)], //Using the getColor function to access the stored cookie JSON
-        duration:200,
+        duration:150,
       },
     ],
     
@@ -345,16 +345,16 @@ function moveTile(id,Tile,FutureTile) { //TIle is the tile as it sits NOW, Futur
       translateY:{
         
         value:[findCurrentAnim(id,"Y"),(((calcY(FutureTile.tileId))-calcY(Tile.tileId))*transformnumy).toString()+'vmin'], // This might make very little sense, but it's due to the way CSS animations work. You need to find the current value  of it, and work from there, hence, the excessive code.
-        duration:200,
+        duration:150,
     },
       translateX:{
         value:[findCurrentAnim(id,"X"),(((((calcX(FutureTile.tileId)%14))-(calcX(Tile.tileId)%14)))*transformnumx).toString()+'vmin'],  //See above       //value:[5.735*0,5.735*-13],
-        duration:200,
+        duration:150,
       },
   
       backgroundColor: [{
         value:['#'+getColor(Tile.tileNum),'#'+getColor(FutureTile.tileNum)], //Animate colors for deletion+movement animations... not implemented yet, sadly, due to some arcane bug.
-        duration:200,
+        duration:150,
       }
     ],
     
@@ -379,17 +379,17 @@ function deleteTile(id, Tile) { //Play delete animation then kick that sorry thi
     targets: '#'+'tile'+id,
     scale:[{
       value:0,
-      duration:200,
+      duration:150,
     },
   ],
   rotation:[{
     value:'1turn',
-    duration:200,
+    duration:150,
   },
 ],
     backgroundColor: [{
       value:['#'+getColor(Tile.tileNum), '#FFFFFF'],
-      duration:200,
+      duration:150,
     },
   ],
   
@@ -669,14 +669,16 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
         recentboard=jsonParser(data.board);
         break
       case 'waitingForPlayers':
+        /*
         if (myPlayerNum==4) {
           myPlayerNum=4-data.numLeft;
           changemade=true;
         }
-        if (gameStarted==false) {
+        */
+        /*if (gameStarted==false) {
           document.getElementById("player"+myPlayerNum).classList.add("indigo");
           document.getElementById("player"+myPlayerNum).classList.remove("elegant-color-dark");
-          }
+          }*/
           if(!$("#googlymoogle").length) {
             var alert = document.createElement('div');
             alert.className='alert alert-dismissible alert-dark fade show';
@@ -706,6 +708,12 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
         console.log(data);
         console.log("FATAL ERROR IN WEBSOCKET- COLLECTING LOG");
         break;
+      case 'yourPlayerId':
+        myPlayerNum=data.id;
+        if (gameStarted==false) {
+          document.getElementById("player"+myPlayerNum).classList.add("indigo");
+          document.getElementById("player"+myPlayerNum).classList.remove("elegant-color-dark");
+          }
       case 'gameOver':
         //Delete Cookies
       
