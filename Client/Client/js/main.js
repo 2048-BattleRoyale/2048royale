@@ -262,17 +262,17 @@ function newTile(id, Box) { //Draws brand new Boxes
       targets: '#'+'tile'+(box.id).toString(),
       scale:[{
         value:[0,1],
-        duration:300,
+        duration:50,
       },
     ],
     rotation:[{
       value:['20deg','-20deg','0deg'], //Legacy animation support- easy to turn on, by changing the property name.
-      duration:300,
+      duration:50,
     },
   ],
       backgroundColor: [{
         value:['#FFFFFF', '#'+getColor(box.value)], //Using the getColor function to access the stored cookie JSON
-        duration:300,
+        duration:50,
       },
     ],
     
@@ -337,7 +337,7 @@ function drawLocked() { // Draw all of the locked, immobile boxes.
 
 
 function moveTile(id,Tile,FutureTile) { //TIle is the tile as it sits NOW, FutureTile is where you want it to move.
-  okayWork=false; //This is a bit of a bad variable name, but in essence, it states if the player can make a move- 300ms delay, at the moment.
+  okayWork=false; //This is a bit of a bad variable name, but in essence, it states if the player can make a move- 50ms delay, at the moment.
   var progress=0;
     ///console.log("Finding the current animation of " + id + ". It is: " + findCurrentAnim(id,"X")); Debug stuff.
     anime({
@@ -345,16 +345,16 @@ function moveTile(id,Tile,FutureTile) { //TIle is the tile as it sits NOW, Futur
       translateY:{
         
         value:[findCurrentAnim(id,"Y"),(((calcY(FutureTile.tileId))-calcY(Tile.tileId))*transformnumy).toString()+'vmin'], // This might make very little sense, but it's due to the way CSS animations work. You need to find the current value  of it, and work from there, hence, the excessive code.
-        duration:300,
+        duration:50,
     },
       translateX:{
         value:[findCurrentAnim(id,"X"),(((((calcX(FutureTile.tileId)%14))-(calcX(Tile.tileId)%14)))*transformnumx).toString()+'vmin'],  //See above       //value:[5.735*0,5.735*-13],
-        duration:300,
+        duration:50,
       },
   
       backgroundColor: [{
         value:['#'+getColor(Tile.tileNum),'#'+getColor(FutureTile.tileNum)], //Animate colors for deletion+movement animations... not implemented yet, sadly, due to some arcane bug.
-        duration:300,
+        duration:50,
       }
     ],
     
@@ -379,17 +379,17 @@ function deleteTile(id, Tile) { //Play delete animation then kick that sorry thi
     targets: '#'+'tile'+id,
     scale:[{
       value:0,
-      duration:300,
+      duration:50,
     },
   ],
   rotation:[{
     value:'1turn',
-    duration:300,
+    duration:50,
   },
 ],
     backgroundColor: [{
       value:['#'+getColor(Tile.tileNum), '#FFFFFF'],
-      duration:300,
+      duration:50,
     },
   ],
   
@@ -589,8 +589,8 @@ $(document).on('click', '.blocked', function() {
     socket.send(JSON.stringify({ //Modify this with cookies, to make sure one player gets reconnected with their correct session etc... and can't join several times.
       msgType: "unlockBox",
       sessionID: sessionID.toString(),
-      x:xValue.toString(),
-      y:yValue.toString(),
+      'row':yValue.toString(),
+      'col':xValue.toString(),
     }));
     delete document.getElementById('blocked'+id);
   }
@@ -626,7 +626,7 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
     console.log("Socket is connected.");
     if (document.cookie.indexOf('sessionID')==-1) {
       sessionID=getSessionID();
-      $.cookie("sessionID", JSON.stringify(sessionID),{ expires: .005 });
+      $.cookie("sessionID", JSON.stringify(sessionID),{ expires: .5 });
    /* Uncomment this when you want cookie persistence
       socket.send(JSON.stringify({ //Modify this with cookies, to make sure one player gets reconnected with their correct session etc... and can't join several times.
       msgType: "signup",
