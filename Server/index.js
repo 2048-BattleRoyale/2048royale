@@ -269,7 +269,7 @@ function handleWsMessage(ws, msg) {
       break;
     case "unlockBox":
       logMsg(false, "Box unlock message received. sID: " + parsedMsg.sessionID +
-        ", x: " + parsedMsg.x + ", y: " + parsedMsg.y);
+        ", row: " + parsedMsg.row + ", col: " + parsedMsg.col);
       // Find the board that this player is on.
       var sessionID = parsedMsg.sessionID;
       var board = findPlayersBoard(ws, sessionID);
@@ -278,7 +278,7 @@ function handleWsMessage(ws, msg) {
         logMsg(true, "Error!: Board not found for sessionID: " +
           parsedMsg.sessionID)
       } else {
-        board.enableBox(parsedMsg.x, parsedMsg.y);
+        board.enableBox(parsedMsg.row, parsedMsg.col);
         sendBoardUpdate(board);
       }
       break;

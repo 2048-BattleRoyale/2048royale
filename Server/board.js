@@ -176,10 +176,10 @@ class Board {
   }
 
   // Enable a new box on the this.boxes
-  // x (int): X-coordinate of the box to be enabled.
-  // y (int): Y-coordinate of the box to be enabled.
-  enableBox(x, y) {
-    this.boxes[x][y].enabled = true;
+  // r (int): Row of the box to be enabled.
+  // c (int): Column of the box to be enabled.
+  enableBox(r, c) {
+    this.boxes[r][c].enabled = true;
   }
 
   // INTERNAL FUNCTION, don't call from outside!!!
