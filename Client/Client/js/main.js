@@ -29,6 +29,7 @@ var playerAlive = true;
 var players = [];
 var eventuallyRemove = [];
 var newBoard;
+var animationSpeed=150;
 var gameStarted = false;
 var sessionID;
 var myPlayerNum = 4;
@@ -197,8 +198,13 @@ function jsonParser(jsonToParse) {
   drawLocked();
   // FOR NOW console.log("MRS:")
   console.log(parsedBoard);
-  console.log("sacrebluwu");
-
+  let currentobj= document.getElementById("openB");
+  if (score >= (10 ** boxesOpened)) {
+    currentobj.className="btn btn-dark active newBox active"
+  }
+  else {
+      currentobj.className="btn btn-dark active newBox disabled"
+  }
   return (parsedBoard);
 }
 
@@ -274,15 +280,15 @@ function newTile(id, Box) { //Draws brand new Boxes
     targets: '#' + 'tile' + (box.id).toString(),
     scale: [{
       value: [0, 1],
-      duration: 150,
+      duration: animationSpeed,
     }, ],
     rotation: [{
       value: ['20deg', '-20deg', '0deg'], //Legacy animation support- easy to turn on, by changing the property name.
-      duration: 150,
+      duration: animationSpeed,
     }, ],
     backgroundColor: [{
       value: ['#FFFFFF', '#' + getColor(box.value)], //Using the getColor function to access the stored cookie JSON
-      duration: 150,
+      duration: animationSpeed,
     }, ],
 
     easing: 'linear',
@@ -350,16 +356,16 @@ function moveTile(id, Tile, FutureTile) { //Tile is the tile as it sits NOW, Fut
     translateY: {
 
       value: [findCurrentAnim(id, "Y"), (((calcY(FutureTile.tileId)) - calcY(Tile.tileId)) * transformnumy).toString() + 'vmin'], // This might make very little sense, but it's due to the way CSS animations work. You need to find the current value  of it, and work from there, hence, the excessive code.
-      duration: 150,
+      duration: animationSpeed,
     },
     translateX: {
       value: [findCurrentAnim(id, "X"), (((((calcX(FutureTile.tileId) % 14)) - (calcX(Tile.tileId) % 14))) * transformnumx).toString() + 'vmin'], //See above       //value:[5.735*0,5.735*-13],
-      duration: 150,
+      duration: animationSpeed,
     },
 
     backgroundColor: [{
       value: ['#' + getColor(Tile.tileNum), '#' + getColor(FutureTile.tileNum)], //Animate colors for deletion+movement animations... not implemented yet, sadly, due to some arcane bug.
-      duration: 150,
+      duration: animationSpeed,
     }],
 
     easing: 'easeInOutCubic',
@@ -383,15 +389,15 @@ function deleteTile(id, Tile) { //Play delete animation then kick that sorry thi
     targets: '#' + 'tile' + id,
     scale: [{
       value: 0,
-      duration: 150,
+      duration: animationSpeed,
     }, ],
     rotation: [{
       value: '1turn',
-      duration: 150,
+      duration: animationSpeed,
     }, ],
     backgroundColor: [{
       value: ['#' + getColor(Tile.tileNum), '#FFFFFF'],
-      duration: 150,
+      duration: animationSpeed,
     }, ],
 
     easing: 'linear',
@@ -563,12 +569,12 @@ window.addEventListener("keydown", function (e) { // Prevent scrolling
 var stringJSON;
 window.onload = function () { //Ensure that sockets work when the site first loads
   //Random Jquery Stuff to keep site running
-  $('#title').on('click', function (event) {
+  $('#title').on('click', function () {
     window.location.href = "index.html";
     console.log('home');
   });
 
-  $('.newBox').on('click', function (event) {
+  $('.newBox').on('click', function () {
     if (score >= (10 ** boxesOpened)) { //REPLACE WITH SCORE FUNCTION SOON !!!!!!!IMPORTANT!!!!!!!!!!!
       $(".blocked").css({
         "border-color": "#FFFFF",
@@ -625,7 +631,7 @@ window.onload = function () { //Ensure that sockets work when the site first loa
   };
 
   // Show a connected message when the WebSocket is opened.
-  socket.onopen = function (event) {
+  socket.onopen = function () {
     console.log("Socket is connected.");
     if (document.cookie.indexOf('sessionID') == -1) {
       sessionID = getSessionID();
@@ -692,7 +698,7 @@ window.onload = function () { //Ensure that sockets work when the site first loa
         if (data.numLeft == 0) {
           $('#googlymoogle').alert('close');
         }
-        $('#googlymoogle').on('click', function (event) {
+        $('#googlymoogle').on('click', function () {
           $('#googlymoogle').alert('close');
         })
         break;
@@ -720,7 +726,7 @@ window.onload = function () { //Ensure that sockets work when the site first loa
     };
 
     // Show a disconnected message when the WebSocket is closed.
-    socket.onclose = function (event) {
+    socket.onclose = function () {
       console.log("Socket is disconnected");
       //location.reload();
     };
