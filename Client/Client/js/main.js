@@ -51,6 +51,7 @@ var recentboard = {
 var okayWork = true;
 var boxClicked = false;
 var boxesOpened = 2;
+var queue=[];
 //Test/Example board used for testing out a real board object.
 //Color Profiles Stored Dynamically Online- this is the default
 
@@ -223,7 +224,7 @@ function silentNew(id, Box) { //Redraws a given id with BOX data with no animati
   var box = new Tile(id, calcX(Box.tileId % 14), calcY(Box.tileId), Box.tileNum, Box.owner, Box.enabled);
   var tile_div = document.getElementById("tile" + id);
   tile_div.className = 'tile';
-  tile_div.innerHTML = (box.value).toString() + "<div><div style=\"font-size:1vmin;transform: translate(0, -3.2vmin);\">" + players[Box.owner - 1] + "</div></div>";
+  tile_div.innerHTML = (box.value).toString() + "<div style=\"height:.5vmin;\"><div style=\"font-size:1vmin;transform: translate(0, -3.2vmin);height:.1vmin\">" + players[Box.owner - 1] + "</div></div>"; //Work around for terrible CSS practices.
   tile_div.id = 'tile' + (box.id).toString();
   document.getElementById('tile' + (box.id).toString()).style.transform = "translate(" + (transformnumx * (box.x - 1)) + "vmin," + ((box.y - 1) * transformnumy) + "vmin)"; //Original position transform
   document.getElementById('tile' + (box.id).toString()).style.backgroundColor = '#' + getColor(box.value);
@@ -269,7 +270,7 @@ function newTile(id, Box) { //Draws brand new Boxes
   var box = new Tile(id, calcX(Box.tileId % 14), calcY(Box.tileId), Box.tileNum, Box.owner, Box.enabled); // Turns the board box object into a compatible Tile object for easy access.
   var tile_div = document.createElement('div');
   tile_div.className = 'tile';
-  tile_div.innerHTML = (box.value).toString() + "<div><div style=\"font-size:1vmin;transform: translate(0, -3.2vmin);\">" + players[Box.owner - 1] + "</div></div>"; //Work around for terrible CSS practices.
+  tile_div.innerHTML = (box.value).toString() + "<div style=\"height:.5vmin;\"><div style=\"font-size:1vmin;transform: translate(0, -3.2vmin);height:.1vmin\">" + players[Box.owner - 1] + "</div></div>"; //Work around for terrible CSS practices.
   tile_div.id = 'tile' + (box.id).toString();
   grid.appendChild(tile_div); //Add this to the grid element.
 
@@ -371,9 +372,10 @@ function moveTile(id, Tile, FutureTile) { //Tile is the tile as it sits NOW, Fut
     easing: 'easeInOutCubic',
     update: function () { //Change the text in a tile mid move, if it's merging.
       progress += 1
+
       if (progress > 40 && progress < 50) {
         document.getElementById('tile' + (id).toString()).style.color = '#' + darkOrLight(getColor(FutureTile.tileNum));
-        document.getElementById('tile' + (id).toString()).innerHTML = (FutureTile.tileNum).toString() + "<div><div style=\"font-size:1vmin;transform: translate(0, -3.2vmin);\">" + players[FutureTile.owner - 1] + "</div></div>";
+        document.getElementById('tile' + (id).toString()).innerHTML = (FutureTile.tileNum).toString() + "<div style=\"height:.5vmin;\"><div style=\"font-size:1vmin;transform: translate(0, -3.2vmin);height:.1vmin\">"  + players[FutureTile.owner - 1] + "</div></div>";
       }
     },
     complete: function () {
@@ -584,9 +586,8 @@ window.onload = function () { //Ensure that sockets work when the site first loa
       boxClicked = true;
     }
   });
-
   $(document).on('click', '.blocked', function () {
-    var id = $(this).attr('id').split("blocked")[1];
+    var id = $(this).attr('id').split("blocked")[1]; 
     console.log(id);
     let xValue = calcX(id % 14) - 1;
     let yValue = calcY(id) - 1;
