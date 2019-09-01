@@ -207,7 +207,7 @@ function handleWsMessage(ws, msg) {
       // Add the player to the board.
       boardsList[freeBoard].addPlayer(parsedMsg.sessionID, ws, parsedMsg.name);
 
-      logMsg(false, "New player added to board " + freeBoard + " with player ID " + playerID);
+      logMsg(false, "New player added to board " + freeBoard);
 
       // If this made the board full, then start the game.
       if (boardsList[freeBoard].isFull()) {
@@ -351,7 +351,7 @@ http.createServer(function (request, response) {
 // Start WebSocket Server to listen for new players making moves/actions.
 new websockets.Server({
   port: wsPort
-}).on('connection', function(socket) {
+}).on('connection', function (socket) {
   logMsg(false, "Connection established with new client");
   socket.on('message', function incoming(msg) {
     logMsg(false, "WebSocket message received: " + msg);
