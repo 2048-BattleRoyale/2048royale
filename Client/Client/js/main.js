@@ -43,6 +43,7 @@ var recentboard={"players":{},"boxes":{}};
 var okayWork=true;
 var socket = new WebSocket('wss://tfrserver.herokuapp.com'); 
 var boxClicked=false;
+var boxesOpened=2;
 //Test/Example board used for testing out a real board object.
 //Color Profiles Stored Dynamically Online- this is the default
 var theme1={ //This is the standard 2048 theme
@@ -159,6 +160,8 @@ function jsonParser(jsonToParse) {
       document.getElementById("player"+myPlayerNum).classList.add("indigo");
       document.getElementById("player"+myPlayerNum).classList.remove("elegant-color-dark");
       }
+    score=jsonToParse.players[parseInt(myPlayerNum)-1].score;
+    
     document.getElementById("player"+(i+1).toString()).innerHTML=jsonToParse.players[i].name + "   " + "<span class=\"badge badge-primary badge-pill elegant-color \" id=\"player1sc\">"+jsonToParse.players[i].score+"</span>";
   }
   lockedBoxes=[];
@@ -571,7 +574,7 @@ $('#title').on('click', function(event) {
 });
 
 $('.newBox').on('click', function(event) {
-  if (true) { //REPLACE WITH SCORE FUNCTION SOON !!!!!!!IMPORTANT!!!!!!!!!!!
+  if (score>=(10**boxesOpened)) { //REPLACE WITH SCORE FUNCTION SOON !!!!!!!IMPORTANT!!!!!!!!!!!
     $(".blocked").css({"border-color": "#FFFFF", 
     "border-width":"1px", 
     "border-style":"solid"});
@@ -592,7 +595,9 @@ $(document).on('click', '.blocked', function() {
       'row':yValue.toString(),
       'col':xValue.toString(),
     }));
+    boxClicked=false;
     delete document.getElementById('blocked'+id);
+    boxesOpened++;
   }
 });
 //Cookie Jar
@@ -704,8 +709,8 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
           if(!$("#googlymoogle").length) {
             $('#googlymoogle').alert('close');
           }
-          console.log("THIS IS MY PLAYER ID!!!!!!!!!" + data.playerId+1);
-          myPlayerNum=data.playerId+1;
+          myPlayerNum=parseInt(data.playerId)+1;
+          console.log("THIS IS MY PLAYER ID!!!!!!!!!" + myPlayerNum);
           if (gameStarted==false) {
             document.getElementById("player"+myPlayerNum).classList.add("indigo");
             document.getElementById("player"+myPlayerNum).classList.remove("elegant-color-dark");
