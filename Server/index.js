@@ -1,5 +1,3 @@
-const http = require('http');
-const url = require('url');
 const websockets = require('ws');
 const Board = require("./board.js");
 
@@ -169,28 +167,30 @@ function handleWsMessage(ws, msg) {
   }
 
   // Is the provided session ID in the list of issued IDs?
-  // var validSID = false;
-  // for (var i = 0; i < issuedSIDs.length; i++) {
-  //   logMsg(false, "issuedID:\t" + issuedSIDs[i])
-  //   logMsg(false, "parsedMsg.sID:\t" + parsedMsg.sessionID)
-  //   if (parsedMsg.sessionID === issuedSIDs[i]) {
-  //     logMsg(false, "Same.")
-  //     validSID = true;
-  //     break;
-  //   }
-  // }
-  // if (!validSID) {
-  //   ws.send(JSON.stringify({
-  //     msgType: "ERR",
-  //     err: "SessionID isn't valid"
-  //   }));
-  //   return;
-  // }
+  if (parsedMsg.msgType !== "signup") {
+    var validSID = false;
+    for (var i = 0; i < issuedSIDs.length; i++) {
+      logMsg(false, "issuedID:\t" + issuedSIDs[i])
+      logMsg(false, "parsedMsg.sID:\t" + parsedMsg.sessionID)
+      if (parsedMsg.sessionID === issuedSIDs[i]) {
+        logMsg(false, "Same.")
+        validSID = true;
+        break;
+      }
+    }
+    if (!validSID) {
+      logMsg(true, "ERR!: Session ID " + parsedMsg.sessionID + " is invalid!");
+      ws.send(JSON.stringify({
+        msgType: "ERR",
+        err: "SessionID isn't valid"
+      }));
+      return;
+    }
+  }
 
   switch (parsedMsg.msgType) {
     case "signup":
-      logMsg(false, "Signup message received. Name: " + parsedMsg.name + ", sID: " +
-        parsedMsg.sessionID);
+      logMsg(false, "Signup message received. Name: " + parsedMsg.name);
 
       // Look for boards which have less than a full set of players.
       var freeBoard = -1;
@@ -205,9 +205,17 @@ function handleWsMessage(ws, msg) {
       }
 
       // Add the player to the board.
-      boardsList[freeBoard].addPlayer(parsedMsg.sessionID, ws, parsedMsg.name);
+      var newSessionID = makeSessionID(8);
+      boardsList[freeBoard].addPlayer(newSessionID, ws, parsedMsg.name);
 
-      logMsg(false, "New player added to board " + freeBoard);
+      logMsg(false, "New player added to board " + freeBoard + " sID " +
+        newSessionID);
+
+      // Send the client its new session ID.
+      ws.send(JSON.stringify({
+        msgType: "signupSuccess",
+        sessionId: newSessionID
+      }));
 
       // If this made the board full, then start the game.
       if (boardsList[freeBoard].isFull()) {
@@ -306,7 +314,7 @@ function handleWsMessage(ws, msg) {
 }
 
 // *****************************************************************************
-// HTTP and WebSockets Server init and setup.
+// WebSockets Server init and setup.
 // *****************************************************************************
 
 // Setup periodic cleanup of old boards.
@@ -317,36 +325,6 @@ var cleanupHandle = setInterval(cleanUpOldBoards, timeBetweenOldBoardCleanupPass
 // Setup periodic heartbeat message to all players.
 var heartbeatHandle = setInterval(sendHeartbeatMsgs, timeBetweenHeartbeatMsgs);
 //clearInterval(heartbeatHandle)
-
-// Start HTTP Server to listen for new clients to sign in.
-http.createServer(function (request, response) {
-  response.writeHead(200, {
-    // 'Content-type': 'text/plain'
-    'Content-type': 'text/html'
-  });
-
-  pathName = url.parse(request.url).pathname;
-  query = url.parse(request.url).query;
-  logMsg(false, "HTTP Query: {pathName: " + pathName + ", query: " + query + "}");
-
-  // Send the client a unique session id.
-  var sessionID = "";
-  var unique = true;
-  do {
-    sessionID = makeSessionID(8);
-
-    // Is this session ID already assigned to someone?
-    for (var i = 0; i < boardsList.length; i++) {
-      var playersList = boardsList[i].getPlayers;
-      for (var j = 0; j < playersList.length; j++) {
-        if (playersList[j].sID === sessionID) unique = false;
-      }
-    }
-  } while (!unique)
-
-  response.write(sessionID);
-  response.end();
-}).listen(httpPort);
 
 // Start WebSocket Server to listen for new players making moves/actions.
 new websockets.Server({
