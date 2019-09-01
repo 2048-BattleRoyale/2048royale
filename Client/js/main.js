@@ -20,7 +20,6 @@ for (index = 1; index < 14; index++) {
 }
 
 
-
 //Variable&Class Declarations
 var grid = document.getElementById('tiles');
 var userToken = "PLACEHOLDER";
@@ -29,7 +28,7 @@ var playerAlive = true;
 var players = [];
 var eventuallyRemove = [];
 var newBoard;
-var animationSpeed=150;
+var animationSpeed = 150;
 var gameStarted = false;
 var sessionID;
 var myPlayerNum = 4;
@@ -51,10 +50,9 @@ var recentboard = {
 var okayWork = true;
 var boxClicked = false;
 var boxesOpened = 2;
-var queue=[];
-//Test/Example board used for testing out a real board object.
-//Color Profiles Stored Dynamically Online- this is the default
+var queue = [];
 
+//Color Profiles Stored Dynamically Online- this is the default
 
 var theme1 = { //This is the standard 2048 theme
   "2": "EEE4DA",
@@ -93,7 +91,6 @@ class Tile { //A class used to reparse Board JSONs (somewhat legacy)
   }
 }
 
-
 //Practical side-functions
 function findCurrentAnim(id, xory) { // Useful in the console to find X or Y
   var transforms = document.getElementById('tile' + id.toString()).style.transform; //Get the overarching CSS transform
@@ -110,7 +107,6 @@ function findCurrentAnim(id, xory) { // Useful in the console to find X or Y
     console.log("Fatal error on line 106.");
   }
 }
-
 
 function calcX(tileId) { //Used to parse the modulo values given in the Tile creation of newTile
   if (tileId == 1) {
@@ -131,17 +127,6 @@ function calcY(tileId) { //See above... but for Y
   }
 }
 
-function getSessionID() //This is a placeholder function, to be replaced when the server is entirely running.
-{
-  /*
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", "http://127.0.0.1:7000", false ); // false for synchronous request
-    xmlHttp.send( null );
-    return xmlHttp.responseText;
-  */
-  return Math.random() * 10000;
-}
-
 function getColor(values) { //Takes the color of a tile with a certain number and steals it from the cookie table
   return JSON.parse($.cookie("colorTheme"))[values.toString()];
 }
@@ -157,7 +142,7 @@ function darkOrLight(bgColor) { //Thanks https://stackoverflow.com/questions/394
     darkColor : lightColor;
 }
 
-var theDevil;
+var theDevil; // TODO(Aidan): This name needs to be improved.
 
 function jsonParser(jsonToParse) {
   //jsonToParse is the name of the overall JSON, duh, Neil.
@@ -199,15 +184,14 @@ function jsonParser(jsonToParse) {
   drawLocked();
   // FOR NOW console.log("MRS:")
   console.log(parsedBoard);
-  let currentobj= document.getElementById("openB");
+  let currentobj = document.getElementById("openB");
   if (score >= (10 ** boxesOpened)) {
-    currentobj.className="btn btn-dark active newBox active"
+    currentobj.className = "btn btn-dark active newBox active"
+  } else {
+    currentobj.className = "btn btn-dark active newBox disabled"
   }
-  else {
-      currentobj.className="btn btn-dark active newBox disabled"
-  }
-  console.log("set score to:" +score*100/(10**boxesOpened) + '%');
-  document.getElementById("scoreBar").style='width:'+ score*100/(10**boxesOpened) + '%';
+  console.log("set score to:" + score * 100 / (10 ** boxesOpened) + '%');
+  document.getElementById("scoreBar").style = 'width:' + score * 100 / (10 ** boxesOpened) + '%';
   return (parsedBoard);
 }
 
@@ -218,11 +202,13 @@ function divCleaner() { //Cleanup divs and make everything align nicely.... A la
   }
   eventuallyRemove = [];
 }
-//Primary Functions
 
+// ----------------------------
+//      Primary Functions
+// ----------------------------
 
-function silentNew(id, Box) { //Redraws a given id with BOX data with no animation- hence, silent. See newtile, if you're confused, for further details.
-
+//Redraws a given id with BOX data with no animation- hence, silent. See newtile, if you're confused, for further details.
+function silentNew(id, Box) {
   var box = new Tile(id, calcX(Box.tileId % 14), calcY(Box.tileId), Box.tileNum, Box.owner, Box.enabled);
   var tile_div = document.getElementById("tile" + id);
   tile_div.className = 'tile';
@@ -267,8 +253,8 @@ function silentNew(id, Box) { //Redraws a given id with BOX data with no animati
   }
 }
 
-
-function newTile(id, Box) { //Draws brand new Boxes
+//Draws brand new Boxes
+function newTile(id, Box) {
   var box = new Tile(id, calcX(Box.tileId % 14), calcY(Box.tileId), Box.tileNum, Box.owner, Box.enabled); // Turns the board box object into a compatible Tile object for easy access.
   var tile_div = document.createElement('div');
   tile_div.className = 'tile';
@@ -332,7 +318,8 @@ function newTile(id, Box) { //Draws brand new Boxes
   }
 }
 
-function drawLocked() { // Draw all of the locked, immobile boxes.
+// Draw all of the locked, immobile boxes.
+function drawLocked() {
   $('.blocked').remove() //kill all of the current locked boxes.
 
   for (let i = 0; i < lockedBoxes.length; i++) { //For each locked box, redraw it- this accomodates for blanks.
@@ -349,8 +336,9 @@ function drawLocked() { // Draw all of the locked, immobile boxes.
   $(".blocked").css("background-color", "#" + JSON.parse($.cookie("boardTheme"))["blocked"]); //Color it with the blocked box cookie.
 }
 
-
-function moveTile(id, Tile, FutureTile) { //Tile is the tile as it sits NOW, FutureTile is where you want it to move.
+//Tile is the tile as it sits NOW, FutureTile is where you want it to move.
+function moveTile(id, Tile, FutureTile) {
+  // TODO(Aidan): Improve below variable name.
   okayWork = false; //This is a bit of a bad variable name, but in essence, it states if the player can make a move- 50ms delay, at the moment.
   var progress = 0;
   ///console.log("Finding the current animation of " + id + ". It is: " + findCurrentAnim(id,"X")); Debug stuff.
@@ -377,7 +365,7 @@ function moveTile(id, Tile, FutureTile) { //Tile is the tile as it sits NOW, Fut
 
       if (progress > 40 && progress < 50) {
         document.getElementById('tile' + (id).toString()).style.color = '#' + darkOrLight(getColor(FutureTile.tileNum));
-        document.getElementById('tile' + (id).toString()).innerHTML = (FutureTile.tileNum).toString() + "<div style=\"height:.5vmin;\"><div style=\"font-size:1vmin;transform: translate(0, -3.2vmin);height:.1vmin\">"  + players[FutureTile.owner - 1] + "</div></div>";
+        document.getElementById('tile' + (id).toString()).innerHTML = (FutureTile.tileNum).toString() + "<div style=\"height:.5vmin;\"><div style=\"font-size:1vmin;transform: translate(0, -3.2vmin);height:.1vmin\">" + players[FutureTile.owner - 1] + "</div></div>";
       }
     },
     complete: function () {
@@ -387,7 +375,8 @@ function moveTile(id, Tile, FutureTile) { //Tile is the tile as it sits NOW, Fut
   })
 }
 
-function deleteTile(id, Tile) { //Play delete animation then kick that sorry thing off of the array.
+//Play delete animation then kick that sorry thing off of the array.
+function deleteTile(id, Tile) {
   console.log("DELETING " + id);
   anime({ //Animate deletions.
     targets: '#' + 'tile' + id,
@@ -411,7 +400,8 @@ function deleteTile(id, Tile) { //Play delete animation then kick that sorry thi
   document.getElementById('tile' + id).remove(); //Actually remove the div.
 }
 
-function drawMovement(newBoard) { //Draw all movement using the most recent array as source, and an input one from the JSON parser.
+//Draw all movement using the most recent array as source, and an input one from the JSON parser.
+function drawMovement(newBoard) {
   board = newBoard;
   oldnew = JSON.parse(JSON.stringify(newBoard)); //This is the way garbage languages like JS require you to obfuscate a memory location.
   //Find Key Differences
@@ -474,17 +464,18 @@ function drawMovement(newBoard) { //Draw all movement using the most recent arra
   console.log("THE OLD BOARD IS" + Object.keys(oldBoard.boxes));
 }
 
+// -------------------
+//     Listeners
+// -------------------
 
-//Listeners
-document.addEventListener('keyup', function (event) { // Read keypresses
-  //var socket = new WebSocket('wss://tfrserver.herokuapp.com');
+// Read keypresses
+document.addEventListener('keyup', function (event) {
   //alert(event.keyCode); (Uncomment this line if you need to add future keyswitch codes)
   if (true && gameStarted && okayWork) {
     //var socket = new WebSocket('wss://tfrserver.herokuapp.com');
     switch (event.keyCode) {
       case 87:
       case 38:
-        // alert("Up! To be replaced by sockets when ready.");
         socket.send(JSON.stringify({
           msgType: "playerMove",
           direction: "up",
@@ -503,7 +494,6 @@ document.addEventListener('keyup', function (event) { // Read keypresses
         break;
       case 39:
       case 68:
-        //   alert("Right! To be replaced by sockets when ready.");
         socket.send(JSON.stringify({
           msgType: "playerMove",
           direction: "right",
@@ -522,7 +512,6 @@ document.addEventListener('keyup', function (event) { // Read keypresses
         break;
       case 40:
       case 83:
-        //  alert("Down! To be replaced by sockets when ready.");
         socket.send(JSON.stringify({
           msgType: "playerMove",
           direction: "down",
@@ -542,7 +531,6 @@ document.addEventListener('keyup', function (event) { // Read keypresses
         break;
       case 37:
       case 65:
-        // alert("Left! To be replaced by sockets when ready.");
         socket.send(JSON.stringify({
           msgType: "playerMove",
           direction: "left",
@@ -563,15 +551,18 @@ document.addEventListener('keyup', function (event) { // Read keypresses
   }
 });
 
-window.addEventListener("keydown", function (e) { // Prevent scrolling
+// Prevent scrolling
+window.addEventListener("keydown", function (e) {
   // space and arrow keys
   if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
     e.preventDefault();
   }
 }, false);
 
+// TODO(Aidan): Move below global variable to the top of the file with the rest.
 var stringJSON;
-window.onload = function () { //Ensure that sockets work when the site first loads
+//Ensure that sockets work when the site first loads
+window.onload = function () {
   //Random Jquery Stuff to keep site running
   $('#title').on('click', function () {
     window.location.href = "index.html";
@@ -589,7 +580,7 @@ window.onload = function () { //Ensure that sockets work when the site first loa
     }
   });
   $(document).on('click', '.blocked', function () {
-    var id = $(this).attr('id').split("blocked")[1]; 
+    var id = $(this).attr('id').split("blocked")[1];
     console.log(id);
     let xValue = calcX(id % 14) - 1;
     let yValue = calcY(id) - 1;
@@ -626,7 +617,6 @@ window.onload = function () { //Ensure that sockets work when the site first loa
   // Create a new WebSocket.
   socket = new WebSocket('wss://tfrserver.herokuapp.com');
 
-
   // Handle any errors that occur.
   socket.onerror = function (error) {
     console.log('WebSocket Error: ' + error);
@@ -641,8 +631,6 @@ window.onload = function () { //Ensure that sockets work when the site first loa
       name: "Player" + Math.floor(Math.random() * 10)
     }));
   };
-
-
 
   // Handle messages sent by the server.
   socket.onmessage = function (event) {
@@ -703,22 +691,22 @@ window.onload = function () { //Ensure that sockets work when the site first loa
           document.getElementById("player" + myPlayerNum).classList.add("indigo");
           document.getElementById("player" + myPlayerNum).classList.remove("elegant-color-dark");
         }
-          /* Uncomment this when you want cookie persistence
-             socket.send(JSON.stringify({ //Modify this with cookies, to make sure one player gets reconnected with their correct session etc... and can't join several times.
-             msgType: "signup",
-             sessionID: sessionID.toString(),
-             name: "Billy Bob"
-           }));
-           */
+        /* Uncomment this when you want cookie persistence
+           socket.send(JSON.stringify({ //Modify this with cookies, to make sure one player gets reconnected with their correct session etc... and can't join several times.
+           msgType: "signup",
+           sessionID: sessionID.toString(),
+           name: "Billy Bob"
+         }));
+         */
         break;
       case 'ERR':
         console.log(data);
         console.log("FATAL ERROR IN WEBSOCKET- COLLECTING LOG");
         break;
-      case 'signupSuccess': 
-          console.log(data.sessionId);
-          $.cookie("sessionID", JSON.stringify(data.sessionId));
-          sessionID=data.sessionId;
+      case 'signupSuccess':
+        console.log(data.sessionId);
+        $.cookie("sessionID", JSON.stringify(data.sessionId));
+        sessionID = data.sessionId;
       case 'yourPlayerId':
       case 'heartbeat':
         break;
@@ -726,9 +714,9 @@ window.onload = function () { //Ensure that sockets work when the site first loa
         break;
 
       case 'gameTimeOut':
-          alert("There is a 20 minute game limit.You've been kicked");
-          location.reload();
-          $.cookie("sessionID", null);
+        alert("There is a 20 minute game limit.You've been kicked");
+        location.reload();
+        $.cookie("sessionID", null);
         break;
       case 'clientClosed':
         break;
@@ -740,8 +728,5 @@ window.onload = function () { //Ensure that sockets work when the site first loa
       console.log("Socket is disconnected");
       //location.reload();
     };
-
-    //Send a signup request as soon as the socket is connected
-
   };
 }
