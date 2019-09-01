@@ -17,10 +17,6 @@ console.log("CONFIG: Server Timezone:\tUTC" + (-(new Date).getTimezoneOffset() /
 console.log();
 console.log("BEGIN SERVER LOG OUTPUT");
 
-// TODOS:
-// - Implement client function to let server know that the client has been closed.
-// - Enable feature to reject sessionIDs not already in issuedSIDs.
-
 // {Board, Board, Board, ...}
 var boardsList = [];
 boardsList.remove = function (index) {
