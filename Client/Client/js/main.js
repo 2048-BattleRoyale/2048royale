@@ -564,8 +564,6 @@ window.addEventListener("keydown", function (e) { // Prevent scrolling
 
 var stringJSON;
 window.onload = function () { //Ensure that sockets work when the site first loads
-
-
   //Random Jquery Stuff to keep site running
   $('#title').on('click', function (event) {
     window.location.href = "index.html";
