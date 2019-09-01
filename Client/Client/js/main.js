@@ -714,9 +714,9 @@ window.onload = function () { //Ensure that sockets work when the site first loa
         console.log(data);
         console.log("FATAL ERROR IN WEBSOCKET- COLLECTING LOG");
         break;
-      case 'sendSession':
+      case 'signupSuccess': 
           console.log(data.sessionId);
-          $.cookie("sessionID", data.sessionId);
+          $.cookie("sessionID", JSON.stringify(data.sessionId));
       case 'yourPlayerId':
       case 'heartbeat':
         break;
