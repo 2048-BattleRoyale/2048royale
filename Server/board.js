@@ -383,7 +383,7 @@ class Board {
           if ((player == 1 || player == 2) &&
             !(this.boxes[6][col].enabled && this.boxes[7][col].enabled)) {
             // If not, if the first unlocked box in the column isn't occupied exit the loop.
-            if (this.boxes[5][col].tileId == 0) {
+            if (this.boxes[5][col].tileId == 0 && this.boxes[5][col].enabled == true) {
               viableBoxFound = true;
               viableRow = 5;
               viableCol = col;
@@ -497,7 +497,7 @@ class Board {
           if ((player == 3 || player == 4) &&
             !(this.boxes[6][col].enabled && this.boxes[7][col].enabled)) {
             // If not, if the first unlocked box in the column isn't occupied exit the loop.
-            if (this.boxes[8][col].tileId == 0) {
+            if (this.boxes[8][col].tileId == 0 && this.boxes[8][col].enabled == true) {
               viableBoxFound = true;
               viableRow = 8;
               viableCol = col;
@@ -611,7 +611,7 @@ class Board {
           if ((player == 1 || player == 3) &&
             !(this.boxes[row][6].enabled && this.boxes[row][7].enabled)) {
             // If not, if the first unlocked box in the column isn't occupied exit the loop.
-            if (this.boxes[row][5].tileId == 0) {
+            if (this.boxes[row][5].tileId == 0 && this.boxes[row][5].enabled == true) {
               viableBoxFound = true;
               viableRow = row;
               viableCol = 5;
@@ -725,7 +725,7 @@ class Board {
           if ((player == 2 || player == 4) &&
             !(this.boxes[row][6].enabled && this.boxes[row][7].enabled)) {
             // If not, if the first unlocked box in the column isn't occupied exit the loop.
-            if (this.boxes[row][8].tileId == 0) {
+            if (this.boxes[row][8].tileId == 0 && this.boxes[row][8].enabled == true) {
               viableBoxFound = true;
               viableRow = row;
               viableCol = 8;
