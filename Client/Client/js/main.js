@@ -1,6 +1,6 @@
 var gridContainer = document.getElementById('gridlines');
 gridContainer.style.transform = "translate(0vmin,0vmin)";
-//document.getElementById('background').style.transform="translate(1vmin,0vmin)"
+
 //Draw those snazzy vertical lines
 for (index = 1; index < 14; index++) {
   var vertical_line = document.createElement('div');
@@ -9,6 +9,7 @@ for (index = 1; index < 14; index++) {
   gridContainer.appendChild(vertical_line);
   document.getElementById("vline" + index.toString()).style.transform = "translate(" + (5.75 * index).toString() + "vmin," + (0).toString() + "vmin)";
 }
+
 //Draw some snazzier horizontal lines
 for (index = 1; index < 14; index++) {
   var horizontal_line = document.createElement('div');
@@ -17,13 +18,13 @@ for (index = 1; index < 14; index++) {
   gridContainer.appendChild(horizontal_line);
   document.getElementById("hline" + index.toString()).style.transform = "translate(" + (0).toString() + "vmin," + (5.75 * index).toString() + "vmin)";
 }
+
+
+
 //Variable&Class Declarations
 var grid = document.getElementById('tiles');
 var userToken = "PLACEHOLDER";
 var score = 0;
-var totalB = 0;
-var animationDuration = 500;
-var packetSent = false;
 var playerAlive = true;
 var players = [];
 var eventuallyRemove = [];
@@ -47,7 +48,6 @@ var recentboard = {
   "boxes": {}
 };
 var okayWork = true;
-var socket = new WebSocket('wss://tfrserver.herokuapp.com');
 var boxClicked = false;
 var boxesOpened = 2;
 //Test/Example board used for testing out a real board object.
@@ -359,7 +359,7 @@ function moveTile(id, Tile, FutureTile) { //Tile is the tile as it sits NOW, Fut
       duration: 150,
     }],
 
-    easing: 'easeInOutQuad',
+    easing: 'easeInOutCubic',
     update: function () { //Change the text in a tile mid move, if it's merging.
       progress += 1
       if (progress > 40 && progress < 50) {
@@ -564,7 +564,7 @@ window.onload = function () { //Ensure that sockets work when the site first loa
   //Random Jquery Stuff to keep site running
   $('#title').on('click', function (event) {
     window.location.href = "index.html";
-    console.log('home')
+    console.log('home');
   });
 
   $('.newBox').on('click', function (event) {
