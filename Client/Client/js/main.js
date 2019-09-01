@@ -631,7 +631,7 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
     console.log("Socket is connected.");
     if (document.cookie.indexOf('sessionID')==-1) {
       sessionID=getSessionID();
-      $.cookie("sessionID", JSON.stringify(sessionID),{ expires: .5 });
+      $.cookie("sessionID", JSON.stringify(sessionID));
    /* Uncomment this when you want cookie persistence
       socket.send(JSON.stringify({ //Modify this with cookies, to make sure one player gets reconnected with their correct session etc... and can't join several times.
       msgType: "signup",
@@ -731,7 +731,7 @@ lightColor=JSON.parse($.cookie("boardTheme"))["lightColor"];
   // Show a disconnected message when the WebSocket is closed.
   socket.onclose = function (event) {
     console.log("Socket is disconnected");
-    location.reload();
+    //location.reload();
   };
   
 
