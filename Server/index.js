@@ -8,6 +8,7 @@ const httpPort = 7000;
 const wsPort = process.env.PORT || 8000;
 const oldBoardTimeout = 20 /* mins */ * 60 /* secs */ * 1000 /* ms */ ;
 const timeBetweenOldBoardCleanupPasses = 1 /* mins */ * 60 /* secs */ * 1000 /* ms */ ;
+const timeBetweenHeartbeatMsgs = 1 /* mins */ * 60 /* secs */ * 1000 /* ms */ ;
 
 // Log config messages to the terminal.
 console.log("CONFIG: HTTP server on port:\t" + httpPort);
@@ -136,6 +137,18 @@ function cleanUpOldBoards() {
   if (numBoardsRemoved > 0) logMsg(false, "Cleanup routine removed " +
     numBoardsRemoved + " empty/unused boards");
   else logMsg(false, "Cleanup routine removed no boards");
+}
+
+// Helper function called on a cycle timer to keep the websocket connection alive.
+function sendHeartbeatMsgs() {
+  for (var i = 0; i < boardsList.length; i++) {
+    var playersList = boardsList[i].getPlayers();
+    for (var j = 0; j < playersList.length; j++) {
+      playersList[j].connection.send(JSON.stringify({
+        msgType: "heartbeat"
+      }));
+    }
+  }
 }
 
 // Handles an incoming WebSockets message.
@@ -300,6 +313,10 @@ function handleWsMessage(ws, msg) {
 // https://stackoverflow.com/a/1224485/3339274
 var cleanupHandle = setInterval(cleanUpOldBoards, timeBetweenOldBoardCleanupPasses);
 //clearInterval(cleanupHandle)
+
+// Setup periodic heartbeat message to all players.
+var heartbeatHandle = setInterval(sendHeartbeatMsgs, timeBetweenHeartbeatMsgs);
+//clearInterval(heartbeatHandle)
 
 // Start HTTP Server to listen for new clients to sign in.
 http.createServer(function (request, response) {
