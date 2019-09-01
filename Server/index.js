@@ -1,6 +1,6 @@
 const http = require('http');
 const url = require('url');
-const WebSocket = require('ws');
+const websockets = require('ws');
 const Board = require("./board.js");
 
 const printDebugLevelMsgs = true;
@@ -332,9 +332,9 @@ http.createServer(function (request, response) {
 }).listen(httpPort);
 
 // Start WebSocket Server to listen for new players making moves/actions.
-new WebSocket.Server({
+new websockets.Server({
   port: wsPort
-}).on('connection', function connection(socket) {
+}).on('connection', function(socket) {
   logMsg(false, "Connection established with new client");
   socket.on('message', function incoming(msg) {
     logMsg(false, "WebSocket message received: " + msg);
