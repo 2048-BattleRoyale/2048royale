@@ -702,7 +702,6 @@ window.onload = function () { //Ensure that sockets work when the site first loa
           document.getElementById("player" + myPlayerNum).classList.add("indigo");
           document.getElementById("player" + myPlayerNum).classList.remove("elegant-color-dark");
         }
-          $.cookie("sessionID", data.yourSessionId);
           /* Uncomment this when you want cookie persistence
              socket.send(JSON.stringify({ //Modify this with cookies, to make sure one player gets reconnected with their correct session etc... and can't join several times.
              msgType: "signup",
@@ -715,6 +714,9 @@ window.onload = function () { //Ensure that sockets work when the site first loa
         console.log(data);
         console.log("FATAL ERROR IN WEBSOCKET- COLLECTING LOG");
         break;
+      case 'sendSession':
+          console.log(data.sessionId);
+          $.cookie("sessionID", data.sessionId);
       case 'yourPlayerId':
       case 'heartbeat':
         break;
