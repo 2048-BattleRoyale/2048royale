@@ -85,7 +85,16 @@
 <div class="container" style="position:static;transform:translate(23vmin,0vmin)"> <!--This contains the grid object, in addition to scores and other information in the middle of the page-->
   <div class='row' style="transform:translate(-9vmin,0vmin)">
     <div class="col-sm col-md-1">
-    <button type="button" id="openB" class="btn btn-dark active newBox" style="transform:translate(-16vmin,4vmin);font-family:ClearSans-Bold;">Open a Box</button>
+      <div class='row'>
+      <div class="col-sm col-md-0"> 
+        <button type="button" id="openB" class="btn btn-dark active newBox" style="transform:translate(-16vmin,4vmin);font-family:ClearSans-Bold;">Open a Box</button>
+        <div class="progress" style="width:5.2vw;height:1.2vmin;transform:translate(-15.5vmin,4vmin);font-family:ClearSans-Bold;" >
+        <div class="progress-bar blue" id='scoreBar' role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+            </div>
+
+      </div>
+
     </div>
     <div class="col-sm col-md-20">
     <div id="Board" class="Board " style="">

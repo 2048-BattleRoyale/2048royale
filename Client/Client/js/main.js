@@ -206,6 +206,8 @@ function jsonParser(jsonToParse) {
   else {
       currentobj.className="btn btn-dark active newBox disabled"
   }
+  console.log("set score to:" +score*100/(10**boxesOpened) + '%');
+  document.getElementById("scoreBar").style='width:'+ score*100/(10**boxesOpened) + '%';
   return (parsedBoard);
 }
 
@@ -622,7 +624,6 @@ window.onload = function () { //Ensure that sockets work when the site first loa
   lightColor = JSON.parse($.cookie("boardTheme"))["lightColor"];
 
   // Create a new WebSocket.
-  //var socket = new WebSocket('ws://echo.websocket.org');
   socket = new WebSocket('wss://tfrserver.herokuapp.com');
 
 
@@ -717,6 +718,7 @@ window.onload = function () { //Ensure that sockets work when the site first loa
       case 'signupSuccess': 
           console.log(data.sessionId);
           $.cookie("sessionID", JSON.stringify(data.sessionId));
+          sessionID=data.sessionId;
       case 'yourPlayerId':
       case 'heartbeat':
         break;
