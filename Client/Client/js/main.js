@@ -324,7 +324,6 @@ function drawLocked() { // Draw all of the locked, immobile boxes.
   $('.blocked').remove() //kill all of the current locked boxes.
 
   for (let i = 0; i < lockedBoxes.length; i++) { //For each locked box, redraw it- this accomodates for blanks.
-
     var blocked_tile = document.createElement('div');
     blocked_tile.className = 'blocked';
     blocked_tile.id = 'blocked' + lockedBoxes[i];
@@ -333,13 +332,13 @@ function drawLocked() { // Draw all of the locked, immobile boxes.
     var transformnumy = 5.748124954411;
     document.getElementById('blocked' + (lockedBoxes[i]).toString()).style.transform = "translate(" + (transformnumx * (calcX(lockedBoxes[i] % 14) - 1)) + "vmin," + (calcY(lockedBoxes[i]) - 1) * transformnumy + "vmin)" //Original position transform
     document.getElementById('blocked' + (lockedBoxes[i]).toString()).style.transform = document.getElementById('blocked' + (lockedBoxes[i]).toString()).style.transform + " translateX(0vmin)" + " translateY(0vmin)"; //Original position transform
-
   }
+
   $(".blocked").css("background-color", "#" + JSON.parse($.cookie("boardTheme"))["blocked"]) //Color it with the blocked box cookie.
 }
 
 
-function moveTile(id, Tile, FutureTile) { //TIle is the tile as it sits NOW, FutureTile is where you want it to move.
+function moveTile(id, Tile, FutureTile) { //Tile is the tile as it sits NOW, FutureTile is where you want it to move.
   okayWork = false; //This is a bit of a bad variable name, but in essence, it states if the player can make a move- 50ms delay, at the moment.
   var progress = 0;
   ///console.log("Finding the current animation of " + id + ". It is: " + findCurrentAnim(id,"X")); Debug stuff.
@@ -393,9 +392,8 @@ function deleteTile(id, Tile) { //Play delete animation then kick that sorry thi
     }, ],
 
     easing: 'linear',
-
-
   })
+
   eventuallyRemove.push((id).toString()); //Add it to the eventually remove array.
   document.getElementById('tile' + id).remove(); //Actually remove the div.
 }
@@ -550,7 +548,6 @@ document.addEventListener('keyup', function (event) { // Read keypresses
             }))
         }
         break;
-
     }
   }
 });
