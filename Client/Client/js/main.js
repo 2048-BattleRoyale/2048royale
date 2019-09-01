@@ -634,23 +634,9 @@ window.onload = function () { //Ensure that sockets work when the site first loa
   // Show a connected message when the WebSocket is opened.
   socket.onopen = function () {
     console.log("Socket is connected.");
-    if (document.cookie.indexOf('sessionID') == -1) {
-      sessionID = getSessionID();
-      $.cookie("sessionID", JSON.stringify(sessionID));
-      /* Uncomment this when you want cookie persistence
-         socket.send(JSON.stringify({ //Modify this with cookies, to make sure one player gets reconnected with their correct session etc... and can't join several times.
-         msgType: "signup",
-         sessionID: sessionID.toString(),
-         name: "Billy Bob"
-       }));
-       */
-    } else {
-      console.log(JSON.parse($.cookie("sessionID")));
-      sessionID = JSON.parse($.cookie("sessionID"));
-    }
+
     socket.send(JSON.stringify({ //Modify this with cookies, to make sure one player gets reconnected with their correct session etc... and can't join several times.
       msgType: "signup",
-      sessionID: sessionID.toString(),
       name: "Player" + Math.floor(Math.random() * 10)
     }));
   };
@@ -716,13 +702,32 @@ window.onload = function () { //Ensure that sockets work when the site first loa
           document.getElementById("player" + myPlayerNum).classList.add("indigo");
           document.getElementById("player" + myPlayerNum).classList.remove("elegant-color-dark");
         }
+          $.cookie("sessionID", data.yourSessionId);
+          /* Uncomment this when you want cookie persistence
+             socket.send(JSON.stringify({ //Modify this with cookies, to make sure one player gets reconnected with their correct session etc... and can't join several times.
+             msgType: "signup",
+             sessionID: sessionID.toString(),
+             name: "Billy Bob"
+           }));
+           */
         break;
       case 'ERR':
         console.log(data);
         console.log("FATAL ERROR IN WEBSOCKET- COLLECTING LOG");
         break;
       case 'yourPlayerId':
+      case 'heartbeat':
+        break;
       case 'gameOver':
+        break;
+
+      case 'gameTimeOut':
+          alert("There is a 20 minute game limit.You've been kicked");
+          location.reload();
+          $.cookie("sessionID", null);
+        break;
+      case 'clientClosed':
+        break;
         //Delete Cookies
     };
 
