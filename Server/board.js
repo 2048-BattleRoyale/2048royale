@@ -18,16 +18,20 @@ class Board {
   // sessionID (string): Client-provided session ID.
   // connection (WS connection): WebSockets connection to use to reach the client at a later time.
   // name (string): Client-provided name of the player.
+  // returns: int: Player ID of the newly created player.
   addPlayer(sessionID, connection, name) {
     if (this.isFull()) return;
 
-    this.playersInGame.push({
+    var newLength = this.playersInGame.push({
       sID: sessionID,
       connection: connection,
       name: name,
       score: 0,
       hasLost: false
     });
+
+    // Convert the length to a valid array index.
+    return newLength;
   }
 
   // Removes a player from the game board.
@@ -141,7 +145,12 @@ class Board {
   }
 
   // Log the tile numbers and owners as well as the enabled/disabled state of each box.
-  logTileInfo() {
+  logBoardState() {
+    console.log();
+    console.log("Player 1 Score: " + this.playersInGame[0].score);
+    console.log("Player 2 Score: " + this.playersInGame[1].score);
+    console.log("Player 3 Score: " + this.playersInGame[2].score);
+    console.log("Player 4 Score: " + this.playersInGame[3].score);
     console.log();
     console.log("Tiles (number)\t\tTiles (owner)\t\tTiles (ID)");
 
@@ -329,7 +338,7 @@ class Board {
               };
 
               // Add the value of the new tile to the player's score.
-              this.playersInGame[player].score += num*2;
+              this.playersInGame[player - 1].score += num*2;
             }
           }
         }
@@ -443,7 +452,7 @@ class Board {
               };
 
               // Add the value of the new tile to the player's score.
-              this.playersInGame[player].score += num*2;
+              this.playersInGame[player - 1].score += num*2;
             }
           }
         }
@@ -557,7 +566,7 @@ class Board {
               };
 
               // Add the value of the new tile to the player's score.
-              this.playersInGame[player].score += num*2;
+              this.playersInGame[player - 1].score += num*2;
             }
           }
         }
@@ -671,7 +680,7 @@ class Board {
               };
 
               // Add the value of the new tile to the player's score.
-              this.playersInGame[player].score += num*2;
+              this.playersInGame[player - 1].score += num*2;
             }
           }
         }

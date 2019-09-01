@@ -5,7 +5,11 @@ var board = new Board();
 
 console.log("Initial Setup:");
 board.initBoard();
-board.logTileInfo();
+board.addPlayer(1234, null, "Bob");
+board.addPlayer(1234, null, "Bob");
+board.addPlayer(1234, null, "Bob");
+board.addPlayer(1234, null, "Bob");
+board.logBoardState();
 
 function getInputAndAct() {
   const rl = readline.createInterface({
@@ -16,7 +20,7 @@ function getInputAndAct() {
   rl.question('Move direction? ', (answer) => {
     console.log(answer);
     board.handleBoardMove(answer, 1);
-    board.logTileInfo();
+    board.logBoardState();
 
     rl.close();
     getInputAndAct();

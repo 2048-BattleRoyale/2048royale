@@ -197,6 +197,9 @@ function handleWsMessage(ws, msg) {
 
       // Add the player to the board.
       boardsList[freeBoard].addPlayer(parsedMsg.sessionID, ws, parsedMsg.name);
+
+      logMsg(false, "New player added to board " + freeBoard + " with player ID " + playerID);
+
       // If this made the board full, then start the game.
       if (boardsList[freeBoard].isFull()) {
         // Initialize the board, so that it has boxes.
@@ -207,7 +210,8 @@ function handleWsMessage(ws, msg) {
         for (var i = 0; i < playersList.length; i++) {
           logMsg(false, "Sending game starting message to board: " + freeBoard + ", player: " + i)
           playersList[i].connection.send(JSON.stringify({
-            msgType: "gameStarting"
+            msgType: "gameStarting",
+            playerId: i
           }));
           playersList[i].connection.send(JSON.stringify({
             msgType: "boardUpdate",
