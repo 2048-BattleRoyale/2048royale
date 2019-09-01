@@ -1,0 +1,25 @@
+{
+  "name": "2048royale-server",
+  "version": "0.1.0",
+  "description": "Server for 2048Royale game",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon ./index.js",
+    "stopall": "killall node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/2048-BattleRoyale/2048royale.git"
+  },
+  "author": "Neil Balch, etc.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/2048-BattleRoyale/2048royale/issues"
+  },
+  "homepage": "https://github.com/2048-BattleRoyale/2048royale#readme",
+  "dependencies": {
+    "nodemon": "^1.19.1",
+    "ws": "^7.1.0"
+  }
+}
