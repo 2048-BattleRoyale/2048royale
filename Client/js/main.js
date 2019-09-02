@@ -121,23 +121,20 @@ function findCurrentAnim(id, xory) { // Useful in the console to find X or Y
 
 //This converts an ID value, ranging from (1-196)%14 into an X value.
 function calcX(tileId) { //Used to parse the modulo values given in the Tile creation of newTile
-  if (tileId == 1) {
+  if (tileId == 1)
     return 1; //This basically turns the ID into an x value from 1-14.
-  }
-  if (tileId == 0) {
+  else if (tileId == 0)
     return 14;
-  } else {
+  else
     return tileId;
-  }
 }
 
 //This converts an ID value, ranging from (1-196)%14 into a Y value.
 function calcY(tileId) { //See above... but for Y
-  if (tileId % 14 == 0) {
+  if (tileId % 14 == 0)
     return tileId / 14;
-  } else {
+  else
     return Math.floor(tileId / 14 + 1);
-  }
 }
 
 //This, although only one line, shortens the code greatly.
@@ -156,7 +153,6 @@ function darkOrLight(bgColor) { //Thanks https://stackoverflow.com/questions/394
   return (((r * 0.299) + (g * 0.587) + (b * 0.114)) > 215) ?
     darkColor : lightColor;
 }
-
 
 //Take the JSON.parse'd string the server sends, and convert it into the format of the client, repurposing information for the scoreboard along the way
 function jsonParser(jsonToParse) {
@@ -179,19 +175,16 @@ function jsonParser(jsonToParse) {
 
     document.getElementById("player" + (i + 1).toString()).innerHTML = jsonToParse.players[i].name + "   " + "<span class=\"badge badge-primary badge-pill elegant-color \" id=\"player1sc\">" + jsonToParse.players[i].score + "</span>";
   }
+
   //Parse locked Boxes
   lockedBoxes = [];
   for (let j = 0; j < jsonToParse.boxes.length; j++) {
-    if (!jsonToParse.boxes[j].enabled) {
+    if (!jsonToParse.boxes[j].enabled)
       lockedBoxes.push(j + 1);
-    }
-    if (jsonToParse.boxes[j].tileNum == 0) { //Catch-all needs to be replaced soon
+    if (jsonToParse.boxes[j].tileNum == 0) //Catch-all needs to be replaced soon
       continue;
-    }
 
     let testOb = jsonToParse.boxes[j];
-    //Ignore; bug fixing console.log(testOb)
-    // tempID=jsonToParse.boxes[j].tileId;
     let tempID = testOb.tileId;
     testOb.tileId = j + 1; // Sets name to tile ID.
     parsedBoard.boxes[tempID.toString()] = testOb;
@@ -199,20 +192,20 @@ function jsonParser(jsonToParse) {
   drawLocked();
 
   //Manage the scoreboard
-  let currentobj = document.getElementById("openB");
-  if (score >= (10 ** boxesOpened)) {
-    currentobj.className = "btn btn-dark active newBox active"
-  } else {
-    currentobj.className = "btn btn-dark active newBox disabled"
-  }
-  if (debug) {
+  let currentObj = document.getElementById("openB");
+  if (score >= (10 ** boxesOpened))
+    currentObj.className = "btn btn-dark active newBox active"
+  else
+    currentObj.className = "btn btn-dark active newBox disabled"
+
+  if (debug)
     console.log("set score to:" + score * 100 / (10 ** boxesOpened) + '%');
-  }
+
   document.getElementById("scoreBar").style = 'width:' + score * 100 / (10 ** boxesOpened) + '%';
-  return (parsedBoard);
+  return parsedBoard;
 }
 
-//Cleanup divs and make everything align nicely.... A lategame function, for performance optimizations.
+//Cleanup divs and make everything align nicely.... A late-game function, for performance optimizations.
 function divCleaner() {
   for (i = 0; i < eventuallyRemove.length; i++) {
     document.getElementById("tile" + eventuallyRemove[i]).remove();
@@ -227,7 +220,7 @@ function divCleaner() {
 //      Primary Functions    //
 ///////////////////////////////
 
-//Redraws a given id with BOX data with no animation- hence, silent. See newtile, if you're confused, for further details.
+//Redraws a given id with BOX data with no animation- hence, silent. See newTile, if you're confused, for further details.
 function silentNew(id, Box) {
   //console.log('Attempting to move' + id);
   var box = new Tile(id, calcX(Box.tileId % 14), calcY(Box.tileId), Box.tileNum, Box.owner, Box.enabled);
@@ -256,7 +249,6 @@ function silentNew(id, Box) {
     case (128):
     case (256):
     case (512):
-      //    document.getElementById('tile'+(box.id).toString()).style.marginLeft='255vmin'
       document.getElementById('tile' + (box.id).toString()).style.fontSize = '2vmin'; // 2.8 max
       document.getElementById('tile' + (box.id).toString()).style.lineHeight = '5vmin';
       break;
@@ -343,7 +335,7 @@ function newTile(id, Box) {
 function drawLocked() {
   $('.blocked').remove() //kill all of the current locked boxes.
 
-  for (let i = 0; i < lockedBoxes.length; i++) { //For each locked box, redraw it- this accomodates for blanks.
+  for (let i = 0; i < lockedBoxes.length; i++) { //For each locked box, redraw it, accommodating for blanks.
     var blocked_tile = document.createElement('div');
     blocked_tile.className = 'blocked';
     blocked_tile.id = 'blocked' + lockedBoxes[i];
@@ -359,7 +351,6 @@ function drawLocked() {
 
 //Tile is the tile as it sits NOW, FutureTile is where you want it to move.
 function moveTile(id, Tile, FutureTile) {
-  // TODO(Aidan): Improve below variable name.
   canMove = false; //This is a bit of a bad variable name, but in essence, it states if the player can make a move- 50ms delay, at the moment.
   var progress = 0;
 
@@ -423,8 +414,6 @@ function deleteTile(id, Tile) {
       document.getElementById('tile' + id).remove(); //Actually remove the div.
     }
   })
-
-
 }
 
 //Draw all movement using the most recent array as source, and an input one from the JSON parser.
@@ -449,9 +438,9 @@ function drawMovement(newBoard) {
 
   additions = []
   additions = newArrayKeys.filter(x => !currentArrayKeys.includes(x));
-  if (debug) {
+  if (debug)
     console.log("Done adding " + additions);
-  }
+
   //Then, you check to see if there are any elements (by id) that the old array has and new doesn't  (deletions)
   deletions = []
   if (debug) {
@@ -459,12 +448,11 @@ function drawMovement(newBoard) {
     console.log("The board currently contains" + currentArrayKeys);
   }
   deletions = currentArrayKeys.filter(x => !newArrayKeys.includes(x));
-  if (debug) {
+  if (debug)
     console.log("Done deleting " + deletions);
-  }
-  //Remove these from the lists; they'll be parsed seperately
-  //Parse Deletions
 
+  //Remove these from the lists; they'll be parsed separately
+  //Parse Deletions
   do {
     if (additions.length > 0) {
       newTile(additions[0], newBoard.boxes[additions[0]]);
@@ -474,19 +462,16 @@ function drawMovement(newBoard) {
     }
   } while (additions.length > 0);
   ketamine = currentArrayKeys.filter(x => newArrayKeys.includes(x)); //Don't ask about the variable name.... this one was painful. These filters ultimately look for intersections in both arrays. Simple.
-  if (debug) {
+  if (debug)
     console.log('Things to just move:' + ketamine);
-  }
+
   var i = 0;
   for (i in ketamine) {
-    if (true /*idInCurrentArray(ketamine)[0]*/ ) {
-      if (debug) {
-        console.log("RECIEVED" + i);
-        console.log(ketamine[i] + 'SENT');
-      }
-      moveTile(ketamine[i], oldBoard.boxes[ketamine[i]], newBoard.boxes[ketamine[i]]);
-      //  console.log(Box)
+    if (debug) {
+      console.log("RECIEVED" + i);
+      console.log(ketamine[i] + 'SENT');
     }
+    moveTile(ketamine[i], oldBoard.boxes[ketamine[i]], newBoard.boxes[ketamine[i]]);
   }
   do {
     if (deletions.length > 0) {
@@ -494,24 +479,23 @@ function drawMovement(newBoard) {
       deletions.shift();
     }
   } while (deletions.length > 0);
-  if (debug) {
+
+  if (debug)
     console.log("THE OLD BOARD WAS" + Object.keys(oldBoard.boxes));
-  }
+
   oldBoard = memDump;
-  if (debug) {
+  if (debug)
     console.log("THE OLD BOARD IS" + Object.keys(oldBoard.boxes));
-  }
 }
 
 ///////////////////////
 //     Listeners     //
 ///////////////////////
 
-// Read keypresses
+// Read key presses
 document.addEventListener('keyup', function (event) {
-  //alert(event.keyCode); (Uncomment this line if you need to add future keyswitch codes)
-  if (true && gameStarted && canMove) {
-    //var socket = new WebSocket('wss://tfrserver.herokuapp.com');
+  //alert(event.keyCode); (Uncomment this line if you need to add future key switch codes)
+  if (gameStarted && canMove) {
     switch (event.keyCode) {
       case 87:
       case 38:
@@ -593,9 +577,8 @@ document.addEventListener('keyup', function (event) {
 // Prevent scrolling
 window.addEventListener("keydown", function (e) {
   // space and arrow keys
-  if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1) {
+  if ([32, 37, 38, 39, 40].indexOf(e.keyCode) > -1)
     e.preventDefault();
-  }
 }, false);
 
 
@@ -629,11 +612,10 @@ window.onload = function () {
     }
     let xValue = calcX(id % 14) - 1;
     let yValue = calcY(id) - 1;
-    if (debug) {
+    if (debug)
       console.log(xValue + "," + yValue);
-    }
-    if (boxClicked) {
 
+    if (boxClicked) {
       socket.send(JSON.stringify({ //Modify this with cookies, to make sure one player gets reconnected with their correct session etc... and can't join several times.
         msgType: "unlockBox",
         sessionID: sessionID.toString(),
@@ -652,13 +634,11 @@ window.onload = function () {
 
   //Is this the first time the page is opened, and the cookie(s) don't exist? Add the defaults.
 
-  if (document.cookie.indexOf('colorTheme') == -1) {
+  if (document.cookie.indexOf('colorTheme') == -1)
     $.cookie("colorTheme", JSON.stringify(theme1));
-  }
 
-  if (document.cookie.indexOf('boardTheme') == -1) {
+  if (document.cookie.indexOf('boardTheme') == -1)
     $.cookie("boardTheme", JSON.stringify(extraInfo));
-  }
 
   //Set the theme, for background elements
   $(".vline, .hline").css("background-color", "#" + JSON.parse($.cookie("boardTheme"))["lineBorder"]);
@@ -687,14 +667,14 @@ window.onload = function () {
 
   // Handle messages sent by the server.
   socket.onmessage = function (event) {
-    if (debug) {
+    if (debug)
       console.log(event.data);
-    };
+
     stringJSON = event.data;
-    data = (JSON.parse(event.data));
-    if (debug) {
+    data = JSON.parse(event.data);
+    if (debug)
       console.log(data.msgType)
-    }
+
     switch (data.msgType) {
       case 'boardUpdate': //Is the board being updated?
         parsedBoard = jsonParser(data.board);
@@ -715,22 +695,23 @@ window.onload = function () {
         } else {
           document.getElementById("googlymoogle").innerHTML = "Welcome to the queue. We are currently waiting on " + data.numLeft + " players. Thank you for your patience.";
         }
-        if (data.numLeft == 0) {
+        if (data.numLeft == 0)
           $('#googlymoogle').alert('close');
-        }
+
         $('#googlymoogle').on('click', function () {
           $('#googlymoogle').alert('close');
         })
         break;
       case 'gameStarting': //Is the game starting? Close alerts, and fetch your playerID.
-        if (debug) {
+        if (debug)
           console.log(data);
-        }
+
         gameStarted = false;
         changemade = true;
-        if (!$("#googlymoogle").length) {
+
+        if (!$("#googlymoogle").length)
           $('#googlymoogle').alert('close');
-        }
+
         myPlayerNum = parseInt(data.playerId) + 1;
         console.log("PlayerID:" + myPlayerNum);
         if (gameStarted == false) {
@@ -760,7 +741,7 @@ window.onload = function () {
         break;
 
       case 'gameTimeOut':
-        alert("There is a 20 minute game limit.You've been kicked");
+        alert("There is a 20 minute game limit. You've been kicked");
         location.reload();
         $.cookie("sessionID", null);
         break;
@@ -771,8 +752,7 @@ window.onload = function () {
 
     // Show a disconnected message when the WebSocket is closed.
     socket.onclose = function () {
-      console.log("Socket is disconnected");
-      //location.reload();
+      console.log("Socket has been disconnected");
     };
   };
 }
