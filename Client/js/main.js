@@ -604,6 +604,15 @@ window.addEventListener("keydown", function (e) {
     e.preventDefault();
 }, false);
 
+window.onbeforeunload = function (e) {
+  if (!gameStarted) {
+    console.log("CLOSED");
+    socket.send(JSON.stringify({
+    msgType: "clientClosed",
+    sessionID: JSON.parse($.cookie("sessionID")).toString()
+  }));
+}
+}
 
 //Ensure that sockets work when the site first loads
 window.onload = function () {
