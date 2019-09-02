@@ -86,7 +86,7 @@ var extraInfo = { //This is stored in the secondary colors Cookie
 }
 
 //Tile class is the object that's stored in each array.
-class Tile { //A class used to reparse Board JSONs (somewhat legacy)
+class Tile { //A class used to re-parse Board JSON (somewhat legacy)
   constructor(id, x, y, value, owner, enabled) {
     this.x = x;
     this.y = y;
