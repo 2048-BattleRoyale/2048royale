@@ -28,8 +28,8 @@ for (index = 1; index < 14; index++) {
 /////////////////////////////////////
 
 var grid = document.getElementById('tiles');
-var score = 0; 
-var stringJSON; //Unparsed JSON
+var score = 0;
+var stringJSON; // Unparsed JSON
 var playerAlive = true;
 var players = []; //Total array of all players
 var newBoard; //First draw
@@ -41,27 +41,27 @@ var lockedBoxes = []; //Array of all lockedBoxes?
 var lightColor = 'F9F6F2';
 var darkColor = '776E65';
 var transformationFactorX = 5.741924954411; // This is the value in which a tile must move to be centered on the X axis, with all of the pieces of the grid. The same is true of the 'y' value.
+var transformationFactorY = 5.747124954411; // See above
 var memDump; // Purely used for type conversion
-var oldBoard = { //Second most recent board in memory
+var oldBoard = { // Second most recent board in memory
   "players": {},
   "boxes": {}
 };
-var transformationFactorY = 5.747124954411; //See above
-var debug = false; //Debug mode, y/n?
-var recentBoard = { //Most recent board object
+var recentBoard = { // Most recent board object
   "players": {},
   "boxes": {}
 };
+var debug = false; // Debug mode, y/n?
 var canMove = true; // Can the player currently make a move?
-var boxClicked = false; //Have you  clicked a box?
-var boxesOpened = 2; //Starting at two, this value allows you to open boxes.
-var logDump; //Dumps most recent JSON in Raw
+var boxClicked = false; // Have you  clicked a box?
+var boxesOpened = 2; // Starting at two, this value allows you to open boxes.
+var logDump; // Dumps most recent JSON in Raw
 
 /////////////////////////////////////
 //         Color Profiles          //
 /////////////////////////////////////
 
-var theme1 = { 
+var theme1 = {
   "2": "EEE4DA",
   "4": "ede0c8",
   "8": "F2B179",
@@ -84,7 +84,6 @@ var extraInfo = { //This is stored in the secondary colors Cookie
   "darkColor": "776e65",
   "lightColor": "F9F6F2"
 }
-
 
 //Tile class is the object that's stored in each array.
 class Tile { //A class used to reparse Board JSONs (somewhat legacy)
@@ -206,18 +205,18 @@ function jsonParser(jsonToParse) {
     currentobj.className = "btn btn-dark active newBox disabled"
   }
   if (debug) {
-  console.log("set score to:" + score * 100 / (10 ** boxesOpened) + '%');
+    console.log("set score to:" + score * 100 / (10 ** boxesOpened) + '%');
   }
   document.getElementById("scoreBar").style = 'width:' + score * 100 / (10 ** boxesOpened) + '%';
   return (parsedBoard);
 }
 
- //Cleanup divs and make everything align nicely.... A lategame function, for performance optimizations.
+//Cleanup divs and make everything align nicely.... A lategame function, for performance optimizations.
 function divCleaner() {
   for (i = 0; i < eventuallyRemove.length; i++) {
     document.getElementById("tile" + eventuallyRemove[i]).remove();
     if (debug) {
-    console.log("Removed tile" + eventuallyRemove[i]);
+      console.log("Removed tile" + eventuallyRemove[i]);
     }
   }
 }
@@ -399,7 +398,7 @@ function moveTile(id, Tile, FutureTile) {
 //Play delete animation then kick that sorry thing off of the array.
 function deleteTile(id, Tile) {
   if (debug) {
-  console.log("DELETING " + id);
+    console.log("DELETING " + id);
   }
   anime({ //Animate deletions.
     targets: '#' + 'tile' + id,
@@ -440,7 +439,7 @@ function drawMovement(newBoard) {
     return parseInt(x, 10);
   });
 
- if (debug) {
+  if (debug) {
     console.log("THE NEW BOARD IS: " + newArrayKeys)
     console.log("THE OLD BOARD IS: " + currentArrayKeys);
   }
@@ -449,17 +448,17 @@ function drawMovement(newBoard) {
   additions = []
   additions = newArrayKeys.filter(x => !currentArrayKeys.includes(x));
   if (debug) {
-  console.log("Done adding " + additions);
+    console.log("Done adding " + additions);
   }
   //Then, you check to see if there are any elements (by id) that the old array has and new doesn't  (deletions)
   deletions = []
   if (debug) {
-  console.log("The board will contain " + newArrayKeys);
-  console.log("The board currently contains" + currentArrayKeys);
+    console.log("The board will contain " + newArrayKeys);
+    console.log("The board currently contains" + currentArrayKeys);
   }
   deletions = currentArrayKeys.filter(x => !newArrayKeys.includes(x));
   if (debug) {
-  console.log("Done deleting " + deletions);
+    console.log("Done deleting " + deletions);
   }
   //Remove these from the lists; they'll be parsed seperately
   //Parse Deletions
@@ -474,14 +473,14 @@ function drawMovement(newBoard) {
   } while (additions.length > 0);
   ketamine = currentArrayKeys.filter(x => newArrayKeys.includes(x)); //Don't ask about the variable name.... this one was painful. These filters ultimately look for intersections in both arrays. Simple.
   if (debug) {
-  console.log('Things to just move:' + ketamine);
+    console.log('Things to just move:' + ketamine);
   }
   var i = 0;
   for (i in ketamine) {
     if (true /*idInCurrentArray(ketamine)[0]*/ ) {
       if (debug) {
         console.log("RECIEVED" + i);
-      console.log(ketamine[i] + 'SENT');
+        console.log(ketamine[i] + 'SENT');
       }
       moveTile(ketamine[i], oldBoard.boxes[ketamine[i]], newBoard.boxes[ketamine[i]]);
       //  console.log(Box)
@@ -494,11 +493,11 @@ function drawMovement(newBoard) {
     }
   } while (deletions.length > 0);
   if (debug) {
-  console.log("THE OLD BOARD WAS" + Object.keys(oldBoard.boxes));
+    console.log("THE OLD BOARD WAS" + Object.keys(oldBoard.boxes));
   }
   oldBoard = memDump;
   if (debug) {
-  console.log("THE OLD BOARD IS" + Object.keys(oldBoard.boxes));
+    console.log("THE OLD BOARD IS" + Object.keys(oldBoard.boxes));
   }
 }
 
@@ -601,7 +600,7 @@ window.addEventListener("keydown", function (e) {
 //Ensure that sockets work when the site first loads
 window.onload = function () {
   //Random Jquery Stuff to keep site running
-  
+
   //Clicking on the title? Go home.
   $('#title').on('click', function () {
     window.location.href = "index.html";
@@ -629,7 +628,7 @@ window.onload = function () {
     let xValue = calcX(id % 14) - 1;
     let yValue = calcY(id) - 1;
     if (debug) {
-    console.log(xValue + "," + yValue);
+      console.log(xValue + "," + yValue);
     }
     if (boxClicked) {
 
@@ -645,11 +644,11 @@ window.onload = function () {
     }
   });
 
-///////////////////////
-//      Cookies      //
-///////////////////////
+  ///////////////////////
+  //      Cookies      //
+  ///////////////////////
 
-//Is this the first time the page is opened, and the cookie(s) don't exist? Add the defaults.
+  //Is this the first time the page is opened, and the cookie(s) don't exist? Add the defaults.
 
   if (document.cookie.indexOf('colorTheme') == -1) {
     $.cookie("colorTheme", JSON.stringify(theme1));
@@ -692,7 +691,7 @@ window.onload = function () {
     stringJSON = event.data;
     data = (JSON.parse(event.data));
     if (debug) {
-    console.log(data.msgType)
+      console.log(data.msgType)
     }
     switch (data.msgType) {
       case 'boardUpdate': //Is the board being updated?
@@ -723,7 +722,7 @@ window.onload = function () {
         break;
       case 'gameStarting': //Is the game starting? Close alerts, and fetch your playerID.
         if (debug) {
-        console.log(data);
+          console.log(data);
         }
         gameStarted = false;
         changemade = true;
@@ -753,7 +752,7 @@ window.onload = function () {
         $.cookie("sessionID", JSON.stringify(data.sessionId));
         sessionID = data.sessionId;
         break;
-        case 'heartbeat'://Keep connection Live
+      case 'heartbeat': //Keep connection Live
         break;
       case 'gameOver':
         break;
