@@ -56,6 +56,10 @@ var canMove = true; // Can the player currently make a move?
 var boxClicked = false; // Have you  clicked a box?
 var boxesOpened = 2; // Starting at two, this value allows you to open boxes.
 var logDump; // Dumps most recent JSON in Raw
+var percentUntilNextMove={
+  nextMove:"0%"
+};
+
 
 /////////////////////////////////////
 //         Color Profiles          //
@@ -127,7 +131,25 @@ function calcX(tileId) { //Used to parse the modulo values given in the Tile cre
   else
     return tileId;
 }
+function allowNextMove() {
+  anime({
+    targets: percentUntilNextMove, //Target the appropriate div
+    nextMove: ['0%', '100%'],
+    round:10,
+    duration:150,
+    easing: 'easeInOutCubic',
+    update: function() {
+      console.log(percentUntilNextMove.nextMove);
+      document.getElementById('nextMoveTimer').style='width:'+percentUntilNextMove.nextMove;
 
+    },
+    complete: function () {
+      document.getElementById('nextMoveTimer').style='width:0%';
+      //percentUntilNextMove.nextMove='0%';
+      canMove=true;
+    }
+  })
+}
 //This converts an ID value, ranging from (1-196)%14 into a Y value.
 function calcY(tileId) { //See above... but for Y
   if (tileId % 14 == 0)
@@ -349,7 +371,6 @@ function drawLocked() {
 
 //Tile is the tile as it sits NOW, FutureTile is where you want it to move.
 function moveTile(id, Tile, FutureTile) {
-  canMove = false; //This is a bit of a bad variable name, but in essence, it states if the player can make a move- 50ms delay, at the moment.
   var progress = 0;
 
   //Animate the Tile from 'Tile' to 'FutureTile'
@@ -381,8 +402,7 @@ function moveTile(id, Tile, FutureTile) {
     },
     complete: function () {
       silentNew(id, FutureTile); //Reset the CSS properties with a silent deletion
-      canMove = true; //Allow another move to be made THIS WILL NEED TO BE REPLACED SOON; IT LEADS TO LAG LATE GAME, WHEN MULTIPLE CLIENTS ARE MOVING. **************
-    }
+        }
   })
 }
 
@@ -408,7 +428,7 @@ function deleteTile(id, Tile) {
 
     easing: 'linear',
     complete: function () {
-      eventuallyRemove.push((id).toString()); //Add it to the eventually remove array.
+      //eventuallyRemove.push((id).toString()); //Add it to the eventually remove array.
       document.getElementById('tile' + id).remove(); //Actually remove the div.
     }
   })
@@ -511,6 +531,7 @@ document.addEventListener('keyup', function (event) {
               sessionID: JSON.parse($.cookie("sessionID")).toString()
             }));
         }
+        allowNextMove();
 
         break;
       case 39:
@@ -530,6 +551,8 @@ document.addEventListener('keyup', function (event) {
               sessionID: JSON.parse($.cookie("sessionID")).toString()
             }));
         }
+        allowNextMove();
+
         break;
       case 40:
       case 83:
@@ -548,6 +571,7 @@ document.addEventListener('keyup', function (event) {
               sessionID: JSON.parse($.cookie("sessionID")).toString()
             }));
         }
+        allowNextMove();
 
         break;
       case 37:
@@ -567,6 +591,8 @@ document.addEventListener('keyup', function (event) {
               sessionID: JSON.parse($.cookie("sessionID")).toString()
             }));
         }
+        allowNextMove();
+
         break;
     }
   }
