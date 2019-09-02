@@ -190,12 +190,12 @@ function jsonParser(jsonToParse) {
       continue;
     }
 
-    testOb = jsonToParse.boxes[j];
+    let testOb = jsonToParse.boxes[j];
     //Ignore; bug fixing console.log(testOb)
     // tempID=jsonToParse.boxes[j].tileId;
-    asdf = testOb.tileId;
+    let tempID = testOb.tileId;
     testOb.tileId = j + 1; // Sets name to tile ID.
-    parsedBoard.boxes[asdf.toString()] = testOb;
+    parsedBoard.boxes[tempID.toString()] = testOb;
   }
   drawLocked();
 
