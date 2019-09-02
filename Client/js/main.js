@@ -605,7 +605,7 @@ window.addEventListener("keydown", function (e) {
 }, false);
 
 window.onbeforeunload = function (e) {
-  if (!gameStarted) {
+  if (!gameStarted && !debug) {
     console.log("CLOSED");
     socket.send(JSON.stringify({
     msgType: "clientClosed",
