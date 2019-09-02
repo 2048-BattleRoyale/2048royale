@@ -703,21 +703,21 @@ window.onload = function () {
 
         break;
       case 'waitingForPlayers': //Are we waiting for players? If so, update the notification
-        if (!$("#googlymoogle").length) {
+        if (!$("#waiting").length) {
           var alert = document.createElement('div');
           alert.className = 'alert alert-dismissible alert-dark fade show';
-          alert.id = 'googlymoogle';
+          alert.id = 'waiting';
           alert.role = "alert";
           alert.innerHTML = "Welcome to the queue. We are currently waiting on " + data.numLeft + " players. Thank you for your patience.";
           document.getElementById("alertCenter").appendChild(alert);
         } else {
-          document.getElementById("googlymoogle").innerHTML = "Welcome to the queue. We are currently waiting on " + data.numLeft + " players. Thank you for your patience.";
+          document.getElementById("waiting").innerHTML = "Welcome to the queue. We are currently waiting on " + data.numLeft + " players. Thank you for your patience.";
         }
         if (data.numLeft == 0) {
-          $('#googlymoogle').alert('close');
+          $('#waiting').alert('close');
         }
-        $('#googlymoogle').on('click', function () {
-          $('#googlymoogle').alert('close');
+        $('#waiting').on('click', function () {
+          $('#waiting').alert('close');
         })
         break;
       case 'gameStarting': //Is the game starting? Close alerts, and fetch your playerID.
@@ -726,8 +726,8 @@ window.onload = function () {
         }
         gameStarted = false;
         changemade = true;
-        if (!$("#googlymoogle").length) {
-          $('#googlymoogle').alert('close');
+        if (!$("#waiting").length) {
+          $('#waiting').alert('close');
         }
         myPlayerNum = parseInt(data.playerId) + 1;
         console.log("PlayerID:" + myPlayerNum);
