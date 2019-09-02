@@ -31,14 +31,13 @@ var grid = document.getElementById('tiles');
 var score = 0;
 var stringJSON; // Unparsed JSON
 var playerAlive = true;
-var players = []; // Total array of all players
-var eventuallyRemove = [];
-var newBoard; // First draw
-var animationSpeed = 150; // What speed should these tiles move at?
-var gameStarted = false; // Are you a moron? Read the name.
-var sessionID; // Certain Player's SessionID
-var myPlayerNum = 4; // Where am I on the leaderboard?
-var lockedBoxes = []; // Array of all lockedBoxes?
+var players = []; //Total array of all players
+var newBoard; //First draw
+var animationSpeed = 150; //What speed should these tiles move at?
+var gameStarted = false; //Are you a moron? Read the name.
+var sessionID; //Certain Player's SessionID
+var myPlayerNum = 4; //Where am I on the leaderboard?
+var lockedBoxes = []; //Array of all lockedBoxes?
 var lightColor = 'F9F6F2';
 var darkColor = '776E65';
 var transformationFactorX = 5.741924954411; // This is the value in which a tile must move to be centered on the X axis, with all of the pieces of the grid. The same is true of the 'y' value.
@@ -213,7 +212,6 @@ function divCleaner() {
       console.log("Removed tile" + eventuallyRemove[i]);
     }
   }
-  eventuallyRemove = [];
 }
 
 ///////////////////////////////
@@ -685,21 +683,22 @@ window.onload = function () {
 
         break;
       case 'waitingForPlayers': //Are we waiting for players? If so, update the notification
-        if (!$("#googlymoogle").length) {
+        if (!$("#waiting").length) {
           var alert = document.createElement('div');
           alert.className = 'alert alert-dismissible alert-dark fade show';
-          alert.id = 'googlymoogle';
+          alert.id = 'waiting';
           alert.role = "alert";
           alert.innerHTML = "Welcome to the queue. We are currently waiting on " + data.numLeft + " players. Thank you for your patience.";
           document.getElementById("alertCenter").appendChild(alert);
         } else {
-          document.getElementById("googlymoogle").innerHTML = "Welcome to the queue. We are currently waiting on " + data.numLeft + " players. Thank you for your patience.";
+          document.getElementById("waiting").innerHTML = "Welcome to the queue. We are currently waiting on " + data.numLeft + " players. Thank you for your patience.";
         }
-        if (data.numLeft == 0)
-          $('#googlymoogle').alert('close');
 
-        $('#googlymoogle').on('click', function () {
-          $('#googlymoogle').alert('close');
+        if (data.numLeft == 0)
+          $('#waiting').alert('close');
+
+        $('#waiting').on('click', function () {
+          $('#waiting').alert('close');
         })
         break;
       case 'gameStarting': //Is the game starting? Close alerts, and fetch your playerID.
@@ -707,10 +706,9 @@ window.onload = function () {
           console.log(data);
 
         gameStarted = false;
-        changemade = true;
 
-        if (!$("#googlymoogle").length)
-          $('#googlymoogle').alert('close');
+        if (!$("#waiting").length)
+          $('#waiting').alert('close');
 
         myPlayerNum = parseInt(data.playerId) + 1;
         console.log("PlayerID:" + myPlayerNum);
