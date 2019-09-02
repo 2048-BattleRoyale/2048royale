@@ -28,36 +28,35 @@ for (index = 1; index < 14; index++) {
 /////////////////////////////////////
 
 var grid = document.getElementById('tiles');
-var userToken = "PLACEHOLDER";
-var score = 0;
-var stringJSON;
+var score = 0; 
+var stringJSON; //Unparsed JSON
 var playerAlive = true;
-var players = [];
+var players = []; //Total array of all players
 var eventuallyRemove = [];
-var newBoard;
-var animationSpeed = 150;
-var gameStarted = false;
-var sessionID;
-var myPlayerNum = 4;
-var lockedBoxes = [];
+var newBoard; //First draw
+var animationSpeed = 150; //What speed should these tiles move at?
+var gameStarted = false; //Are you a moron? Read the name.
+var sessionID; //Certain Player's SessionID
+var myPlayerNum = 4; //Where am I on the leaderboard?
+var lockedBoxes = []; //Array of all lockedBoxes?
 var lightColor = 'F9F6F2';
 var darkColor = '776E65';
 var transformationFactorX = 5.741924954411; // This is the value in which a tile must move to be centered on the X axis, with all of the pieces of the grid. The same is true of the 'y' value.
-var memDump;
-var oldBoard = {
+var memDump; // Purely used for type conversion
+var oldBoard = { //Second most recent board in memory
   "players": {},
   "boxes": {}
 };
-var transformationFactorY = 5.747124954411;
-var debug = false;
-var recentBoard = {
+var transformationFactorY = 5.747124954411; //See above
+var debug = false; //Debug mode, y/n?
+var recentBoard = { //Most recent board object
   "players": {},
   "boxes": {}
 };
-var canMove = true;
-var boxClicked = false;
-var boxesOpened = 2;
-var queue = [];
+var canMove = true; // Can the player currently make a move?
+var boxClicked = false; //Have you  clicked a box?
+var boxesOpened = 2; //Starting at two, this value allows you to open boxes.
+var logDump; //Dumps most recent JSON in Raw
 
 /////////////////////////////////////
 //         Color Profiles          //
@@ -159,7 +158,6 @@ function darkOrLight(bgColor) { //Thanks https://stackoverflow.com/questions/394
     darkColor : lightColor;
 }
 
-var logDump; 
 
 //Take the JSON.parse'd string the server sends, and convert it into the format of the client, repurposing information for the scoreboard along the way
 function jsonParser(jsonToParse) {
