@@ -209,6 +209,7 @@ function divCleaner() { //Cleanup divs and make everything align nicely.... A la
 
 //Redraws a given id with BOX data with no animation- hence, silent. See newtile, if you're confused, for further details.
 function silentNew(id, Box) {
+  console.log('Attempting to move' + id);
   var box = new Tile(id, calcX(Box.tileId % 14), calcY(Box.tileId), Box.tileNum, Box.owner, Box.enabled);
   var tile_div = document.getElementById("tile" + id);
   tile_div.className = 'tile';
@@ -394,10 +395,13 @@ function deleteTile(id, Tile) {
     }, ],
 
     easing: 'linear',
+    complete: function () {
+      eventuallyRemove.push((id).toString()); //Add it to the eventually remove array.
+      document.getElementById('tile' + id).remove(); //Actually remove the div.
+    }
   })
 
-  eventuallyRemove.push((id).toString()); //Add it to the eventually remove array.
-  document.getElementById('tile' + id).remove(); //Actually remove the div.
+
 }
 
 //Draw all movement using the most recent array as source, and an input one from the JSON parser.
