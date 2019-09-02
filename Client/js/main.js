@@ -725,7 +725,7 @@ window.onload = function () {
           console.log(data);
         }
         gameStarted = false;
-        changemade = true;
+        
         if (!$("#waiting").length) {
           $('#waiting').alert('close');
         }
