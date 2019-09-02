@@ -139,7 +139,6 @@ function allowNextMove() {
     duration:150,
     easing: 'easeInOutCubic',
     update: function() {
-      console.log(percentUntilNextMove.nextMove);
       document.getElementById('nextMoveTimer').style='width:'+percentUntilNextMove.nextMove;
 
     },
