@@ -71,11 +71,11 @@ url('ClearSans-Bold.eot');
   z-index: -5554;
 }
 .Board{
-  width:83.5vmin;
-  height:83.5vmin;
+  width:70.5vw;
+  height:70.5vw;
   position: absolute;
   justify-content: center;
-  transform: translate(-15vmin,2%);
+  transform: translate(-1vw,2%);
   }
 
 .Title {

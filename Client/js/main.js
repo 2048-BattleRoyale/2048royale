@@ -623,6 +623,10 @@ window.onload = function () {
     window.location.href = "index.html";
     console.log('home');
   });
+  //Remove initial Notif
+  $('#devAlert').on('click', function () {
+    $('#devAlert').alert('close');
+  })
 
   //If you click the newBox button, and you're in a position where you could open a newBox, enable the next box clicked.
   $('.newBox').on('click', function () {
