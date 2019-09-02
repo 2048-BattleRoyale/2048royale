@@ -32,7 +32,6 @@ var score = 0;
 var stringJSON; //Unparsed JSON
 var playerAlive = true;
 var players = []; //Total array of all players
-var eventuallyRemove = [];
 var newBoard; //First draw
 var animationSpeed = 150; //What speed should these tiles move at?
 var gameStarted = false; //Are you a moron? Read the name.
@@ -221,7 +220,6 @@ function divCleaner() {
     console.log("Removed tile" + eventuallyRemove[i]);
     }
   }
-  eventuallyRemove = [];
 }
 
 ///////////////////////////////
