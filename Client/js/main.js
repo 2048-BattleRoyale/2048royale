@@ -1,3 +1,7 @@
+/////////////////////
+// Create the grid //
+/////////////////////
+
 var gridContainer = document.getElementById('gridlines');
 gridContainer.style.transform = "translate(0vmin,0vmin)";
 
@@ -19,11 +23,14 @@ for (index = 1; index < 14; index++) {
   document.getElementById("hline" + index.toString()).style.transform = "translate(" + (0).toString() + "vmin," + (5.75 * index).toString() + "vmin)";
 }
 
+/////////////////////////////////////
+// Class and Variable Declarations //
+/////////////////////////////////////
 
-//Variable&Class Declarations
 var grid = document.getElementById('tiles');
 var userToken = "PLACEHOLDER";
 var score = 0;
+var stringJSON;
 var playerAlive = true;
 var players = [];
 var eventuallyRemove = [];
@@ -35,26 +42,28 @@ var myPlayerNum = 4;
 var lockedBoxes = [];
 var lightColor = 'F9F6F2';
 var darkColor = '776E65';
-var transformnumx = 5.741924954411;
-var oldnew;
+var transformationFactorX = 5.741924954411; // This is the value in which a tile must move to be centered on the X axis, with all of the pieces of the grid. The same is true of the 'y' value.
+var memDump;
 var oldBoard = {
   "players": {},
   "boxes": {}
 };
-var transformnumy = 5.747124954411;
+var transformationFactorY = 5.747124954411;
 var debug = false;
-var recentboard = {
+var recentBoard = {
   "players": {},
   "boxes": {}
 };
-var okayWork = true;
+var canMove = true;
 var boxClicked = false;
 var boxesOpened = 2;
 var queue = [];
 
-//Color Profiles Stored Dynamically Online- this is the default
+/////////////////////////////////////
+//         Color Profiles          //
+/////////////////////////////////////
 
-var theme1 = { //This is the standard 2048 theme
+var theme1 = { 
   "2": "EEE4DA",
   "4": "ede0c8",
   "8": "F2B179",
@@ -91,7 +100,11 @@ class Tile { //A class used to reparse Board JSONs (somewhat legacy)
   }
 }
 
-//Practical side-functions
+/////////////////////////////////////
+//         Utility Functions       //
+/////////////////////////////////////
+
+//Find the CSS transformation factor of a given tile at any point.
 function findCurrentAnim(id, xory) { // Useful in the console to find X or Y
   var transforms = document.getElementById('tile' + id.toString()).style.transform; //Get the overarching CSS transform
   transformY = ((transforms.split('translateY'))[1].slice(0, (transforms.split('translateY'))[1].length - 5)); //Use slices to break the Y transform down to just x + vmin
@@ -108,6 +121,7 @@ function findCurrentAnim(id, xory) { // Useful in the console to find X or Y
   }
 }
 
+//This converts an ID value, ranging from (1-196)%14 into an X value.
 function calcX(tileId) { //Used to parse the modulo values given in the Tile creation of newTile
   if (tileId == 1) {
     return 1; //This basically turns the ID into an x value from 1-14.
@@ -119,6 +133,7 @@ function calcX(tileId) { //Used to parse the modulo values given in the Tile cre
   }
 }
 
+//This converts an ID value, ranging from (1-196)%14 into a Y value.
 function calcY(tileId) { //See above... but for Y
   if (tileId % 14 == 0) {
     return tileId / 14;
@@ -127,10 +142,12 @@ function calcY(tileId) { //See above... but for Y
   }
 }
 
+//This, although only one line, shortens the code greatly.
 function getColor(values) { //Takes the color of a tile with a certain number and steals it from the cookie table
   return JSON.parse($.cookie("colorTheme"))[values.toString()];
 }
 
+//Should the text be the light color, or the dark color?
 function darkOrLight(bgColor) { //Thanks https://stackoverflow.com/questions/3942878/how-to-decide-font-color-in-white-or-black-depending-on-background-color
   //Figure out if the font color should be dark or light, given a hex value
 
@@ -142,12 +159,13 @@ function darkOrLight(bgColor) { //Thanks https://stackoverflow.com/questions/394
     darkColor : lightColor;
 }
 
-var theDevil; // TODO(Aidan): This name needs to be improved.
+var logDump; 
 
+//Take the JSON.parse'd string the server sends, and convert it into the format of the client, repurposing information for the scoreboard along the way
 function jsonParser(jsonToParse) {
   //jsonToParse is the name of the overall JSON, duh, Neil.
   //Do something with the player values here
-  theDevil = jsonToParse;
+  logDump = jsonToParse;
   var parsedBoard = {
     "players": {},
     "boxes": {}
@@ -164,12 +182,12 @@ function jsonParser(jsonToParse) {
 
     document.getElementById("player" + (i + 1).toString()).innerHTML = jsonToParse.players[i].name + "   " + "<span class=\"badge badge-primary badge-pill elegant-color \" id=\"player1sc\">" + jsonToParse.players[i].score + "</span>";
   }
+  //Parse locked Boxes
   lockedBoxes = [];
   for (let j = 0; j < jsonToParse.boxes.length; j++) {
     if (!jsonToParse.boxes[j].enabled) {
       lockedBoxes.push(j + 1);
     }
-    //console.log(lockedBoxes);
     if (jsonToParse.boxes[j].tileNum == 0) { //Catch-all needs to be replaced soon
       continue;
     }
@@ -182,40 +200,45 @@ function jsonParser(jsonToParse) {
     parsedBoard.boxes[asdf.toString()] = testOb;
   }
   drawLocked();
-  // FOR NOW console.log("MRS:")
-  console.log(parsedBoard);
+
+  //Manage the scoreboard
   let currentobj = document.getElementById("openB");
   if (score >= (10 ** boxesOpened)) {
     currentobj.className = "btn btn-dark active newBox active"
   } else {
     currentobj.className = "btn btn-dark active newBox disabled"
   }
+  if (debug) {
   console.log("set score to:" + score * 100 / (10 ** boxesOpened) + '%');
+  }
   document.getElementById("scoreBar").style = 'width:' + score * 100 / (10 ** boxesOpened) + '%';
   return (parsedBoard);
 }
 
-function divCleaner() { //Cleanup divs and make everything align nicely.... A lategame function, for performance optimizations.
+ //Cleanup divs and make everything align nicely.... A lategame function, for performance optimizations.
+function divCleaner() {
   for (i = 0; i < eventuallyRemove.length; i++) {
     document.getElementById("tile" + eventuallyRemove[i]).remove();
+    if (debug) {
     console.log("Removed tile" + eventuallyRemove[i]);
+    }
   }
   eventuallyRemove = [];
 }
 
-// ----------------------------
-//      Primary Functions
-// ----------------------------
+///////////////////////////////
+//      Primary Functions    //
+///////////////////////////////
 
 //Redraws a given id with BOX data with no animation- hence, silent. See newtile, if you're confused, for further details.
 function silentNew(id, Box) {
-  console.log('Attempting to move' + id);
+  //console.log('Attempting to move' + id);
   var box = new Tile(id, calcX(Box.tileId % 14), calcY(Box.tileId), Box.tileNum, Box.owner, Box.enabled);
   var tile_div = document.getElementById("tile" + id);
   tile_div.className = 'tile';
   tile_div.innerHTML = (box.value).toString() + "<div style=\"height:.5vmin;\"><div style=\"font-size:1vmin;transform: translate(0, -3.2vmin);height:.1vmin\">" + players[Box.owner - 1] + "</div></div>"; //Work around for terrible CSS practices.
   tile_div.id = 'tile' + (box.id).toString();
-  document.getElementById('tile' + (box.id).toString()).style.transform = "translate(" + (transformnumx * (box.x - 1)) + "vmin," + ((box.y - 1) * transformnumy) + "vmin)"; //Original position transform
+  document.getElementById('tile' + (box.id).toString()).style.transform = "translate(" + (transformationFactorX * (box.x - 1)) + "vmin," + ((box.y - 1) * transformationFactorY) + "vmin)"; //Original position transform
   document.getElementById('tile' + (box.id).toString()).style.backgroundColor = '#' + getColor(box.value);
   document.getElementById('tile' + (box.id).toString()).style.transform = document.getElementById('tile' + (box.id).toString()).style.transform + " translateX(0vmin)" + " translateY(0vmin)"; //Original position transform
   document.getElementById('tile' + (box.id).toString()).style.color = '#' + darkOrLight(getColor(box.value));
@@ -263,7 +286,7 @@ function newTile(id, Box) {
   tile_div.id = 'tile' + (box.id).toString();
   grid.appendChild(tile_div); //Add this to the grid element.
 
-  document.getElementById('tile' + (box.id).toString()).style.transform = "translate(" + (transformnumx * (box.x - 1)) + "vmin," + ((box.y - 1) * transformnumy) + "vmin)"; //Original position transform
+  document.getElementById('tile' + (box.id).toString()).style.transform = "translate(" + (transformationFactorX * (box.x - 1)) + "vmin," + ((box.y - 1) * transformationFactorY) + "vmin)"; //Original position transform
   document.getElementById('tile' + (box.id).toString()).style.backgroundColor = '#' + getColor(box.value);
   document.getElementById('tile' + (box.id).toString()).style.transform = document.getElementById('tile' + (box.id).toString()).style.transform + " translateX(0vmin)" + " translateY(0vmin)"; //Original position transform
   anime({ //Animate it all.
@@ -319,7 +342,7 @@ function newTile(id, Box) {
   }
 }
 
-// Draw all of the locked, immobile boxes.
+// Draw all of the locked, sessile boxes.
 function drawLocked() {
   $('.blocked').remove() //kill all of the current locked boxes.
 
@@ -328,9 +351,9 @@ function drawLocked() {
     blocked_tile.className = 'blocked';
     blocked_tile.id = 'blocked' + lockedBoxes[i];
     grid.appendChild(blocked_tile);
-    var transformnumx = 5.741924954411;
-    var transformnumy = 5.748124954411;
-    document.getElementById('blocked' + (lockedBoxes[i]).toString()).style.transform = "translate(" + (transformnumx * (calcX(lockedBoxes[i] % 14) - 1)) + "vmin," + (calcY(lockedBoxes[i]) - 1) * transformnumy + "vmin)"; //Original position transform
+    var transformationFactorX = 5.741924954411;
+    var transformationFactorY = 5.748124954411;
+    document.getElementById('blocked' + (lockedBoxes[i]).toString()).style.transform = "translate(" + (transformationFactorX * (calcX(lockedBoxes[i] % 14) - 1)) + "vmin," + (calcY(lockedBoxes[i]) - 1) * transformationFactorY + "vmin)"; //Original position transform
     document.getElementById('blocked' + (lockedBoxes[i]).toString()).style.transform = document.getElementById('blocked' + (lockedBoxes[i]).toString()).style.transform + " translateX(0vmin)" + " translateY(0vmin)"; //Original position transform
   }
 
@@ -340,18 +363,19 @@ function drawLocked() {
 //Tile is the tile as it sits NOW, FutureTile is where you want it to move.
 function moveTile(id, Tile, FutureTile) {
   // TODO(Aidan): Improve below variable name.
-  okayWork = false; //This is a bit of a bad variable name, but in essence, it states if the player can make a move- 50ms delay, at the moment.
+  canMove = false; //This is a bit of a bad variable name, but in essence, it states if the player can make a move- 50ms delay, at the moment.
   var progress = 0;
-  ///console.log("Finding the current animation of " + id + ". It is: " + findCurrentAnim(id,"X")); Debug stuff.
+
+  //Animate the Tile from 'Tile' to 'FutureTile'
   anime({
     targets: '#' + 'tile' + id, //Target the appropriate div
     translateY: {
 
-      value: [findCurrentAnim(id, "Y"), (((calcY(FutureTile.tileId)) - calcY(Tile.tileId)) * transformnumy).toString() + 'vmin'], // This might make very little sense, but it's due to the way CSS animations work. You need to find the current value  of it, and work from there, hence, the excessive code.
+      value: [findCurrentAnim(id, "Y"), (((calcY(FutureTile.tileId)) - calcY(Tile.tileId)) * transformationFactorY).toString() + 'vmin'], // This might make very little sense, but it's due to the way CSS animations work. You need to find the current value  of it, and work from there, hence, the excessive code.
       duration: animationSpeed,
     },
     translateX: {
-      value: [findCurrentAnim(id, "X"), (((((calcX(FutureTile.tileId) % 14)) - (calcX(Tile.tileId) % 14))) * transformnumx).toString() + 'vmin'], //See above       //value:[5.735*0,5.735*-13],
+      value: [findCurrentAnim(id, "X"), (((((calcX(FutureTile.tileId) % 14)) - (calcX(Tile.tileId) % 14))) * transformationFactorX).toString() + 'vmin'], //See above       //value:[5.735*0,5.735*-13],
       duration: animationSpeed,
     },
 
@@ -371,14 +395,16 @@ function moveTile(id, Tile, FutureTile) {
     },
     complete: function () {
       silentNew(id, FutureTile); //Reset the CSS properties with a silent deletion
-      okayWork = true; //Allow another move to be made
+      canMove = true; //Allow another move to be made THIS WILL NEED TO BE REPLACED SOON; IT LEADS TO LAG LATE GAME, WHEN MULTIPLE CLIENTS ARE MOVING. **************
     }
   })
 }
 
 //Play delete animation then kick that sorry thing off of the array.
 function deleteTile(id, Tile) {
+  if (debug) {
   console.log("DELETING " + id);
+  }
   anime({ //Animate deletions.
     targets: '#' + 'tile' + id,
     scale: [{
@@ -407,32 +433,38 @@ function deleteTile(id, Tile) {
 //Draw all movement using the most recent array as source, and an input one from the JSON parser.
 function drawMovement(newBoard) {
   board = newBoard;
-  oldnew = JSON.parse(JSON.stringify(newBoard)); //This is the way garbage languages like JS require you to obfuscate a memory location.
+  memDump = JSON.parse(JSON.stringify(newBoard)); //This is the way garbage languages like JS require you to obfuscate a memory location.
   //Find Key Differences
   newArrayKeys = (Object.keys(newBoard.boxes)); //Find the keys, or ids, of each box in both arrays.
   newArrayKeys = newArrayKeys.map(function (x) {
     return parseInt(x, 10);
   });
-  console.log("THE NEW BOARD IS: " + newArrayKeys)
   currentArrayKeys = Object.keys(oldBoard.boxes);
   currentArrayKeys = currentArrayKeys.map(function (x) {
     return parseInt(x, 10);
   });
-  console.log("THE OLD BOARD IS: " + currentArrayKeys);
+
+ if (debug) {
+    console.log("THE NEW BOARD IS: " + newArrayKeys)
+    console.log("THE OLD BOARD IS: " + currentArrayKeys);
+  }
   //First, you find if there are any elements newArrayKeys has that the current one doesn't (additions)
 
   additions = []
   additions = newArrayKeys.filter(x => !currentArrayKeys.includes(x));
+  if (debug) {
   console.log("Done adding " + additions);
+  }
   //Then, you check to see if there are any elements (by id) that the old array has and new doesn't  (deletions)
   deletions = []
+  if (debug) {
   console.log("The board will contain " + newArrayKeys);
   console.log("The board currently contains" + currentArrayKeys);
-
+  }
   deletions = currentArrayKeys.filter(x => !newArrayKeys.includes(x));
-
+  if (debug) {
   console.log("Done deleting " + deletions);
-
+  }
   //Remove these from the lists; they'll be parsed seperately
   //Parse Deletions
 
@@ -445,14 +477,16 @@ function drawMovement(newBoard) {
     }
   } while (additions.length > 0);
   ketamine = currentArrayKeys.filter(x => newArrayKeys.includes(x)); //Don't ask about the variable name.... this one was painful. These filters ultimately look for intersections in both arrays. Simple.
-  console.log(ketamine);
+  if (debug) {
+  console.log('Things to just move:' + ketamine);
+  }
   var i = 0;
   for (i in ketamine) {
     if (true /*idInCurrentArray(ketamine)[0]*/ ) {
       if (debug) {
         console.log("RECIEVED" + i);
-      }
       console.log(ketamine[i] + 'SENT');
+      }
       moveTile(ketamine[i], oldBoard.boxes[ketamine[i]], newBoard.boxes[ketamine[i]]);
       //  console.log(Box)
     }
@@ -463,19 +497,23 @@ function drawMovement(newBoard) {
       deletions.shift();
     }
   } while (deletions.length > 0);
+  if (debug) {
   console.log("THE OLD BOARD WAS" + Object.keys(oldBoard.boxes));
-  oldBoard = oldnew;
+  }
+  oldBoard = memDump;
+  if (debug) {
   console.log("THE OLD BOARD IS" + Object.keys(oldBoard.boxes));
+  }
 }
 
-// -------------------
-//     Listeners
-// -------------------
+///////////////////////
+//     Listeners     //
+///////////////////////
 
 // Read keypresses
 document.addEventListener('keyup', function (event) {
   //alert(event.keyCode); (Uncomment this line if you need to add future keyswitch codes)
-  if (true && gameStarted && okayWork) {
+  if (true && gameStarted && canMove) {
     //var socket = new WebSocket('wss://tfrserver.herokuapp.com');
     switch (event.keyCode) {
       case 87:
@@ -485,7 +523,7 @@ document.addEventListener('keyup', function (event) {
           direction: "up",
           sessionID: JSON.parse($.cookie("sessionID")).toString()
         }));
-        okayWork = false;
+        canMove = false;
         if (debug) {
           console.log(
             JSON.stringify({
@@ -503,7 +541,7 @@ document.addEventListener('keyup', function (event) {
           direction: "right",
           sessionID: JSON.parse($.cookie("sessionID")).toString()
         }));
-        okayWork = false;
+        canMove = false;
 
         if (debug) {
           console.log(
@@ -521,7 +559,7 @@ document.addEventListener('keyup', function (event) {
           direction: "down",
           sessionID: JSON.parse($.cookie("sessionID")).toString()
         }));
-        okayWork = false;
+        canMove = false;
 
         if (debug) {
           console.log(
@@ -540,7 +578,7 @@ document.addEventListener('keyup', function (event) {
           direction: "left",
           sessionID: JSON.parse($.cookie("sessionID")).toString()
         }));
-        okayWork = false;
+        canMove = false;
 
         if (debug) {
           console.log(
@@ -563,18 +601,20 @@ window.addEventListener("keydown", function (e) {
   }
 }, false);
 
-// TODO(Aidan): Move below global variable to the top of the file with the rest.
-var stringJSON;
+
 //Ensure that sockets work when the site first loads
 window.onload = function () {
   //Random Jquery Stuff to keep site running
+  
+  //Clicking on the title? Go home.
   $('#title').on('click', function () {
     window.location.href = "index.html";
     console.log('home');
   });
 
+  //If you click the newBox button, and you're in a position where you could open a newBox, enable the next box clicked.
   $('.newBox').on('click', function () {
-    if (score >= (10 ** boxesOpened)) { //REPLACE WITH SCORE FUNCTION SOON !!!!!!!IMPORTANT!!!!!!!!!!!
+    if (score >= (10 ** boxesOpened)) {
       $(".blocked").css({
         "border-color": "#FFFFF",
         "border-width": "1px",
@@ -583,12 +623,18 @@ window.onload = function () {
       boxClicked = true;
     }
   });
+
+  //Enable the next box clicked, and send it to the server
   $(document).on('click', '.blocked', function () {
     var id = $(this).attr('id').split("blocked")[1];
-    console.log(id);
+    if (debug) {
+      console.log(id);
+    }
     let xValue = calcX(id % 14) - 1;
     let yValue = calcY(id) - 1;
+    if (debug) {
     console.log(xValue + "," + yValue);
+    }
     if (boxClicked) {
 
       socket.send(JSON.stringify({ //Modify this with cookies, to make sure one player gets reconnected with their correct session etc... and can't join several times.
@@ -603,7 +649,12 @@ window.onload = function () {
     }
   });
 
-  //Cookie Jar
+///////////////////////
+//      Cookies      //
+///////////////////////
+
+//Is this the first time the page is opened, and the cookie(s) don't exist? Add the defaults.
+
   if (document.cookie.indexOf('colorTheme') == -1) {
     $.cookie("colorTheme", JSON.stringify(theme1));
   }
@@ -612,6 +663,7 @@ window.onload = function () {
     $.cookie("boardTheme", JSON.stringify(extraInfo));
   }
 
+  //Set the theme, for background elements
   $(".vline, .hline").css("background-color", "#" + JSON.parse($.cookie("boardTheme"))["lineBorder"]);
   $(".grid").css("border", "2vmin solid #" + JSON.parse($.cookie("boardTheme"))["lineBorder"]);
   $(".grid").css("background-color", "#" + JSON.parse($.cookie("boardTheme"))["gridBackground"]);
@@ -643,28 +695,19 @@ window.onload = function () {
     };
     stringJSON = event.data;
     data = (JSON.parse(event.data));
-
+    if (debug) {
     console.log(data.msgType)
+    }
     switch (data.msgType) {
-      case 'boardUpdate':
+      case 'boardUpdate': //Is the board being updated?
         parsedBoard = jsonParser(data.board);
         $.cookie("lastBoard", JSON.stringify(parsedBoard)); //Also log currentArray, somehow, in order to redraw smooothly.
-        //console.log(parsedBoard);
         drawMovement(parsedBoard);
         gameStarted = true;
-        recentboard = jsonParser(data.board);
-        break
-      case 'waitingForPlayers':
-        /*
-        if (myPlayerNum==4) {
-          myPlayerNum=4-data.numLeft;
-          changemade=true;
-        }
-        */
-        /*if (gameStarted==false) {
-          document.getElementById("player"+myPlayerNum).classList.add("indigo");
-          document.getElementById("player"+myPlayerNum).classList.remove("elegant-color-dark");
-          }*/
+        recentBoard = jsonParser(data.board);
+
+        break;
+      case 'waitingForPlayers': //Are we waiting for players? If so, update the notification
         if (!$("#googlymoogle").length) {
           var alert = document.createElement('div');
           alert.className = 'alert alert-dismissible alert-dark fade show';
@@ -682,15 +725,17 @@ window.onload = function () {
           $('#googlymoogle').alert('close');
         })
         break;
-      case 'gameStarting':
+      case 'gameStarting': //Is the game starting? Close alerts, and fetch your playerID.
+        if (debug) {
         console.log(data);
+        }
         gameStarted = false;
         changemade = true;
         if (!$("#googlymoogle").length) {
           $('#googlymoogle').alert('close');
         }
         myPlayerNum = parseInt(data.playerId) + 1;
-        console.log("THIS IS MY PLAYER ID!!!!!!!!!" + myPlayerNum);
+        console.log("PlayerID:" + myPlayerNum);
         if (gameStarted == false) {
           document.getElementById("player" + myPlayerNum).classList.add("indigo");
           document.getElementById("player" + myPlayerNum).classList.remove("elegant-color-dark");
@@ -711,8 +756,8 @@ window.onload = function () {
         console.log(data.sessionId);
         $.cookie("sessionID", JSON.stringify(data.sessionId));
         sessionID = data.sessionId;
-      case 'yourPlayerId':
-      case 'heartbeat':
+        break;
+        case 'heartbeat'://Keep connection Live
         break;
       case 'gameOver':
         break;
