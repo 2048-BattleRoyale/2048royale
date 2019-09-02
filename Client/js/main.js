@@ -136,7 +136,7 @@ function allowNextMove() {
     targets: percentUntilNextMove, //Target the appropriate div
     nextMove: ['0%', '100%'],
     round:10,
-    duration:150,
+    duration:170,
     easing: 'easeInOutCubic',
     update: function() {
       document.getElementById('nextMoveTimer').style='width:'+percentUntilNextMove.nextMove;
