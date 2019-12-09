@@ -715,7 +715,12 @@ window.onload = function () {
       case 'boardUpdate': //Is the board being updated?
         parsedBoard = jsonParser(data.board);
         $.cookie("lastBoard", JSON.stringify(parsedBoard)); //Also log currentArray, somehow, in order to redraw smooothly.
-        drawMovement(parsedBoard);
+       	try {
+        	drawMovement(parsedBoard);
+		}
+		catch (e) {
+		 // statements to handle any exceptions
+		}
         gameStarted = true;
         recentBoard = jsonParser(data.board);
 
