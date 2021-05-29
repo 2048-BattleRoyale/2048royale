@@ -20,6 +20,6 @@
   "homepage": "https://github.com/2048-BattleRoyale/2048royale#readme",
   "dependencies": {
     "nodemon": "^1.19.1",
-    "ws": "^7.1.0"
+    "ws": "^7.4.6"
   }
 }
